@@ -1,0 +1,12 @@
+faiss-cpu==1.9.0.post1
+Flask==3.1.0
+langchain==0.3.9
+langchain-community==0.3.9
+langchain-core==0.3.21
+langchain-openai==0.2.11
+langchain-text-splitters==0.3.2
+langsmith==0.1.147
+openai==1.56.2
+tqdm>=4.64.1  # Progress bar
+aiohttp>=3.8.1  # Async HTTP requests
+requests>=2.28.1  # HTTP library
