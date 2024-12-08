@@ -14,7 +14,9 @@
             box-sizing: border-box;
         }
 
-        body {
+        body,
+        html {
+            height: 100%;
             margin: 0;
             font-family: 'Roboto', 'Noto Sans', sans-serif;
             overflow-x: hidden;
@@ -84,9 +86,9 @@
             width: 100%;
         }
 
-        /* 자기소개 구역 */
+        /* About */
         #intro {
-            height: 35vh;
+            height: 35%;
             background-color: #f9f9f9;
             display: flex;
             flex-direction: row;
@@ -118,9 +120,9 @@
             object-fit: cover;
         }
 
-        /* 두번째 구역: 챗 인터페이스 */
+        /* Chatbot */
         #chat-interface {
-            height: 60vh;
+            height: 60%;
             background-color: #f9f9f9;
             display: flex;
             flex-direction: column;
@@ -135,7 +137,7 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            padding: 20px;
+            /* padding: 20px; */
         }
 
         #chat-box {
@@ -193,9 +195,9 @@
             background-color: #565656;
         }
 
-        /* 푸터 구역 */
+        /* 푸터 */
         #footer {
-            height: 15vh;
+            height: 15%;
             background-color: #f9f9f9;
             display: flex;
             flex-direction: row;
@@ -226,6 +228,73 @@
         .footer-link:hover {
             color: #565656;
         }
+
+        /* 모바일 화면용 스타일 */
+        @media (max-width: 768px) {
+            #intro {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+                text-align: center;
+                margin-top: 100px;
+            }
+
+            /* #intro-text {
+                text-align: center;
+            } */
+
+            #intro-photo {
+                margin-top: 20px;
+                display: none;
+            }
+
+            #chat-container {
+                max-width: 95%;
+            }
+
+            .user-message {
+                font-size: 1rem;
+            }
+
+            .bot-message-container {
+                display: flex;
+                align-items: center;
+                /* margin-bottom: 10px; */
+            }
+
+            .bot-message-container img {
+                width: 1rem;
+                height: 1rem;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+
+            .bot-message {
+                font-size: 1rem;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            #footer {
+                flex-direction: column;
+                align-items: center;
+                height: auto;
+            }
+
+            #footer-text,
+            #footer-contact {
+                text-align: center;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -247,15 +316,15 @@
             <h1>Hi, I'm Jisu Ryou</h1>
             <br>
             <p>
-                👋 I’m a junior UX engineer with a Master’s degree in AI application.
-                <br>Over the past few years, I've primarily focused on conversational AI, including chatbots and voice
+                👋 I'm a junior UX researcher with a Master's degree in AI application services.
+                <br>I've primarily focused on conversational AI, having worked extensively with chatbots and voice
                 agents.
-                <br>However, I’m also skilled in user experience insight research and full-stack development.
-                <br>For more information about me, please ask anything about me below!
+                <br>I’m also skilled in user experience research and can develop full-stack UX prototypes.
+                <br>For more information about my projects, please use the chatbot below!
             </p>
         </div>
         <div id="intro-photo">
-            <img src="/image.png" alt="Jisu Ryou">
+            <img src="/image.png" alt="It's me!">
         </div>
     </div>
 
@@ -264,7 +333,7 @@
         <div id="chat-container">
             <div id="chat-box"></div>
             <div id="input-box">
-                <input type="text" id="user-input" placeholder="Type your message..." />
+                <input type="text" id="user-input" placeholder="Type your message in English or Korean…" />
                 <button id="send-button"><i class="fa fa-paper-plane"></i></button>
             </div>
         </div>
@@ -275,7 +344,7 @@
         <div id="footer-text">
             <p>
                 &copy; 2024 Jisu Ryou. All rights reserved.
-                <br> All conversations are stored for learning.
+                <br> The chatbot is still under development. Please understand that all conversations will be used for chatbot training.
             </p>
         </div>
         <div id="footer-contact">
@@ -323,11 +392,21 @@
 
             const data = await response.json();
 
-            // Append bot message to chat box
+            // Append bot message with image to chat box
+            const botMessageContainer = document.createElement('div');
+            botMessageContainer.classList.add('bot-message-container');
+
+            const botImage = document.createElement('img');
+            botImage.src = '/image.png'; // 봇의 아바타 이미지 경로
+            botImage.alt = `It's me!`;
+
             const botMessageElem = document.createElement('div');
             botMessageElem.classList.add('message', 'bot-message');
             botMessageElem.textContent = data.reply;
-            chatBox.prepend(botMessageElem);
+
+            botMessageContainer.appendChild(botImage);
+            botMessageContainer.appendChild(botMessageElem);
+            chatBox.prepend(botMessageContainer);
 
             // Scroll to the bottom of chat box
             scrollToBottom();
