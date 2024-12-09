@@ -14,11 +14,16 @@
             box-sizing: border-box;
         }
 
-        body,
+        body {
+            width: 100%;
+            max-width: 640px;
+            height: 100%;
+            margin: 0 auto;
+            font-family: 'Roboto', 'Noto Sans', sans-serif;
+        }
+
         html {
             height: 100%;
-            margin: 0;
-            font-family: 'Roboto', 'Noto Sans', sans-serif;
             overflow-x: hidden;
         }
 
@@ -103,7 +108,6 @@
             flex: 1;
             text-align: left;
             padding: 20px;
-            max-width: 600px;
             font-family: 'Noto Sans', sans-serif;
             font-size: 1rem;
         }
@@ -134,12 +138,11 @@
 
         #chat-container {
             width: 100%;
-            max-width: 800px;
+            /* max-width: 800px; */
             height: 100%;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            /* padding: 20px; */
         }
 
         #chat-box {
@@ -158,28 +161,33 @@
         .user-message {
             text-align: right;
             font-family: 'Noto Sans', sans-serif;
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: 300;
         }
 
         .bot-message-container {
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* 메시지와 이미지를 상단 정렬 */
             margin-bottom: 10px;
+            position: relative; /* 이미지의 위치를 상대적으로 조정 */
         }
 
         .bot-message-container img {
-            width: 30px;
-            height: 30px;
+            width: 1.5rem; /* 크기를 1.5rem로 설정 */
+            height: 1.5rem;
             border-radius: 50%;
             margin-right: 10px;
-            display: none;
+            position: absolute; /* 이미지 위치를 메시지 상단 왼쪽으로 조정 */
+            top: 0;
+            left: 0;
+            display: none; /* 기본적으로 이미지를 숨김 */
         }
 
         .bot-message {
+            padding-left: 2rem; /* 이미지 공간 확보 */
             text-align: left;
             font-family: 'Noto Sans', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 500;
         }
 
@@ -246,7 +254,7 @@
         }
 
         /* 모바일 화면용 스타일 */
-        @media (max-width: 768px) {
+        @media (max-width: 641px) {
             #intro {
                 flex-direction: column;
                 height: auto;
@@ -274,10 +282,6 @@
             }
 
             .bot-message-container img {
-                width: 1rem;
-                height: 1rem;
-                border-radius: 50%;
-                margin-right: 10px;
                 display: inline-block;
             }
 
@@ -329,7 +333,7 @@
             <br>
             <p>
                 👋 I'm a junior UX researcher with a Master's degree in AI application services.
-                <br>I've primarily focused on conversational AI, having worked extensively with chatbots and voice
+                <br>I've primarily focused on <strong>conversational AI</strong>, having worked extensively with chatbots and voice
                 agents.
                 <br>I’m also skilled in user experience research and can develop full-stack UX prototypes.
                 <br>For more information about my projects, please use the chatbot below!
@@ -376,15 +380,15 @@
 
     <script>
         let lastScrollY = window.scrollY;
-        const header = document.getElementById('header');
+        const header = document.querySelector('header');
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > lastScrollY) {
-                // Scroll down: Hide header
-                header.style.top = '-60px'; // 헤더 숨기기
+                // 스크롤 아래로: 헤더 숨기기
+                header.style.transform = 'translateY(-100%)';
             } else {
-                // Scroll up: Show header
-                header.style.top = '0'; // 헤더 보이기
+                // 스크롤 위로: 헤더 보이기
+                header.style.transform = 'translateY(0)';
             }
             lastScrollY = window.scrollY;
         });
