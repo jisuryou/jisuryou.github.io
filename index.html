@@ -126,9 +126,70 @@
             object-fit: cover;
         }
 
+        /* 타임라인 기본 레이아웃 */
+        #timeline {
+            background-color: #f9f9f9;
+            padding: 40px 20px;
+        }
+
+        .timeline-container {
+            position: relative;
+            height: 700px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+        }
+
+        .timeline-left,
+        .timeline-right {
+            position: relative;
+            width: 100%;
+        }
+
+        .timeline-item {
+            position: absolute;
+            transform: translateY(-50%);
+            max-width: 300px;
+            box-sizing: border-box;
+        }
+
+        .timeline-item h3 {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .timeline-left .timeline-item {
+            text-align: right;
+            right: calc(50% - 130px);
+        }
+
+        .timeline-right .timeline-item {
+            text-align: left;
+            left: calc(50% - 130px);
+        }
+
+        .timeline-line {
+            width: 4px;
+            background: linear-gradient(to bottom, #333, #aaa);
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            z-index: 1;
+        }
+
         /* Chatbot */
         #chat-interface {
-            height: 60%;
+            height: 80%;
             background-color: #f9f9f9;
             display: flex;
             flex-direction: column;
@@ -167,24 +228,30 @@
 
         .bot-message-container {
             display: flex;
-            align-items: flex-start; /* 메시지와 이미지를 상단 정렬 */
+            align-items: flex-start;
+            /* 메시지와 이미지를 상단 정렬 */
             margin-bottom: 10px;
-            position: relative; /* 이미지의 위치를 상대적으로 조정 */
+            position: relative;
+            /* 이미지의 위치를 상대적으로 조정 */
         }
 
         .bot-message-container img {
-            width: 1.5rem; /* 크기를 1.5rem로 설정 */
+            width: 1.5rem;
+            /* 크기를 1.5rem로 설정 */
             height: 1.5rem;
             border-radius: 50%;
             margin-right: 10px;
-            position: absolute; /* 이미지 위치를 메시지 상단 왼쪽으로 조정 */
+            position: absolute;
+            /* 이미지 위치를 메시지 상단 왼쪽으로 조정 */
             top: 0;
             left: 0;
-            display: none; /* 기본적으로 이미지를 숨김 */
+            display: none;
+            /* 기본적으로 이미지를 숨김 */
         }
 
         .bot-message {
-            padding-left: 2rem; /* 이미지 공간 확보 */
+            padding-left: 2rem;
+            /* 이미지 공간 확보 */
             text-align: left;
             font-family: 'Noto Sans', sans-serif;
             font-size: 1rem;
@@ -254,7 +321,7 @@
         }
 
         /* 모바일 화면용 스타일 */
-        @media (max-width: 641px) {
+        @media screen and (max-width: 640px) {
             #intro {
                 flex-direction: column;
                 height: auto;
@@ -287,6 +354,37 @@
 
             .bot-message {
                 font-size: 1rem;
+            }
+
+            .timeline-container {
+                flex-direction: column;
+                align-items: flex-start;
+                height: auto;
+                position: relative;
+            }
+
+            .timeline-line {
+                display: block;
+                /* 타임라인 선 표시 */
+                position: absolute;
+                top: 0;
+                left: 20px;
+                /* 화면 왼쪽에 고정 */
+                height: 100%;
+                width: 4px;
+                background: linear-gradient(to bottom, #333, #aaa);
+            }
+
+            .timeline-item {
+                position: relative;
+                text-align: left;
+                padding-left: 50px;
+                max-width: 90%;
+                box-sizing: border-box;
+            }
+
+            .timeline-item h3 {
+                margin-bottom: 5px; /* 제목 간격 조정 */
             }
 
             header {
@@ -333,7 +431,8 @@
             <br>
             <p>
                 👋 I'm a junior UX researcher with a Master's degree in AI application services.
-                <br>I've primarily focused on <strong>conversational AI</strong>, having worked extensively with chatbots and voice
+                <br>I've primarily focused on <strong>conversational AI</strong>, having worked extensively with
+                chatbots and voice
                 agents.
                 <br>I’m also skilled in user experience research and can develop full-stack UX prototypes.
                 <br>For more information about my projects, please use the chatbot below!
@@ -341,6 +440,47 @@
         </div>
         <div id="intro-photo">
             <img src="/image.png" alt="It's me!">
+        </div>
+    </div>
+
+    <div id="timeline" class="section">
+        <div class="timeline-container">
+            <div class="timeline-left">
+                <div class="timeline-item" data-start-year="2017">
+                    <h3>Sungkyunkwan University, Korea<br>Mar 2017~Aug 2021</h3>
+                    <p>Bachelor of Engineering and Bachelor of Science in Psychology
+                        <br>(1st) Dept. of Software, College of Software Convergence
+                        <br>(2nd) Dept. of Psychology, College of Social Sciences
+                    </p>
+                </div>
+                <div class="timeline-item" data-start-year="2019">
+                    <h3>The University of Texas at Dallas, United States<br>Jan 2019~May 2019</h3>
+                    <p>Exchange Student</p>
+                </div>
+                <div class="timeline-item" data-start-year="2021">
+                    <h3>Seoul National University, Korea<br>Sep 2021~Feb 2024</h3>
+                    <p>Master of Engineering
+                        <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
+                        <br>Advisor: Prof. Joongseek Lee(UXLab)
+                        <br>(Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving Long Entries in VA Journaling
+                    </p>
+                </div>
+            </div>
+            <div class="timeline-line"></div>
+            <div class="timeline-right">
+                <div class="timeline-item" data-start-year="2020">
+                    <h3>Rihoz, Seoul, Korea<br>Sep 2020~Dec 2020</h3>
+                    <p>Front-End Developer (Intern)<br>
+                        • Contributed to the project ‘Dangjib’, a big data-driven smart life service platform<br>
+                        • Focused on front-end development of the admin web page and the production app</p>
+                </div>
+                <div class="timeline-item" data-start-year="2024">
+                    <h3>SNU UXLab, Seoul, Korea<br>March 2024~Aug 2024</h3>
+                    <p>Project Manager (PM)<br>
+                        • Led the project ‘Financial Hyper-Personalization Using MyData’ with HiUX<br>
+                        • Led the project ‘UX Evaluation of Text-Based Conversational Experiences’ with LG</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -392,6 +532,60 @@
             }
             lastScrollY = window.scrollY;
         });
+
+        const startYear = 2017; // 타임라인 시작 년도
+        const endYear = 2024; // 타임라인 종료 년도
+        const containerHeight = 800; // 타임라인 높이 (CSS와 동일하게 설정)
+
+        // 왼쪽과 오른쪽의 타임라인 아이템 선택
+        const leftItems = document.querySelectorAll(".timeline-left .timeline-item");
+        const rightItems = document.querySelectorAll(".timeline-right .timeline-item");
+        const allItems = [...leftItems, ...rightItems];
+
+        const timelineContainer = document.querySelector(".timeline-container");
+        const originalHTML = timelineContainer.innerHTML;
+
+        // 위치 계산 및 적용 함수
+        function applyPosition(items) {
+            // 640px 이상일 때만 위치 계산 적용
+            if (window.innerWidth > 640) {
+                timelineContainer.innerHTML = originalHTML;
+                const updatedItems = document.querySelectorAll(".timeline-item");
+                updatedItems.forEach(item => {
+                    const year = parseInt(item.getAttribute("data-start-year")); // 각 항목의 시작 년도 가져오기
+                    const position = ((year - startYear) / (endYear - startYear)) * containerHeight * 0.6; // 위치 계산 (%)
+                    item.style.top = `${position + 80}px`;
+                    item.style.position = "absolute";
+                    item.style.left = ""; // 모바일에서의 상대 위치 초기화
+                    item.style.marginTop = "";
+                });
+            } else {
+                const sortedItems = Array.from(items).sort((a, b) => {
+                    const yearA = parseInt(a.getAttribute("data-start-year"));
+                    const yearB = parseInt(b.getAttribute("data-start-year"));
+                    return yearA - yearB; // 시작 년도 기준 오름차순 정렬
+                });
+                // 기존 아이템 초기화
+                timelineContainer.innerHTML = `
+                    <div class="timeline-line"></div>
+                `;
+                let cumulativePosition = 50;
+
+                // 정렬된 아이템 추가
+                sortedItems.forEach(item => {
+                    item.style.position = "relative"; // 상대 위치로 변경
+                    item.style.top = "initial"; // 초기화
+                    item.style.marginTop = `${cumulativePosition}px`; // 누적 위치 적용
+                    // item.style.left = "50px";
+                    timelineContainer.appendChild(item); // 컨테이너에 추가
+                });
+            }
+        }
+
+        // 왼쪽과 오른쪽 각각 위치 계산 및 적용
+        applyPosition(allItems);
+
+        window.addEventListener("resize", () => applyPosition(allItems));
 
         const chatBox = document.getElementById('chat-box');
         const userInput = document.getElementById('user-input');
