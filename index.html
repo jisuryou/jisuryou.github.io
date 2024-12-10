@@ -126,7 +126,7 @@
             object-fit: cover;
         }
 
-        /* 타임라인 기본 레이아웃 */
+        /* 타임라인 */
         #timeline {
             background-color: #f9f9f9;
             padding: 40px 20px;
@@ -229,23 +229,18 @@
         .bot-message-container {
             display: flex;
             align-items: flex-start;
-            /* 메시지와 이미지를 상단 정렬 */
             margin-bottom: 10px;
             position: relative;
-            /* 이미지의 위치를 상대적으로 조정 */
         }
 
         .bot-message-container img {
             width: 1.5rem;
-            /* 크기를 1.5rem로 설정 */
             height: 1.5rem;
             border-radius: 50%;
             margin-right: 10px;
             position: absolute;
-            /* 이미지 위치를 메시지 상단 왼쪽으로 조정 */
             top: 0;
             left: 0;
-            /* display: none; */
         }
 
         .bot-message {
@@ -255,6 +250,11 @@
             font-family: 'Noto Sans', sans-serif;
             font-size: 1rem;
             font-weight: 500;
+        }
+
+        .loading-indicator .bot-message {
+            font-style: italic;
+            color: gray;
         }
 
         #input-box {
@@ -364,11 +364,9 @@
 
             .timeline-line {
                 display: block;
-                /* 타임라인 선 표시 */
                 position: absolute;
                 top: 0;
                 left: 20px;
-                /* 화면 왼쪽에 고정 */
                 height: 100%;
                 width: 4px;
                 background: linear-gradient(to bottom, #333, #aaa);
@@ -383,7 +381,7 @@
             }
 
             .timeline-item h3 {
-                margin-bottom: 5px; /* 제목 간격 조정 */
+                margin-bottom: 5px;
             }
 
             header {
@@ -459,9 +457,11 @@
                 <div class="timeline-item" data-start-year="2021">
                     <h3>Seoul National University, Korea<br>Sep 2021~Feb 2024</h3>
                     <p>Master of Engineering
-                        <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
+                        <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and
+                        Technology (GSCST)
                         <br>Advisor: Prof. Joongseek Lee(UXLab)
-                        <br>(Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving Long Entries in VA Journaling
+                        <br>(Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving Long
+                        Entries in VA Journaling
                     </p>
                 </div>
             </div>
@@ -607,33 +607,43 @@
             // Clear input box
             userInput.value = '';
 
-            // Send message to the backend
-            const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: userMessage })
-            });
-
-            const data = await response.json();
-
-            // Append bot message with image to chat box
-            const botMessageContainer = document.createElement('div');
-            botMessageContainer.classList.add('bot-message-container');
+            // Append "loading" indicator
+            const loadingMessageContainer = document.createElement('div');
+            loadingMessageContainer.classList.add('bot-message-container', 'loading-indicator');
 
             const botImage = document.createElement('img');
             botImage.src = '/image.png'; // 봇의 아바타 이미지 경로
             botImage.alt = `It's me!`;
 
-            const botMessageElem = document.createElement('div');
-            botMessageElem.classList.add('message', 'bot-message');
-            botMessageElem.textContent = data.reply;
+            const loadingMessageElem = document.createElement('div');
+            loadingMessageElem.classList.add('message', 'bot-message');
+            loadingMessageElem.textContent = '...';
 
-            botMessageContainer.appendChild(botImage);
-            botMessageContainer.appendChild(botMessageElem);
-            chatBox.prepend(botMessageContainer);
+            loadingMessageContainer.appendChild(botImage);
+            loadingMessageContainer.appendChild(loadingMessageElem);
+            chatBox.prepend(loadingMessageContainer);
 
-            // Scroll to the bottom of chat box
-            scrollToBottom();
+            // Send message to the backend
+            try {
+                const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userMessage })
+                });
+
+                const data = await response.json();
+
+                // Replace "loading" indicator with bot message
+                loadingMessageElem.textContent = data.reply;
+                loadingMessageContainer.classList.remove('loading-indicator');
+            } catch (error) {
+                // Handle error (e.g., network issue)
+                loadingMessageElem.textContent = 'Error: Could not load message.';
+                console.error(error);
+            } finally {
+                // Scroll to the bottom of chat box
+                scrollToBottom();
+            }
         }
 
         // 클릭 이벤트
