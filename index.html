@@ -249,8 +249,9 @@
 
         #input-box {
             display: flex;
-            position: relative;
-            overflow: hidden;
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
         }
 
         #user-input {
@@ -318,6 +319,7 @@
             height: 1.5rem;
             border-radius: 50%;
             margin-right: 10px;
+            align-self: flex-start;
         }
 
         .bot-message {
@@ -837,12 +839,12 @@
         const chatBox = document.getElementById('chat-box');
         const userInput = document.getElementById('user-input');
         const sendButton = document.getElementById('send-button');
-        const inputBox = document.getElementById("input-box");
+        const inputBox = document.getElementById('input-box');
 
-        function adjustInputPosition() {
-            // 입력 박스를 항상 chat-box의 마지막 메시지 바로 아래로 이동
+        function moveInputBoxToLatestMessage() {
+            // 입력 박스를 최신 메시지 바로 아래로 이동
             chatBox.appendChild(inputBox);
-            chatBox.scrollTop = chatBox.scrollHeight; // 스크롤을 아래로 이동
+            chatBox.scrollTop = chatBox.scrollHeight; // 스크롤을 항상 아래로 이동
         }
 
         async function sendMessage() {
@@ -853,7 +855,7 @@
             const userMessageElem = document.createElement('div');
             userMessageElem.classList.add('message', 'user-message');
             userMessageElem.textContent = userMessage;
-            chatBox.appendChild(userMessageElem);
+            chatBox.insertBefore(userMessageElem, inputBox);
 
             // Clear input box
             userInput.value = '';
@@ -872,9 +874,9 @@
 
             loadingMessageContainer.appendChild(botImage);
             loadingMessageContainer.appendChild(loadingMessageElem);
-            chatBox.appendChild(loadingMessageContainer);
+            chatBox.insertBefore(loadingMessageContainer, inputBox);
 
-            adjustInputPosition();
+            moveInputBoxToLatestMessage();
             
             // Send message to the backend
             try {
@@ -896,7 +898,7 @@
                 console.error(error);
             } finally {
                 // Scroll to the bottom of chat box
-                adjustInputPosition();
+                moveInputBoxToLatestMessage();
             }
         }
 
