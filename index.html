@@ -219,6 +219,37 @@
             z-index: 1;
         }
 
+        .timeline-tooltip {
+            position: absolute;
+            display: none;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 10;
+            max-width: 280px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            pointer-events: auto;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .timeline-tooltip.tooltip-left {
+            text-align: left;
+            left: calc(50% + 20px); /* timeline-left 위치 기준 */
+        }
+
+        .timeline-tooltip.tooltip-right {
+            text-align: left;
+            right: calc(50% + 20px); /* timeline-right 위치 기준 */
+        }
+
+        .timeline-tooltip.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Chatbot */
         #chat-interface {
             height: 100%;
@@ -462,6 +493,12 @@
                 box-sizing: border-box;
             }
 
+            .timeline-tooltip {
+                text-align: left;
+                margin-left: 50px;
+                max-width: 85%;
+            }
+
             header {
                 flex-direction: column;
                 gap: 20px;
@@ -528,6 +565,7 @@
             <div class="timeline-line"></div>
             <div class="timeline-right"></div>
         </div>
+        <div class="timeline-tooltip"></div>
     </div>
 
     <!-- 챗 인터페이스 -->
@@ -656,6 +694,10 @@
                     details: `
                         #Conversational AI #Researcher  
                         <br>Participated in all project phases and led the development stage.
+                    `,
+                    outcome: `
+                        • Successfully approved for deployment on <a href="https://www.notion.so/6fbb37714a92463d814c25d967336ac4" target="_blank">Google Assistant</a>, but no longer available due to the sunset of Dialogflow Google Assistant integration
+                        <br>• Presented at HCI Korea 2022 Tutorial [Building Conversational Services That Grow Their Knowledge Base Over Time]
                     `
                 },
                 {
@@ -666,6 +708,9 @@
                     details: `
                         #Conversational AI #Researcher
                         <br>Contributed to research and user interviews.
+                    `,
+                    outcome: `
+                        • Published in HCI Korea 2022 <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11043832" target="_blank">[“Not a Replacement, But a New Form of Banking”: Exploring VUI Use Cases for Banking via Human-Machine Communication]</a> (3rd Author)
                     `
                 },
                 {
@@ -676,6 +721,10 @@
                     details: `
                         #Conversational AI #Project Manager
                         <br>Led all phases of the project.
+                    `,
+                    outcome: `
+                        • Successfully approved for deployment on <a href="https://sites.google.com/view/snuxlabdreamstation/home" target="_blank">Google Assistant</a>, but no longer available due to the sunset of Dialogflow Google Assistant integration
+                        <br>• Published in CHI Extended Abstract 2023 <a href="https://dl.acm.org/doi/abs/10.1145/3544549.3585901" target="_blank">[”You Said Da Da…”: A Short Echoing Tweak for Journaling with VA]</a> (1st Author)
                     `
                 },
                 {
@@ -686,6 +735,10 @@
                     details: `
                         #Conversational AI #Developer
                         <br>Led the development stage.
+                    `,
+                    outcome: `
+                        • Presented at the exhibition <a href="https://www.youtube.com/watch?v=tXvo3JLIdPg" target="_blank">“ARE YOU REALLY THERE?”</a> organized by Art Center Nabi
+                        <br>• Published in Society of Design Convergence 2023 <a href="https://kiss.kstudy.com/Detail/Ar?key=4037302" target="_blank">[Study on the Mind-Upload of Construction-Building Method - A Case study on the Voice-based Conversation Robot Exhibition -]</a> (2nd Author)
                     `
                 },
                 {
@@ -696,6 +749,10 @@
                     details: `
                         #Conversational AI #Project Manager
                         <br>Led all phases of the project.
+                    `,
+                    outcome: `
+                        • Evaluated ChatThinQ's responses across more than 1,600 reference sets through an automated evaluation system
+                        <br>• Led to a follow-up academia-industry collaborative project
                     `
                 },
                 {
@@ -706,6 +763,9 @@
                     details: `
                         #User Experience #Researcher
                         <br>Conducted log data analysis and participated in user interviews.
+                    `,
+                    outcome: `
+                        • Published in HCI Korea 2023 <a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11229699" target="_blank">[Actually, Clustering is Not Everything! How UXer analyzes behavior types with page log data]</a> (2nd Author)
                     `
                 },
                 {
@@ -716,6 +776,10 @@
                     details: `
                         #User Experience #Project Manager
                         <br>Led all phases of the project.
+                    `,
+                    outcome: `
+                        • Developed home appliance subscription service concepts specifically designed for single-person households in shared housing environments
+                        <br>• Led to a follow-up academia-industry collaborative project
                     `
                 },
                 {
@@ -726,6 +790,10 @@
                     details: `
                         #User Experience #Developer
                         <br>Contributed to backend development.
+                    `,
+                    outcome: `
+                        • Developed a clothing care app for co-living spaces with integrated real-time appliance and spatial data
+                        <br>• Published by Threechairs (2023): <a href="https://www.bookjournalism.com/books/58754" target="_blank">[Single-Person Households and Technology: In the Era of Living Alone, Technology Creates a Sense of Community]</a> (Co-author)
                     `
                 },
                 {
@@ -736,6 +804,9 @@
                     details: `
                         #User Experience #Project Manager
                         <br>Led all phases of the project.
+                    `,
+                    outcome: `
+                        • Developed a financial management app that sends personalized financial notifications based on MyData
                     `
                 }
             ]
@@ -758,11 +829,75 @@
                 const timelineItem = document.createElement('div');
                 timelineItem.classList.add('timeline-item');
                 timelineItem.setAttribute('data-start-year', item.year);
-                timelineItem.setAttribute('data-side', item.side); // 좌/우 방향 설정
+                timelineItem.setAttribute('data-side', item.side);
                 timelineItem.innerHTML = `
                     <h3>${item.title}<br>${item.subtitle}</h3>
                     <p>${item.details}</p>
                 `;
+
+                let tooltip = null;
+                if (tab == "projects"){
+                    tooltip = document.createElement('div');
+                    tooltip.classList.add('timeline-tooltip');
+                    tooltip.innerHTML = `${item.outcome || 'No specific outcome available'}`;
+
+                    timelineContainer.appendChild(timelineItem);
+                    timelineContainer.appendChild(tooltip);
+
+                    let tooltipHovered = false;
+
+                    tooltip.addEventListener('mouseenter', () => {
+                        tooltipHovered = true; // 툴팁 위에 마우스가 있을 때 유지
+                        tooltip.classList.add('visible');
+                    });
+
+                    tooltip.addEventListener('mouseleave', () => {
+                        tooltipHovered = false; // 툴팁에서 마우스가 벗어날 때 숨김
+                        tooltip.classList.remove('visible', 'tooltip-left', 'tooltip-right');
+                    });
+
+                    timelineItem.addEventListener('mouseenter', () => {
+                        const itemTop = timelineItem.offsetTop;
+                        const itemHeight = timelineItem.offsetHeight;
+                        const tooltipHeight = tooltip.offsetHeight;
+                        const viewportHeight = window.innerHeight;
+
+                        /// 툴팁 위치 설정
+                        if (window.innerWidth > 640) {
+                            // 데스크탑: 좌/우 위치 설정
+                            tooltip.style.top = `${itemTop}px`;
+                            if (item.side === 'left') {
+                                tooltip.classList.add('tooltip-left');
+                                tooltip.classList.remove('tooltip-right');
+                            } else {
+                                tooltip.classList.add('tooltip-right');
+                                tooltip.classList.remove('tooltip-left');
+                            }
+                        } else {
+                            // 모바일: 아래쪽 위치 설정
+                            const tooltipBottom = itemTop + itemHeight + tooltipHeight + 20;
+                            if (tooltipBottom > viewportHeight) {
+                                // 화면 하단을 벗어나면 툴팁을 위쪽에 배치
+                                tooltip.style.top = `${itemTop - tooltipHeight}px`;
+                            } else {
+                                // 기본적으로 아래쪽에 배치
+                                tooltip.style.top = `${itemTop + itemHeight + 10}px`;
+                            }
+                            tooltip.classList.remove('tooltip-left', 'tooltip-right');
+                        }
+
+                        tooltip.classList.add('visible');
+                    });
+
+                    timelineItem.addEventListener('mouseleave', () => {
+                        setTimeout(() => {
+                            if (!tooltipHovered) {
+                                tooltip.classList.remove('visible', 'tooltip-left', 'tooltip-right');
+                            }
+                        }, 200); // 약간의 지연으로 사용자가 툴팁에 접근할 시간 제공
+                    });
+                }
+
                 timelineItems.push(timelineItem);
             });
 
