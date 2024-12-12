@@ -661,7 +661,7 @@
                 {
                     side: 'left',
                     year: 2021.9,
-                    title: 'Financial Voice Bot (with HiUX)',
+                    title: 'Advancing Financial Chatbots via Voice Banking (with Taran UXD)',
                     subtitle: '2 months(Sep 2021-Oct 2021)',
                     details: `
                         #Conversational AI #Researcher
@@ -671,7 +671,7 @@
                 {
                     side: 'left',
                     year: 2022.1,
-                    title: 'Dream Diary Voice Bot (Lab pj)',
+                    title: 'Dream Journal Voice Agent (Lab pj)',
                     subtitle: '4 months(Jan 2022-Apr 2022)',
                     details: `
                         #Conversational AI #Project Manager
@@ -722,7 +722,7 @@
                     side: 'right',
                     year: 2023.1,
                     title: 'Clothing Care Pilot for Shared Housing (with Samsung)',
-                    subtitle: '2 months(Jan 2023-Mar 2023)',
+                    subtitle: '3 months(Jan 2023-Mar 2023)',
                     details: `
                         #User Experience #Developer
                         <br>Contributed to backend development.
@@ -763,12 +763,10 @@
                     <h3>${item.title}<br>${item.subtitle}</h3>
                     <p>${item.details}</p>
                 `;
-                // timelineContainer.appendChild(timelineItem);
                 timelineItems.push(timelineItem);
             });
 
             applyPosition(timelineItems);
-            // applyPosition([...timelineContainer.querySelectorAll('.timeline-item')]);
         }
 
         // 위치 계산 및 적용 함수
@@ -827,7 +825,6 @@
                 activeTab = tab.getAttribute('data-tab');
                 startYear = activeTab === "education" ? 2017 : 2021;
                 endYear = activeTab === "education" ? 2024 : 2024;
-                // renderTimelineItems(activeTab);
 
                 timelineContainer.style.height = "0px"; // 초기화 애니메이션
                 setTimeout(() => renderTimelineItems(activeTab), 500);
