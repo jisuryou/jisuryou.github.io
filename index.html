@@ -177,14 +177,14 @@
             max-width: 280px;
             box-sizing: border-box;
 
-            opacity: 0; /* 초기 상태 */
-            transform: translateY(20px); /* 약간 아래로 이동 */
+            opacity: 0;
+            transform: translateY(20px); 
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         .timeline-item.visible {
-            opacity: 1; /* 보이도록 변경 */
-            transform: translateY(0); /* 제자리로 이동 */
+            opacity: 1;
+            transform: translateY(0); 
         }
 
         .timeline-item h3 {
@@ -221,33 +221,22 @@
 
         .timeline-tooltip {
             position: absolute;
-            display: none;
-            background: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            z-index: 10;
-            max-width: 280px;
+            margin-top: 10px;
+            opacity: 0; 
+            transform: translateY(-10px); 
+            transition: transform 0.5s ease, opacity 0.5s ease; 
+            pointer-events: none; 
+            visibility: hidden;
+            overflow: hidden;
             font-size: 0.8rem;
             line-height: 1.4;
-            pointer-events: auto;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .timeline-tooltip.tooltip-left {
-            text-align: left;
-            left: calc(50% + 20px); /* timeline-left 위치 기준 */
-        }
-
-        .timeline-tooltip.tooltip-right {
-            text-align: left;
-            right: calc(50% + 20px); /* timeline-right 위치 기준 */
         }
 
         .timeline-tooltip.visible {
-            display: block;
             opacity: 1;
             transform: translateY(0);
+            visibility: visible;
+            pointer-events: auto;
         }
 
         /* Chatbot */
@@ -494,9 +483,10 @@
             }
 
             .timeline-tooltip {
+                position: absolute;
+                width: 80vw;
+                max-width: 80vw;
                 text-align: left;
-                margin-left: 50px;
-                max-width: 85%;
             }
 
             header {
@@ -565,7 +555,6 @@
             <div class="timeline-line"></div>
             <div class="timeline-right"></div>
         </div>
-        <div class="timeline-tooltip"></div>
     </div>
 
     <!-- 챗 인터페이스 -->
@@ -835,67 +824,41 @@
                     <p>${item.details}</p>
                 `;
 
-                let tooltip = null;
                 if (tab == "projects"){
-                    tooltip = document.createElement('div');
+                    const tooltip = document.createElement('div');
                     tooltip.classList.add('timeline-tooltip');
                     tooltip.innerHTML = `${item.outcome || 'No specific outcome available'}`;
+                    timelineItem.appendChild(tooltip);
 
-                    timelineContainer.appendChild(timelineItem);
-                    timelineContainer.appendChild(tooltip);
+                    let hideTimeout;
 
-                    let tooltipHovered = false;
-
-                    tooltip.addEventListener('mouseenter', () => {
-                        tooltipHovered = true; // 툴팁 위에 마우스가 있을 때 유지
+                    // 툴팁 표시 이벤트
+                    timelineItem.addEventListener('mouseenter', () => {
+                        clearTimeout(hideTimeout); // 숨김 예약 취소
                         tooltip.classList.add('visible');
+                        setTimeout(() => applyPosition(timelineItems), 0); // 위치 재조정
+                    });
+
+                    // 툴팁 숨김 예약
+                    timelineItem.addEventListener('mouseleave', () => {
+                        hideTimeout = setTimeout(() => {
+                            tooltip.classList.remove('visible');
+                            setTimeout(() => applyPosition(timelineItems), 0); // 위치 재조정
+                        }, 100); // 지연 시간 추가
+                    });
+
+                    // 툴팁 위에서 유지
+                    tooltip.addEventListener('mouseenter', () => {
+                        clearTimeout(hideTimeout); // 숨김 예약 취소
                     });
 
                     tooltip.addEventListener('mouseleave', () => {
-                        tooltipHovered = false; // 툴팁에서 마우스가 벗어날 때 숨김
-                        tooltip.classList.remove('visible', 'tooltip-left', 'tooltip-right');
+                        hideTimeout = setTimeout(() => {
+                            tooltip.classList.remove('visible');
+                            setTimeout(() => applyPosition(timelineItems), 0); // 위치 재조정
+                        }, 100);
                     });
 
-                    timelineItem.addEventListener('mouseenter', () => {
-                        const itemTop = timelineItem.offsetTop;
-                        const itemHeight = timelineItem.offsetHeight;
-                        const tooltipHeight = tooltip.offsetHeight;
-                        const viewportHeight = window.innerHeight;
-
-                        /// 툴팁 위치 설정
-                        if (window.innerWidth > 640) {
-                            // 데스크탑: 좌/우 위치 설정
-                            tooltip.style.top = `${itemTop}px`;
-                            if (item.side === 'left') {
-                                tooltip.classList.add('tooltip-left');
-                                tooltip.classList.remove('tooltip-right');
-                            } else {
-                                tooltip.classList.add('tooltip-right');
-                                tooltip.classList.remove('tooltip-left');
-                            }
-                        } else {
-                            // 모바일: 아래쪽 위치 설정
-                            const tooltipBottom = itemTop + itemHeight + tooltipHeight + 20;
-                            if (tooltipBottom > viewportHeight) {
-                                // 화면 하단을 벗어나면 툴팁을 위쪽에 배치
-                                tooltip.style.top = `${itemTop - tooltipHeight}px`;
-                            } else {
-                                // 기본적으로 아래쪽에 배치
-                                tooltip.style.top = `${itemTop + itemHeight + 10}px`;
-                            }
-                            tooltip.classList.remove('tooltip-left', 'tooltip-right');
-                        }
-
-                        tooltip.classList.add('visible');
-                    });
-
-                    timelineItem.addEventListener('mouseleave', () => {
-                        setTimeout(() => {
-                            if (!tooltipHovered) {
-                                tooltip.classList.remove('visible', 'tooltip-left', 'tooltip-right');
-                            }
-                        }, 200); // 약간의 지연으로 사용자가 툴팁에 접근할 시간 제공
-                    });
                 }
 
                 timelineItems.push(timelineItem);
@@ -920,9 +883,17 @@
                 timelineContainer.appendChild(item);
                 const itemHeight = item.offsetHeight; // 실제 아이템의 높이
 
-                // 모든 경우 동일한 `absolute` 위치 사용
+                const tooltip = item.querySelector('.timeline-tooltip');
+                const tooltipVisible = tooltip && tooltip.classList.contains('visible');
+                const tooltipHeight = tooltipVisible ? tooltip.scrollHeight : 0;
+
                 item.style.position = "absolute";
-                item.style.top = `${cumulativePosition}px`; // 위치 계산
+                item.style.top = `${cumulativePosition}px`;
+
+                if (tooltip && tooltipVisible) {
+                    tooltip.style.position = "absolute";
+                    tooltip.style.top = `${itemHeight}px`; // 툴팁을 아이템 아래로 배치
+                }
 
                 // 방향 설정 (좌/우 배치)
                 if (window.innerWidth > 640) {
@@ -939,7 +910,7 @@
                 }
 
                 // 다음 위치를 현재 아이템의 높이에 따라 설정
-                cumulativePosition += itemHeight + (window.innerWidth > 640 ? 40 : 30);
+                cumulativePosition += itemHeight + (tooltipVisible ? tooltipHeight : 0) + (window.innerWidth > 640 ? 40 : 30);
 
                 setTimeout(() => {
                     item.classList.add("visible");
