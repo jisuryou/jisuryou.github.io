@@ -919,8 +919,6 @@
 
             // 타임라인 컨테이너 높이 조정
             timelineContainer.style.height = `${cumulativePosition}px`;
-
-            console.log("Total timeline height adjusted to:", cumulativePosition);
         }
 
         // 탭 클릭 이벤트
@@ -989,7 +987,8 @@
                 const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: userMessage })
+                    body: JSON.stringify({ message: userMessage }),
+                    credentials: "include",
                 });
 
                 const data = await response.json();
