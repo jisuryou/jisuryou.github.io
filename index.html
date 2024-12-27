@@ -202,6 +202,11 @@
             line-height: 1.5;
         }
 
+        .timeline-item a {
+            color: inherit;
+            cursor: pointer;
+        }
+
         .timeline-item.timeline-left {
             text-align: right;
             right: calc(50% + 20px);
@@ -815,6 +820,7 @@
                     year: 2021.7,
                     title: 'Trend Recommendation Chatbot (Lab pj)',
                     subtitle: '2 months (Jul 2021-Aug 2021)',
+                    link: '',
                     details: `
                         #Conversational AI #Researcher  
                         <br>Participated in all project phases and led the development stage.
@@ -829,6 +835,7 @@
                     year: 2021.9,
                     title: 'Advancing Financial Chatbots via Voice Banking (with Taran UXD)',
                     subtitle: '2 months (Sep 2021-Oct 2021)',
+                    link: 'https://ux.snu.ac.kr/project/2021/11/23/banky.html',
                     details: `
                         #Conversational AI #Researcher
                         <br>Contributed to research and user interviews.
@@ -842,6 +849,7 @@
                     year: 2022.1,
                     title: 'Dream Journal Voice Agent (Lab pj)',
                     subtitle: '4 months (Jan 2022-Apr 2022)',
+                    link: 'https://ux.snu.ac.kr/project/2022/05/06/dreamStation.html',
                     details: `
                         #Conversational AI #Project Manager
                         <br>Led all phases of the project.
@@ -856,6 +864,7 @@
                     year: 2022.9,
                     title: 'Exhibition Mind Robots Integrated with AI (with KOCCA)',
                     subtitle: '4 months (Sep 2022-Dec 2022)',
+                    link: 'https://ux.snu.ac.kr/project/2022/10/13/roboticArt.html',
                     details: `
                         #Conversational AI #Developer
                         <br>Led the development stage.
@@ -870,6 +879,7 @@
                     year: 2024.5,
                     title: 'UX Evaluation of Text-Based Conversational Experiences (with LG)',
                     subtitle: '4 months (May 2024-Aug 2024)',
+                    link: 'https://ux.snu.ac.kr/project/2024/10/25/cxq.html',
                     details: `
                         #Conversational AI #Project Manager
                         <br>Led all phases of the project.
@@ -884,6 +894,7 @@
                     year: 2022.3,
                     title: 'UX Improvement for Shopping Platforms (with Naver Shopping)',
                     subtitle: '4 months (Mar 2022-Jun 2022)',
+                    link: 'https://ux.snu.ac.kr/project/2022/05/06/naverShopping.html',
                     details: `
                         #User Experience #Researcher
                         <br>Conducted log data analysis and participated in user interviews.
@@ -897,6 +908,7 @@
                     year: 2022.7,
                     title: 'Opportunity Discovery for Home Appliance Subscription Services (with Samsung)',
                     subtitle: '4 months (Jul 2022-Oct 2022)',
+                    link: 'https://ux.snu.ac.kr/project/2022/08/19/samsung_subscription.html',
                     details: `
                         #User Experience #Project Manager
                         <br>Led all phases of the project.
@@ -911,6 +923,7 @@
                     year: 2023.1,
                     title: 'Clothing Care Pilot for Shared Housing (with Samsung)',
                     subtitle: '3 months (Jan 2023-Mar 2023)',
+                    link: 'https://ux.snu.ac.kr/project/2023/01/02/HAAS.html',
                     details: `
                         #User Experience #Developer
                         <br>Contributed to backend development.
@@ -925,6 +938,7 @@
                     year: 2024.3,
                     title: 'Financial Hyper-Personalization Using MyData (with HiUX)',
                     subtitle: '6 months (Mar 2024-Aug 2024)',
+                    link: 'https://ux.snu.ac.kr/project/2024/04/22/hiux.html',
                     details: `
                         #User Experience #Project Manager
                         <br>Led all phases of the project.
@@ -955,7 +969,9 @@
                 timelineItem.setAttribute('data-start-year', item.year);
                 timelineItem.setAttribute('data-side', item.side);
                 timelineItem.innerHTML = `
-                    <h3>${item.title}</h3>
+                    <h3>
+                        ${item.link ? `<a href="${item.link}" target="_blank">${item.title}</a>` : item.title}    
+                    </h3>
                     <h5>${item.subtitle}</h5>
                     <p>${item.details}</p>
                 `;
