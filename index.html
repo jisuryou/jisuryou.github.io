@@ -968,6 +968,7 @@
                 timelineItem.classList.add('timeline-item');
                 timelineItem.setAttribute('data-start-year', item.year);
                 timelineItem.setAttribute('data-side', item.side);
+                timelineItem.setAttribute('data-category', tab);
                 timelineItem.innerHTML = `
                     <h3>
                         ${item.link ? `<a href="${item.link}" target="_blank">${item.title}</a>` : item.title}    
@@ -1131,7 +1132,7 @@
 
                 // 타임라인 아이템 탐지
                 for (const element of elements) {
-                    if (element.classList.contains("timeline-item")) {
+                    if (element.classList.contains("timeline-item") && element.getAttribute('data-category') === 'projects') {
                         timelineItem = element;
                         break;
                     }
