@@ -14,18 +14,18 @@
             box-sizing: border-box;
         }
 
-        body {
-            width: 100%;
-            max-width: 640px;
+        html {
             height: 100%;
-            margin: 0 auto;
+            overflow-x: hidden;
             font-family: 'Roboto', 'Noto Sans', sans-serif;
             background-color: #f9f9f9;
         }
 
-        html {
+        .content {
+            width: 100%;
+            max-width: 640px;
             height: 100%;
-            overflow-x: hidden;
+            margin: 0 auto;
         }
 
         .section {
@@ -161,9 +161,8 @@
             justify-content: space-between;
             align-items: flex-start;
             width: 100%;
-            
-            overflow: hidden; /* 내용이 바깥으로 넘치지 않도록 설정 */
-            transition: height 0.5s ease; /* 높이 전환 애니메이션 */
+            overflow: hidden;
+            transition: height 0.5s ease;
         }
 
         .timeline-left,
@@ -176,19 +175,18 @@
             position: absolute;
             max-width: 280px;
             box-sizing: border-box;
-
             opacity: 0;
-            transform: translateY(20px); 
+            transform: translateY(20px);
             transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         .timeline-item.visible {
             opacity: 1;
-            transform: translateY(0); 
+            transform: translateY(0);
         }
 
         .timeline-item h3 {
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: bold;
             margin-bottom: 5px;
         }
@@ -220,15 +218,16 @@
         }
 
         .timeline-tooltip {
+            display: none;
             position: absolute;
             margin-top: 10px;
-            opacity: 0; 
-            transform: translateY(-10px); 
-            transition: transform 0.5s ease, opacity 0.5s ease; 
-            pointer-events: none; 
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            pointer-events: none;
             visibility: hidden;
             overflow: hidden;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             line-height: 1.4;
         }
 
@@ -240,60 +239,117 @@
         }
 
         /* Chatbot */
-        #chat-interface {
+        #mobile-chat-interface {
+            display: none;
+        }
+
+        body.custom-cursor {
+            cursor: url('/image_cursor.png'), auto;
+        }
+
+        #cursor-suggestion {
+            position: absolute;
+            font-size: 0.9rem;
+            color: #555;
+            background: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            z-index: 1001;
+            pointer-events: none;
+            white-space: normal;
+            word-wrap: break-word;
+            max-width: calc(100% - 20px);
+            margin: 10px;
+            overflow-wrap: break-word;
+            visibility: hidden;
+            box-sizing: border-box;
+        }
+
+        #desktop-chat-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            display: flex;
-            flex-direction: column;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-
-            /* border: 1px solid #ddd;
-            border-radius: 10px; */
+            z-index: 1000;
+            transition: opacity 0.3s ease;
         }
 
-        #chat-container {
-            width: 100%;
-            /* max-width: 800px; */
-            height: 100%;
+        #desktop-chat-container {
+            width: 80%;
+            max-width: 400px;
+            height: 80%;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            position: relative;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: fadeIn 0.3s forwards ease, scaleIn 0.3s forwards ease;
         }
 
-        #chat-box {
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .chat-box {
             flex: 1;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            padding: 10px;
+            padding: 20px;
             gap: 10px;
         }
 
-        #input-box {
+        .input-box {
             display: flex;
             position: sticky;
             bottom: 0;
             z-index: 10;
         }
 
-        #user-input {
+        .user-input {
             height: 40px;
             border: none;
             outline: none;
             background: none;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             text-align: right;
             padding: 10px;
             transition: width 0.3s ease;
             width: 100%;
         }
 
-        #user-input:focus {
-            width: calc(100% - 50px); /* 전송 버튼 공간만큼 축소 */
+        .user-input:focus {
+            width: calc(100% - 50px);
         }
 
-        #send-button {
+        .send-button {
             position: absolute;
             right: 0;
             opacity: 0;
@@ -303,19 +359,19 @@
             padding: 10px;
             margin-left: 10px;
             border: none;
-            background: none; 
+            background: none;
             color: #757575;
             cursor: pointer;
             border-radius: 10%;
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        #user-input:focus + #send-button {
+        .user-input:focus+.send-button {
             opacity: 1;
             transform: translateX(0);
         }
 
-        #send-button:hover {
+        .send-button:hover {
             color: #fff;
             background-color: #565656;
         }
@@ -348,7 +404,7 @@
         .bot-message {
             text-align: left;
             font-family: 'Noto Sans', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             /* font-weight: 500; */
             line-height: 1.5;
         }
@@ -363,12 +419,15 @@
             0% {
                 content: ".";
             }
+
             33% {
                 content: "..";
             }
+
             66% {
                 content: "...";
             }
+
             100% {
                 content: ".";
             }
@@ -380,8 +439,34 @@
             animation: loadingDots 1s infinite;
         }
 
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: #565656;
+            color: white;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .chat-header .close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .chat-header .close-button:hover {
+            color: #ddd;
+        }
+
         /* 푸터 */
-        #footer {
+        footer {
             height: 15%;
             display: flex;
             flex-direction: row;
@@ -427,7 +512,6 @@
             }
 
             #intro-photo {
-                margin-top: 20px;
                 display: none;
             }
 
@@ -437,26 +521,48 @@
                 height: 60px;
             }
 
-            #chat-container {
+            #desktop-chat-overlay {
+                display: none;
+            }
+
+            #cursor-suggestion {
+                display: none;
+            }
+
+            body.custom-cursor {
+                cursor: auto;
+            }
+
+            #mobile-chat-interface {
+                height: 700px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+            }
+
+            #mobile-chat-container {
+                width: 100%;
+                height: 100%;
                 max-width: 95%;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
             }
 
-            .user-message {
-                font-size: 1rem;
+            .chat-box {
+                padding: 10px;
             }
 
-            .bot-message-container {
+            /* .bot-message-container {
                 display: flex;
                 align-items: center;
-            }
+            } */
 
-            .bot-message-container img {
+            /* .bot-message-container img {
                 display: inline-block;
-            }
-
-            .bot-message {
-                font-size: 1rem;
-            }
+            } */
 
             .timeline-container {
                 flex-direction: column;
@@ -501,7 +607,7 @@
                 justify-content: center;
             }
 
-            #footer {
+            footer {
                 flex-direction: column;
                 align-items: center;
                 height: auto;
@@ -521,63 +627,63 @@
     <header>
         <div class="nav-links">
             <a href="#intro">About</a>
-            <a href="#chat-interface">Chatbot</a>
+            <a href="#" id="chatbot-link">Chatbot</a>
             <a href="#footer">Contact</a>
         </div>
         <a href="/CV_jisuryou_2024.pdf" target="_blank" class="download-cv">Download CV</a>
     </header>
 
-    <!-- 자기소개 -->
-    <div id="intro" class="section">
-        <div id="intro-text">
-            <h1>Hi, I'm Jisu Ryou</h1>
-            <br>
-            <p>
-                👋 I'm a junior UX researcher with a Master's degree in AI application services.
-                <br>I've primarily focused on <strong>conversational AI</strong>, having worked extensively with
-                chatbots and voice
-                agents.
-                <br>I’m also skilled in user experience research and can develop full-stack UX prototypes.
-            </p>
+    <div class="content">
+        <div id="intro" class="section">
+            <div id="intro-text">
+                <h1>Hi, I'm Jisu Ryou</h1>
+                <br>
+                <p>
+                    👋 I'm a junior UX researcher with a Master's degree in AI application services.
+                    <br>I've primarily focused on <strong>conversational AI</strong>, having worked extensively with
+                    chatbots and voice
+                    agents.
+                    <br>I’m also skilled in user experience research and can develop full-stack UX prototypes.
+                </p>
+            </div>
+            <div id="intro-photo">
+                <img src="/image.png" alt="It's me!">
+            </div>
         </div>
-        <div id="intro-photo">
-            <img src="/image.png" alt="It's me!">
+
+        <div id="timeline-tabs" class="section">
+            <button class="tab-button active" data-tab="education">Education & Employment</button>
+            <button class="tab-button" data-tab="projects">Projects</button>
         </div>
-    </div>
 
-    <div id="timeline-tabs" class="section">
-        <button class="tab-button active" data-tab="education">Education & Employment</button>
-        <button class="tab-button" data-tab="projects">Projects</button>
-    </div>
-
-    <div id="timeline" class="section">
-        <div class="timeline-container">
-            <div class="timeline-left"></div>
-            <div class="timeline-line"></div>
-            <div class="timeline-right"></div>
+        <div id="timeline" class="section">
+            <div class="timeline-container">
+                <div class="timeline-left"></div>
+                <div class="timeline-line"></div>
+                <div class="timeline-right"></div>
+            </div>
         </div>
-    </div>
 
-    <!-- 챗 인터페이스 -->
-    <div id="chat-interface" class="section">
-        <div id="chat-container">
-            <!-- Chat box -->
-            <div id="chat-box">
-                <div class="bot-message-container">
-                    <img src="/image.png" alt="It's me!" />
-                    <div class="message bot-message">For more information about my projects, please try to use this!</div>
-                </div>
-                <!-- Input box dynamically moved -->
-                <div id="input-box">
-                    <input type="text" id="user-input" placeholder="Type your message in English or Korean…" />
-                    <button id="send-button"><i class="fa fa-paper-plane"></i></button>
+        <!-- 챗 인터페이스 -->
+        <div id="mobile-chat-interface" class="section">
+            <div id="mobile-chat-container">
+                <div class="chat-box">
+                    <div class="bot-message-container">
+                        <img src="/image.png" alt="It's me!" />
+                        <div class="message bot-message">For more information about my projects, please try to use this!
+                        </div>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="user-input" placeholder="Type your message in English or Korean…" />
+                        <button class="send-button"><i class="fa fa-paper-plane"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 푸터 -->
-    <div id="footer" class="section">
+    <footer class="section">
         <div id="footer-text">
             <p>
                 &copy; 2024 Jisu Ryou. All rights reserved.
@@ -596,7 +702,27 @@
                 <i class="fa-brands fa-github"></i>
             </a>
         </div>
-    </div>
+    </footer>
+
+    <div id="cursor-suggestion">Do you have a question? Click to ask!</div>
+    <div id="desktop-chat-overlay">
+        <div id="desktop-chat-container">
+            <div class="chat-header">
+                <span>Ask Me Anything</span>
+                <button class="close-button">&times;</button>
+            </div>
+            <div class="chat-box">
+                <div class="bot-message-container">
+                    <img src="/image.png" alt="It's me!">
+                    <div class="message bot-message">For more information about my projects, please try to use this!
+                    </div>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="user-input" placeholder="Type your message in English or Korean…" />
+                    <button class="send-button"><i class="fa fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -605,10 +731,8 @@
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > lastScrollY) {
-                // 스크롤 아래로: 헤더 숨기기
                 header.style.transform = 'translateY(-100%)';
             } else {
-                // 스크롤 위로: 헤더 보이기
                 header.style.transform = 'translateY(0)';
             }
             lastScrollY = window.scrollY;
@@ -649,7 +773,7 @@
                         <i>Master of Engineering</i>
                         <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
                         <br>Advisor: Prof. Joongseek Lee (UXLab)
-                        <br>*(Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving Long Entries in VA Journaling
+                        <br>* (Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving Long Entries in VA Journaling
                     `
                 },
                 {
@@ -680,7 +804,7 @@
                     side: 'left',
                     year: 2021.7,
                     title: 'Trend Recommendation Chatbot (Lab pj)',
-                    subtitle: '2 months(Jul 2021-Aug 2021)',
+                    subtitle: '2 months (Jul 2021-Aug 2021)',
                     details: `
                         #Conversational AI #Researcher  
                         <br>Participated in all project phases and led the development stage.
@@ -694,7 +818,7 @@
                     side: 'left',
                     year: 2021.9,
                     title: 'Advancing Financial Chatbots via Voice Banking (with Taran UXD)',
-                    subtitle: '2 months(Sep 2021-Oct 2021)',
+                    subtitle: '2 months (Sep 2021-Oct 2021)',
                     details: `
                         #Conversational AI #Researcher
                         <br>Contributed to research and user interviews.
@@ -707,7 +831,7 @@
                     side: 'left',
                     year: 2022.1,
                     title: 'Dream Journal Voice Agent (Lab pj)',
-                    subtitle: '4 months(Jan 2022-Apr 2022)',
+                    subtitle: '4 months (Jan 2022-Apr 2022)',
                     details: `
                         #Conversational AI #Project Manager
                         <br>Led all phases of the project.
@@ -721,7 +845,7 @@
                     side: 'left',
                     year: 2022.9,
                     title: 'Exhibition Mind Robots Integrated with AI (with KOCCA)',
-                    subtitle: '4 months(Sep 2022-Dec 2022)',
+                    subtitle: '4 months (Sep 2022-Dec 2022)',
                     details: `
                         #Conversational AI #Developer
                         <br>Led the development stage.
@@ -735,7 +859,7 @@
                     side: 'left',
                     year: 2024.5,
                     title: 'UX Evaluation of Text-Based Conversational Experiences (with LG)',
-                    subtitle: '4 months(May 2024-Aug 2024)',
+                    subtitle: '4 months (May 2024-Aug 2024)',
                     details: `
                         #Conversational AI #Project Manager
                         <br>Led all phases of the project.
@@ -749,7 +873,7 @@
                     side: 'right',
                     year: 2022.3,
                     title: 'UX Improvement for Shopping Platforms (with Naver Shopping)',
-                    subtitle: '4 months(Mar 2022-Jun 2022)',
+                    subtitle: '4 months (Mar 2022-Jun 2022)',
                     details: `
                         #User Experience #Researcher
                         <br>Conducted log data analysis and participated in user interviews.
@@ -762,7 +886,7 @@
                     side: 'right',
                     year: 2022.7,
                     title: 'Opportunity Discovery for Home Appliance Subscription Services (with Samsung)',
-                    subtitle: '4 months(Jul 2022-Oct 2022)',
+                    subtitle: '4 months (Jul 2022-Oct 2022)',
                     details: `
                         #User Experience #Project Manager
                         <br>Led all phases of the project.
@@ -776,7 +900,7 @@
                     side: 'right',
                     year: 2023.1,
                     title: 'Clothing Care Pilot for Shared Housing (with Samsung)',
-                    subtitle: '3 months(Jan 2023-Mar 2023)',
+                    subtitle: '3 months (Jan 2023-Mar 2023)',
                     details: `
                         #User Experience #Developer
                         <br>Contributed to backend development.
@@ -790,7 +914,7 @@
                     side: 'right',
                     year: 2024.3,
                     title: 'Financial Hyper-Personalization Using MyData (with HiUX)',
-                    subtitle: '6 months(Mar 2024-Aug 2024)',
+                    subtitle: '6 months (Mar 2024-Aug 2024)',
                     details: `
                         #User Experience #Project Manager
                         <br>Led all phases of the project.
@@ -812,7 +936,7 @@
                 <div class="timeline-line"></div>
             `; // 타임라인 초기화
 
-            const items = timelineData[tab]; 
+            const items = timelineData[tab];
             const timelineItems = [];
 
             items.forEach(item => {
@@ -825,7 +949,7 @@
                     <p>${item.details}</p>
                 `;
 
-                if (tab == "projects"){
+                if (tab == "projects") {
                     const tooltip = document.createElement('div');
                     tooltip.classList.add('timeline-tooltip');
                     tooltip.innerHTML = `${item.outcome || 'No specific outcome available'}`;
@@ -878,9 +1002,7 @@
 
             let cumulativePosition = 50; // 첫 아이템 위치
 
-            // 정렬된 아이템 추가
             sortedItems.forEach((item, index) => {
-                // 아이템 높이 계산 (먼저 DOM에 추가해야 높이를 읽을 수 있음)
                 timelineContainer.appendChild(item);
                 const itemHeight = item.offsetHeight; // 실제 아이템의 높이
 
@@ -893,10 +1015,9 @@
 
                 if (tooltip && tooltipVisible) {
                     tooltip.style.position = "absolute";
-                    tooltip.style.top = `${itemHeight}px`; // 툴팁을 아이템 아래로 배치
+                    tooltip.style.top = `${itemHeight}px`;
                 }
 
-                // 방향 설정 (좌/우 배치)
                 if (window.innerWidth > 640) {
                     if (item.getAttribute("data-side") === "left") {
                         item.classList.add("timeline-left");
@@ -906,11 +1027,9 @@
                         item.classList.remove("timeline-left");
                     }
                 } else {
-                    // 모바일에서는 좌/우 배치를 제거
                     item.classList.remove("timeline-left", "timeline-right");
                 }
 
-                // 다음 위치를 현재 아이템의 높이에 따라 설정
                 cumulativePosition += itemHeight + (tooltipVisible ? tooltipHeight : 0) + (window.innerWidth > 640 ? 40 : 30);
 
                 setTimeout(() => {
@@ -918,11 +1037,9 @@
                 }, index * 100);
             });
 
-            // 타임라인 컨테이너 높이 조정
             timelineContainer.style.height = `${cumulativePosition}px`;
         }
 
-        // 탭 클릭 이벤트
         timelineTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 timelineTabs.forEach(t => t.classList.remove('active'));
@@ -931,92 +1048,260 @@
                 startYear = activeTab === "education" ? 2017 : 2021;
                 endYear = activeTab === "education" ? 2024 : 2024;
 
-                timelineContainer.style.height = "0px"; // 초기화 애니메이션
+                timelineContainer.style.height = "0px";
                 setTimeout(() => renderTimelineItems(activeTab), 500);
             });
         });
 
-        // 초기 렌더링
         renderTimelineItems(activeTab);
         window.addEventListener("resize", () => renderTimelineItems(activeTab));
     </script>
     <script>
-        const chatBox = document.getElementById('chat-box');
-        const userInput = document.getElementById('user-input');
-        const sendButton = document.getElementById('send-button');
-        const inputBox = document.getElementById('input-box');
+        document.addEventListener("DOMContentLoaded", () => {
+            let isDesktop = window.innerWidth > 640;
 
-        function moveInputBoxToLatestMessage() {
-            // 입력 박스를 최신 메시지 바로 아래로 이동
-            chatBox.appendChild(inputBox);
-            chatBox.scrollTop = chatBox.scrollHeight; // 스크롤을 항상 아래로 이동
-        }
+            const state = {
+                isChatOpen: false,
+                isFetching: false,
+                lastSuggestedQuestion: "",
+            };
 
-        async function sendMessage() {
-            const userMessage = userInput.value.trim();
-            if (!userMessage) return;
+            const chatbotLink = document.getElementById("chatbot-link");
+            const chatOverlay = document.getElementById("desktop-chat-overlay");
+            const closeButton = document.querySelector(".close-button");
+            const suggestionBox = document.getElementById("cursor-suggestion");
 
-            // Append user message to chat box
-            const userMessageElem = document.createElement('div');
-            userMessageElem.classList.add('message', 'user-message');
-            userMessageElem.textContent = userMessage;
-            chatBox.insertBefore(userMessageElem, inputBox);
+            const chatBox = document.querySelector(isDesktop ? "#desktop-chat-overlay .chat-box" : "#mobile-chat-interface .chat-box");
+            const userInput = document.querySelector(isDesktop ? "#desktop-chat-overlay .user-input" : "#mobile-chat-interface .user-input");
+            const sendButton = document.querySelector(isDesktop ? "#desktop-chat-overlay .send-button" : "#mobile-chat-interface .send-button");
+            const inputBox = document.querySelector(isDesktop ? "#desktop-chat-overlay .input-box" : "#mobile-chat-interface .input-box");
 
-            // Clear input box
-            userInput.value = '';
+            let cursorTimeout = null;
+            let lastMouseX = -1, lastMouseY = -1;
 
-            // Append "loading" indicator
-            const loadingMessageContainer = document.createElement("div");
-            loadingMessageContainer.classList.add("bot-message-container", "loading-indicator");
+            async function handleSuggestion(mouseX, mouseY, viewportWidth, viewportHeight) {
+                // const elements = document.elementsFromPoint(mouseX - window.pageXOffset, mouseY - window.pageYOffset);
 
-            const botImage = document.createElement("img");
-            botImage.src = "/image.png"; // 봇의 아바타 이미지 경로
-            botImage.alt = `It's me!`;
+                const detectionRadius = 80; // 감지할 추가 반경 (px)
+                const expandedElements = [];
 
-            const loadingMessageElem = document.createElement("div");
-            loadingMessageElem.classList.add("message", "bot-message");
-            loadingMessageElem.textContent = "...";
+                // 감지 영역 확장을 위해 여러 점에서 감지 수행
+                for (let offsetX = -detectionRadius; offsetX <= detectionRadius; offsetX += 10) {
+                    for (let offsetY = -detectionRadius; offsetY <= detectionRadius; offsetY += 10) {
+                        const detectedElements = document.elementsFromPoint(
+                            mouseX + offsetX - window.pageXOffset,
+                            mouseY + offsetY - window.pageYOffset
+                        );
+                        expandedElements.push(...detectedElements);
+                    }
+                }
 
-            loadingMessageContainer.appendChild(botImage);
-            loadingMessageContainer.appendChild(loadingMessageElem);
-            chatBox.insertBefore(loadingMessageContainer, inputBox);
+                // 중복 요소 제거
+                const elements = [...new Set(expandedElements)];
 
-            moveInputBoxToLatestMessage();
-            
-            // Send message to the backend
-            try {
-                const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: userMessage }),
-                    credentials: "include",
+                let suggestionText = "Do you have a question? Click to ask!";
+                let timelineItem = null;
+
+                // 타임라인 아이템 탐지
+                for (const element of elements) {
+                    if (element.classList.contains("timeline-item")) {
+                        timelineItem = element;
+                        break;
+                    }
+                }
+
+                if (timelineItem) {
+                    const title = timelineItem.querySelector("h3")?.innerText || "";
+
+                    if (state.isFetching) return;
+                    state.isFetching = true;
+
+                    try {
+                        const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/question', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ item: title }),
+                            credentials: "include",
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            suggestionText = data?.question || suggestionText;
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                    } finally {
+                        state.isFetching = false;
+                    }
+                }
+
+                suggestionBox.textContent = suggestionText;
+                state.lastSuggestedQuestion = suggestionText;
+
+                const suggestionBoxWidth = suggestionBox.offsetWidth;
+                const suggestionBoxHeight = suggestionBox.offsetHeight;
+
+                let suggestionLeft = mouseX + 20;
+                let suggestionTop = mouseY + 10;
+
+                if (mouseX + suggestionBoxWidth + 30 > viewportWidth) {
+                    suggestionLeft = mouseX - suggestionBoxWidth;
+                }
+
+                if (mouseY + suggestionBoxHeight + 10 > viewportHeight) {
+                    suggestionTop = mouseY - suggestionBoxHeight;
+                }
+
+                suggestionBox.style.left = `${suggestionLeft}px`;
+                suggestionBox.style.top = `${suggestionTop}px`;
+                suggestionBox.style.visibility = "visible";
+            }
+
+            if (isDesktop) {
+                document.addEventListener("mousemove", (e) => {
+                    const mouseX = e.pageX;
+                    const mouseY = e.pageY;
+                    const viewportWidth = window.innerWidth;
+                    const viewportHeight = window.innerHeight;
+
+                    if (state.isChatOpen || state.isFetching) {
+                        clearTimeout(cursorTimeout);
+                        suggestionBox.style.visibility = "hidden";
+                        document.body.classList.remove("custom-cursor");
+                        return;
+                    }
+
+                    if (mouseX !== lastMouseX || mouseY !== lastMouseY) {
+                        clearTimeout(cursorTimeout);
+                        suggestionBox.style.visibility = "hidden";
+                        document.body.classList.remove("custom-cursor");
+
+                        cursorTimeout = setTimeout(() => {
+                            if (state.isChatOpen) return;
+                            document.body.classList.add("custom-cursor");
+                            handleSuggestion(mouseX, mouseY, viewportWidth, viewportHeight);
+                        }, 3000);
+                    }
+
+                    lastMouseX = mouseX;
+                    lastMouseY = mouseY;
                 });
 
-                const data = await response.json();
+                document.addEventListener("click", (e) => {
+                    if (document.body.classList.contains("custom-cursor")) {
+                        chatOverlay.style.display = "flex";
+                        state.isChatOpen = true;
+                        document.body.classList.remove("custom-cursor");
+                        suggestionBox.style.visibility = "hidden";
 
-                // Replace "loading" indicator with bot message
-                loadingMessageElem.textContent = data.reply;
-                loadingMessageContainer.classList.remove('loading-indicator');
-            } catch (error) {
-                // Handle error (e.g., network issue)
-                loadingMessageElem.textContent = 'Error: Could not load message.';
-                loadingMessageContainer.classList.remove('loading-indicator'); // 애니메이션 제거
-                console.error(error);
-            } finally {
-                // Scroll to the bottom of chat box
-                moveInputBoxToLatestMessage();
+                        if (state.lastSuggestedQuestion !== "Do you have a question? Click to ask!") {
+                            const botMessageContainer = document.createElement("div");
+                            botMessageContainer.classList.add("bot-message-container");
+
+                            const botImage = document.createElement("img");
+                            botImage.src = "/image.png";
+                            botImage.alt = "Chatbot";
+
+                            const botMessageElem = document.createElement("div");
+                            botMessageElem.classList.add("message", "bot-message");
+                            botMessageElem.textContent = state.lastSuggestedQuestion;
+
+                            botMessageContainer.appendChild(botImage);
+                            botMessageContainer.appendChild(botMessageElem);
+
+                            chatBox.appendChild(botMessageContainer);
+                            chatBox.scrollTop = chatBox.scrollHeight;
+                        }
+                    }
+                });
             }
-        }
 
-        // 클릭 이벤트
-        sendButton.addEventListener('click', sendMessage);
+            function setChatbotLinkBehavior() {
+                chatbotLink.onclick = (e) => {
+                    e.preventDefault();
 
-        // 엔터 키 이벤트
-        userInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // 기본 Enter 키 동작 방지
-                sendMessage();
+                    if (isDesktop) {
+                        chatOverlay.style.display = "flex";
+                        state.isChatOpen = true;
+                    } else {
+                        document.getElementById("mobile-chat-interface").scrollIntoView({ behavior: "smooth" });
+                    }
+                }    
+
+                closeButton.addEventListener("click", () => {
+                    chatOverlay.style.display = "none";
+                    state.isChatOpen = false;
+                    document.body.classList.remove("custom-cursor");
+                    clearTimeout(cursorTimeout);
+                });
             }
+
+            setChatbotLinkBehavior();
+
+            window.addEventListener("resize", () => {
+                const newIsDesktop = window.innerWidth > 640;
+                if (newIsDesktop !== isDesktop) {
+                    isDesktop = newIsDesktop;
+                    setChatbotLinkBehavior();
+                }
+            });
+
+            async function sendMessage(chatBox, inputBox) {
+                const userMessage = userInput.value.trim();
+                if (!userMessage) return;
+
+                const userMessageElem = document.createElement("div");
+                userMessageElem.classList.add("message", "user-message");
+                userMessageElem.textContent = userMessage;
+                chatBox.insertBefore(userMessageElem, inputBox);
+
+                userInput.value = "";
+
+                const loadingMessageContainer = document.createElement("div");
+                loadingMessageContainer.classList.add("bot-message-container", "loading-indicator");
+
+                const botImage = document.createElement("img");
+                botImage.src = "/image.png";
+                botImage.alt = `It's me!`;
+
+                const loadingMessageElem = document.createElement("div");
+                loadingMessageElem.classList.add("message", "bot-message");
+                loadingMessageElem.textContent = "...";
+
+                loadingMessageContainer.appendChild(botImage);
+                loadingMessageContainer.appendChild(loadingMessageElem);
+                chatBox.insertBefore(loadingMessageContainer, inputBox);
+
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                try {
+                    const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: userMessage }),
+                        credentials: "include",
+                    });
+
+                    const data = await response.json();
+
+                    loadingMessageElem.textContent = data.reply;
+                    loadingMessageContainer.classList.remove("loading-indicator");
+                } catch (error) {
+                    loadingMessageElem.textContent = 'Error: Could not load message.';
+                    loadingMessageContainer.classList.remove("loading-indicator");
+                    console.error(error);
+                } finally {
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            }
+
+            sendButton.addEventListener("click", () => sendMessage(chatBox, inputBox));
+            userInput.addEventListener("keypress", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault(); 
+                    sendMessage(chatBox, inputBox);
+                }
+            });
         });
     </script>
 </body>
