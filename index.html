@@ -1148,8 +1148,7 @@
 
                     suggestionBox.textContent = "...";
                     suggestionBox.classList.add("loading-indicator");
-
-                    await new Promise((resolve) => setTimeout(resolve, 0));
+                    suggestionBox.style.visibility = "visible";
 
                     try {
                         const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/question', {
@@ -1159,11 +1158,9 @@
                             credentials: "include",
                         });
 
-                        if (response.ok) {
-                            const data = await response.json();
-                            state.lastSuggestedQuestion = data?.question || "";
-                            suggestionText = 'Ask me about my work on ' + title +', like "' + data?.question + '"' || suggestionText;
-                        }
+                        const data = await response.json();
+                        state.lastSuggestedQuestion = data?.question || "";
+                        suggestionText = 'Ask me about my work on ' + title +', like "' + data?.question + '"' || suggestionText;
                     } catch (error) {
                         console.error("Error:", error);
                     } finally {
@@ -1174,6 +1171,7 @@
                     }
                 }  else {
                     suggestionBox.textContent = suggestionText;
+                    suggestionBox.style.visibility = "visible";
                 }
 
                 const suggestionBoxWidth = suggestionBox.offsetWidth;
@@ -1263,7 +1261,7 @@
                 });
 
                 chatOverlay.addEventListener("click", (e) => {
-                    if (!chatContainer.contains(e.target)) {
+                    if (state.isChatOpen && !chatContainer.contains(e.target)) {
                         chatOverlay.style.display = "none";
                         state.isChatOpen = false;
                         document.body.classList.remove("custom-cursor");
@@ -1324,7 +1322,7 @@
                     loadingMessageElem.textContent = data.reply;
                     loadingMessageContainer.classList.remove("loading-indicator");
                 } catch (error) {
-                    loadingMessageElem.textContent = 'Error: Could not load message.';
+                    loadingMessageElem.textContent = 'Oops! Something went wrong. Please try again.';
                     loadingMessageContainer.classList.remove("loading-indicator");
                     console.error(error);
                 } finally {
