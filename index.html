@@ -266,7 +266,7 @@
             pointer-events: none;
             white-space: normal;
             word-wrap: break-word;
-            max-width: calc(100% - 20px);
+            max-width: calc(50% - 10px);
             margin: 10px;
             overflow-wrap: break-word;
             visibility: hidden;
@@ -1148,7 +1148,6 @@
                 }
 
                 suggestionBox.textContent = suggestionText;
-                state.lastSuggestedQuestion = suggestionText;
 
                 const suggestionBoxWidth = suggestionBox.offsetWidth;
                 const suggestionBoxHeight = suggestionBox.offsetHeight;
