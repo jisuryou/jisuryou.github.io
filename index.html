@@ -1126,7 +1126,7 @@
 
                         if (response.ok) {
                             const data = await response.json();
-                            suggestionText = data?.question || suggestionText;
+                            suggestionText = 'Ask me about my work on ' + title +', like "' + data?.question + '"' || suggestionText;
                         }
                     } catch (error) {
                         console.error("Error:", error);
@@ -1151,6 +1151,9 @@
                 if (mouseY + suggestionBoxHeight + 10 > viewportHeight) {
                     suggestionTop = mouseY - suggestionBoxHeight;
                 }
+
+                suggestionLeft = Math.max(suggestionLeft, 10);
+                suggestionTop = Math.max(suggestionTop, 10);
 
                 suggestionBox.style.left = `${suggestionLeft}px`;
                 suggestionBox.style.top = `${suggestionTop}px`;
@@ -1194,23 +1197,25 @@
                         document.body.classList.remove("custom-cursor");
                         suggestionBox.style.visibility = "hidden";
 
-                        if (state.lastSuggestedQuestion !== "Do you have a question? Click to ask!") {
-                            const botMessageContainer = document.createElement("div");
-                            botMessageContainer.classList.add("bot-message-container");
+                        if (state.lastSuggestedQuestion && state.lastSuggestedQuestion !== "Do you have a question? Click to ask!") {
+                            // const botMessageContainer = document.createElement("div");
+                            // botMessageContainer.classList.add("bot-message-container");
 
-                            const botImage = document.createElement("img");
-                            botImage.src = "/image.png";
-                            botImage.alt = "Chatbot";
+                            // const botImage = document.createElement("img");
+                            // botImage.src = "/image.png";
+                            // botImage.alt = "Chatbot";
 
-                            const botMessageElem = document.createElement("div");
-                            botMessageElem.classList.add("message", "bot-message");
-                            botMessageElem.textContent = state.lastSuggestedQuestion;
+                            // const botMessageElem = document.createElement("div");
+                            // botMessageElem.classList.add("message", "bot-message");
+                            // botMessageElem.textContent = state.lastSuggestedQuestion;
 
-                            botMessageContainer.appendChild(botImage);
-                            botMessageContainer.appendChild(botMessageElem);
+                            // botMessageContainer.appendChild(botImage);
+                            // botMessageContainer.appendChild(botMessageElem);
 
-                            chatBox.appendChild(botMessageContainer);
-                            chatBox.scrollTop = chatBox.scrollHeight;
+                            // chatBox.appendChild(botMessageContainer);
+                            // chatBox.scrollTop = chatBox.scrollHeight;
+                            userInput.value = state.lastSuggestedQuestion;
+                            sendMessage(chatBox, inputBox);
                         }
                     }
                 });
