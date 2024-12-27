@@ -191,6 +191,12 @@
             margin-bottom: 5px;
         }
 
+        .timeline-item h5 {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
         .timeline-item p {
             font-size: 0.8rem;
             line-height: 1.5;
@@ -383,7 +389,7 @@
         .user-message {
             text-align: right;
             font-family: 'Noto Sans', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             /* font-weight: 300; */
         }
 
@@ -391,6 +397,7 @@
             display: flex;
             align-items: flex-start;
             position: relative;
+            max-width: 100%;
         }
 
         .bot-message-container img {
@@ -407,6 +414,9 @@
             font-size: 0.8rem;
             /* font-weight: 500; */
             line-height: 1.5;
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .loading-indicator .bot-message {
@@ -945,7 +955,8 @@
                 timelineItem.setAttribute('data-start-year', item.year);
                 timelineItem.setAttribute('data-side', item.side);
                 timelineItem.innerHTML = `
-                    <h3>${item.title}<br>${item.subtitle}</h3>
+                    <h3>${item.title}</h3>
+                    <h5>${item.subtitle}</h5>
                     <p>${item.details}</p>
                 `;
 
@@ -1126,6 +1137,7 @@
 
                         if (response.ok) {
                             const data = await response.json();
+                            state.lastSuggestedQuestion = data?.question || "";
                             suggestionText = 'Ask me about my work on ' + title +', like "' + data?.question + '"' || suggestionText;
                         }
                     } catch (error) {
@@ -1198,22 +1210,6 @@
                         suggestionBox.style.visibility = "hidden";
 
                         if (state.lastSuggestedQuestion && state.lastSuggestedQuestion !== "Do you have a question? Click to ask!") {
-                            // const botMessageContainer = document.createElement("div");
-                            // botMessageContainer.classList.add("bot-message-container");
-
-                            // const botImage = document.createElement("img");
-                            // botImage.src = "/image.png";
-                            // botImage.alt = "Chatbot";
-
-                            // const botMessageElem = document.createElement("div");
-                            // botMessageElem.classList.add("message", "bot-message");
-                            // botMessageElem.textContent = state.lastSuggestedQuestion;
-
-                            // botMessageContainer.appendChild(botImage);
-                            // botMessageContainer.appendChild(botMessageElem);
-
-                            // chatBox.appendChild(botMessageContainer);
-                            // chatBox.scrollTop = chatBox.scrollHeight;
                             userInput.value = state.lastSuggestedQuestion;
                             sendMessage(chatBox, inputBox);
                         }
