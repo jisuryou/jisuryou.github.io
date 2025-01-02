@@ -528,6 +528,10 @@ hr {
     border-radius: 3px; 
 }
 
+#project-info p {
+    line-height: 1.6;
+}
+
 #project-content img {
     max-width: 100%;
     height: auto;  

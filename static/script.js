@@ -59,14 +59,14 @@ if (header) {
 
             // 타임라인 아이템 탐지
             for (const element of elements) {
-                if (element.classList.contains("timeline-item") && element.getAttribute('data-category') === 'projects') {
+                if (element.classList.contains("timeline-item")) {
                     timelineItem = element;
                     break;
                 }
             }
 
             if (timelineItem) {
-                const title = timelineItem.querySelector("h3")?.innerText || "";
+                const id = timelineItem.getAttribute("data-id") || ""; 
 
                 if (state.isFetching) return;
                 state.isFetching = true;
@@ -83,7 +83,7 @@ if (header) {
                     const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/question', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ item: title }),
+                        body: JSON.stringify({ item: id }),
                         credentials: "include",
                     });
 
@@ -282,10 +282,10 @@ async function loadMarkdownFile(projectId) {
         const markdown = await response.text();
 
         const title = markdown.split('\n')[0].replace(/^#\s/, '');
-        const infoRegex = /Role: (.+?)\s+Skills: (.+?)\s+Period: (.+?)$/m;
+        const infoRegex = /Role: (.+?)\s+Skills: (.+?)\s+Duration: (.+?)$/m;
         const infoMatch = markdown.match(infoRegex);
         const infoContent = infoMatch
-            ? `<p>Role: ${infoMatch[1]}<br>Skills: ${infoMatch[2]}<br>Period: ${infoMatch[3]}</p>`
+            ? `<p><strong>Role:</strong> ${infoMatch[1]}<br><strong>Skills:</strong> ${infoMatch[2]}<br><strong>Duration:</strong> ${infoMatch[3]}</p>`
             : 'Info not available';
 
         const contentStartIndex = markdown.indexOf("---");
