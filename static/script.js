@@ -66,7 +66,8 @@ if (header) {
             }
 
             if (timelineItem) {
-                const id = timelineItem.getAttribute("data-id") || ""; 
+                const id = timelineItem.getAttribute("data-id") || "";
+                const title = timelineItem.querySelector("h3")?.innerText || "";
 
                 if (state.isFetching) return;
                 state.isFetching = true;
