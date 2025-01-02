@@ -300,7 +300,7 @@
                 timelineItem.setAttribute('data-start-year', item.year);
                 timelineItem.setAttribute('data-side', item.side);
                 timelineItem.setAttribute('data-category', tab);
-                timelineItem.setAttribute('data-id', id);
+                timelineItem.setAttribute('data-id', item.id);
                 timelineItem.innerHTML = `
                     <h3>
                         ${tab == 'projects' ? `<a href="/project.html?id=${item.id}" target="_blank">${item.title}</a>` : item.title}    
@@ -344,7 +344,7 @@
                     item.classList.remove("timeline-left", "timeline-right");
                 }
 
-                cumulativePosition += itemHeight + (tooltipVisible ? tooltipHeight : 0) + (window.innerWidth > 640 ? 40 : 30);
+                cumulativePosition += itemHeight + (window.innerWidth > 640 ? 40 : 30);
 
                 setTimeout(() => {
                     item.classList.add("visible");
