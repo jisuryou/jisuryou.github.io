@@ -301,6 +301,7 @@
                 timelineItem.setAttribute('data-side', item.side);
                 timelineItem.setAttribute('data-category', tab);
                 timelineItem.setAttribute('data-id', item.id);
+                timelineItem.setAttribute('data-title', item.title);
                 timelineItem.innerHTML = `
                     <h3>
                         ${tab == 'projects' ? `<a href="/project.html?id=${item.id}" target="_blank">${item.title}</a>` : item.title}    
