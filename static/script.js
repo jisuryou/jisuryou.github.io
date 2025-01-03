@@ -275,7 +275,7 @@ if (header) {
 }
 
 async function loadMarkdownFile(projectId) {
-    const markdownPath = `/database/notion/${projectId}.md`;
+    const markdownPath = `/database/notion/projects/${projectId}.md`;
 
     try {
         const response = await fetch(markdownPath);
