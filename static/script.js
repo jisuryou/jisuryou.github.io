@@ -68,6 +68,7 @@ if (header) {
             if (timelineItem) {
                 const id = timelineItem.getAttribute("data-id") || "";
                 const title = timelineItem.getAttribute("data-title") || "";
+                const subtitle = timelineItem.getAttribute("data-subtitle") || "";
 
                 if (state.isFetching) return;
                 state.isFetching = true;
@@ -84,7 +85,7 @@ if (header) {
                     const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/question', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ item: title, doc: id }),
+                        body: JSON.stringify({ item: title + ", " + subtitle, doc: id }),
                         credentials: "include",
                     });
 
