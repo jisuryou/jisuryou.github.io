@@ -84,7 +84,7 @@ if (header) {
                     const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/question', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ item: id }),
+                        body: JSON.stringify({ item: title, doc: id }),
                         credentials: "include",
                     });
 
