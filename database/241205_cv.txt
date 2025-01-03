@@ -1,36 +1,56 @@
-Jisu Ryou's CV
+# Jisu Ryou's CV
 
-👋 I’m a junior UX engineer with a Master’s degree in AI application. Over the past few years, I've primarily focused on conversational AI, including chatbots and voice agents. However, I’m also skilled in user experience insight research and full-stack development. For more information about me, please check out my portfolio:)
-Education
-Seoul National University, Korea — Sep 2021~Feb 2024
-Master of Engineering
-Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
-Advisor: Prof. Joongseek Lee
-(Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving Long Entries in VA Journaling
-Sungkyunkwan University, Korea — Mar 2017~Aug 2021
-Bachelor of Engineering and Bachelor of Science in Psychology
-(1st) Dept. of Software, College of Software Convergence
-(2nd) Dept. of Psychology, College of Social Sciences
-The University of Texas at Dallas, United States — Jan 2019~May 2019
-Exchange Student
-Employment
-SNU UXLab, Seoul, Korea — March 2024~Aug 2024
-Project Manager (PM)
-Led the project ‘Financial Hyper-Personalization Using MyData’ with HiUX, focusing on enhancing contextual data through a notification-based financial management app
-Led the project ‘UX Evaluation of Text-Based Conversational Experiences’ with LG, researching and defining evaluation methodologies for ChatThinQ, a custom Home IoT LLM service
-Rihoz, Seoul, Korea — Sep 2020~Dec 2020
-Web Front-End Developer (Intern)
-Contributed to the project ‘Dangjib’, a big data-driven smart life service platform, focusing on front-end development of the admin web page and the production app
-Publication
-Ryou, J., Lee, K., & Lee, J. (2023, April). “You said da da...”: A Short Echoing Tweak for Journaling with VA. In Extended Abstracts of the 2023 CHI Conference on Human Factors in Computing Systems (pp. 1-6). [paper]
-Lee, K., Ryou, J., & Lee, J. (2023). Study on the Mind-Upload of Construction-Building Method: A Case study on the Voice-based Conversation Robot Exhibition. In Design Convergence Study, 22(4), 59-73. [paper]
-Kim, M., Ryou, J., Lee, K., & Lee, J. (2023). Actually, Clustering is Not Everything! How UXer analyzes behavior types with page log data. In HCI KOREA, 497-502. [paper]
-Ryu, M., Park, S., Ryou, J., & Lee, J. (2022). “Not a Replacement, But a New Form of Banking”: Exploring VUI Use Cases for Banking via Human-Machine Communication. In HCI KOREA, 305-311. [paper]
-Joongseek Lee, Minjoo Kim, Jisu Ryou, Kihun Lee (2023). 『1인가구와 기술: 혼삶의 시대, 기술이 만드는 이웃감』. threechairs. [book]
-TALKs
-Joongseek Lee, Sangah Park, Jisu Ryou, Sumin Kwon, Jiseon Yu (2022). “사용할수록 지식베이스가 성장하는 대화형 서비스 만들기”, HCI KOREA 2022 Tutorial.
-Skills
-Programming: Python(high), JavaScript(high), C(intermediate), C++(intermediate), Java(intermediate), C#(low)
-Technical: HTML/CSS(high), SQL(intermediate), R(intermediate), Dialogflow, Google Cloud Platform
-Design: Adobe Illustrator, Photoshop, XD, Figma
-Language: Korean(native), English(fluent)
+### **Overview**
+
+I’m a junior UX researcher with a Master’s degree in AI application. Over the past few years, I've primarily focused on conversational AI, including chatbots and voice agents. I’m also skilled in user experience research and full-stack development.
+
+### **Education**
+
+1) Seoul National University, Korea — Sep 2021~Feb 2024
+
+- Master of Engineering
+- Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
+- Advisor: Prof. Joongseek Lee
+- (Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving Long Entries in VA Journaling
+
+2) Sungkyunkwan University, Korea — Mar 2017~Aug 2021
+
+- Bachelor of Engineering and Bachelor of Science in Psychology
+- (1st) Dept. of Software, College of Software Convergence
+- (2nd) Dept. of Psychology, College of Social Sciences
+
+3) The University of Texas at Dallas, United States — Jan 2019~May 2019
+
+- Exchange Student
+
+### **Employment**
+
+1) SNU UXLab, Seoul, Korea — March 2024~Aug 2024
+
+- Project Manager (PM)
+- Led the project ‘Financial Hyper-Personalization Using MyData’ with HiUX, focusing on enhancing contextual data through a notification-based financial management app
+- Led the project ‘UX Evaluation of Text-Based Conversational Experiences’ with LG, researching and defining evaluation methodologies for ChatThinQ, a custom Home IoT LLM service
+
+2) Rihoz, Seoul, Korea — Sep 2020~Dec 2020
+
+- Web Front-End Developer (Intern)
+- Contributed to the project ‘Dangjib (Your Smart Butler)’, a big data driven smart life service platform, focusing on front-end development of the admin web page and the production app
+
+### **Publication**
+
+- Ryou, J., Lee, K., & Lee, J. (2023, April). “You said da da...”: A Short Echoing Tweak for Journaling with VA. In Extended Abstracts of the 2023 CHI Conference on Human Factors in Computing Systems (pp. 1-6). [paper]
+- Lee, K., Ryou, J., & Lee, J. (2023). Study on the Mind-Upload of Construction-Building Method: A Case study on the Voice-based Conversation Robot Exhibition. In Design Convergence Study, 22(4), 59-73. [paper]
+- Kim, M., Ryou, J., Lee, K., & Lee, J. (2023). Actually, Clustering is Not Everything! How UXer analyzes behavior types with page log data. In HCI KOREA, 497-502. [paper]
+- Ryu, M., Park, S., Ryou, J., & Lee, J. (2022). “Not a Replacement, But a New Form of Banking”: Exploring VUI Use Cases for Banking via Human-Machine Communication. In HCI KOREA, 305-311. [paper]
+- Joongseek Lee, Minjoo Kim, Jisu Ryou, Kihun Lee (2023). 『1인가구와 기술: 혼삶의 시대, 기술이 만드는 이웃감』. threechairs. [book]
+
+### **TALKs**
+
+- Joongseek Lee, Sangah Park, Jisu Ryou, Sumin Kwon, Jiseon Yu (2022). “사용할수록 지식베이스가 성장하는 대화형 서비스 만들기”, HCI KOREA 2022 Tutorial.
+
+### **Skills**
+
+- Programming: Python(high), JavaScript(high), C(intermediate), C++(intermediate), Java(intermediate), C#(low)
+- Technical: HTML/CSS(high), SQL(intermediate), R(intermediate), Dialogflow, Google Cloud Platform
+- Design: Adobe Illustrator, Photoshop, XD, Figma
+- Language: Korean(native), English(fluent)
