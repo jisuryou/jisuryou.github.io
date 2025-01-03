@@ -532,11 +532,19 @@ hr {
     line-height: 1.6;
 }
 
+#project-content em {
+    display: block;
+    text-align: center;
+    font-style: italic;
+    font-size: 0.9em;
+    color: #565656;
+    margin-bottom: 60px; 
+}
+
 #project-content img {
     max-width: 100%;
     height: auto;  
     display: block;
-    margin-bottom: 60px; 
 }
 
 #project-content p {
