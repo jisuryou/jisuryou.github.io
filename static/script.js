@@ -90,7 +90,7 @@ if (header) {
 
                     const data = await response.json();
                     state.lastSuggestedQuestion = data?.question || "";
-                    suggestionText = 'Ask me about my work on ' + title + ', like "' + data?.question + '"' || suggestionText;
+                    suggestionText = 'Ask me about my work on ' + title + ', like ' + data?.question || suggestionText;
                 } catch (error) {
                     console.error("Error:", error);
                 } finally {
