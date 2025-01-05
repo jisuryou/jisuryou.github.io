@@ -273,7 +273,7 @@ if (header) {
                     const sideClass = item.dataset.side === "left" ? "timeline-left" : "timeline-right";
                     item.classList.add(sideClass);
                     dot.style.position = "absolute";
-                    dot.style.top = `${cumulativePosition + itemHeight / 2}px`;
+                    dot.style.top = `${cumulativePosition + 15}px`;
                     dot.style.left = "calc(50% - 5px)";
                     timelineContainer.appendChild(dot);
                 } else {
