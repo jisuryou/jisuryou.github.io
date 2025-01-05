@@ -11,168 +11,343 @@ if (header) {
         lastScrollY = window.scrollY;
     });
 
+    const timelineData = {
+        education: [
+            {
+                side: 'left',
+                year: 2017,
+                title: 'Sungkyunkwan University, Korea',
+                subtitle: 'Mar 2017-Aug 2021',
+                id: '170b4c07aa58801dac70cd2406559ca5',
+                details: `
+                        <i>Bachelor of Engineering and Bachelor of Science in Psychology</i>
+                        <br>(1st) Dept. of Software, College of Software Convergence
+                        <br>(2nd) Dept. of Psychology, College of Social Sciences
+                    `
+            },
+            {
+                side: 'left',
+                year: 2019,
+                title: 'The University of Texas at Dallas, United States',
+                subtitle: 'Jan 2019-May 2019',
+                id: '170b4c07aa588008903ed825d52ba812',
+                details: `
+                        <i>Exchange Student</i>
+                    `
+            },
+            {
+                side: 'left',
+                year: 2021,
+                title: 'Seoul National University, Korea',
+                subtitle: 'Sep 2021-Feb 2024',
+                id: '170b4c07aa58804e80faf5058ac08491',
+                details: `
+                        <i>Master of Engineering</i>
+                        <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
+                        <br>Advisor: Prof. Joongseek Lee (UXLab)
+                        <br>* (Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving Long Entries in VA Journaling
+                    `
+            },
+            {
+                side: 'right',
+                year: 2020,
+                title: 'Rihoz, Seoul, Korea',
+                subtitle: 'Sep 2020-Dec 2020',
+                id: '170b4c07aa5880049acac1fd0d5348af',
+                details: `
+                        <i>Front-End Developer (Intern)</i>
+                        <br>• Contributed to the project ‘Dangjib (Your Smart Butler)’, a big data driven smart life service platform
+                        <br>• Focused on front-end development of the admin web page and the production app
+                    `
+            },
+            {
+                side: 'right',
+                year: 2024,
+                title: 'SNU UXLab, Seoul, Korea',
+                subtitle: 'March 2024-Aug 2024',
+                id: '170b4c07aa5880768155e8c655941f3d',
+                details: `
+                        <i>Project Manager (PM)</i>
+                        <br>• Led the project ‘Financial Hyper-Personalization Using MyData’ with HiUX
+                        <br>• Led the project ‘UX Evaluation of Text-Based Conversational Experiences’ with LG
+                    `
+            }
+        ],
+        projects: [
+            {
+                side: 'left',
+                year: 2021.07,
+                title: 'Trend Recommendation Chatbot (Lab pj)',
+                subtitle: '2 months (Jul 2021-Aug 2021)',
+                id: '196b81a14320412ab2592b7c0a381c27',
+                details: `
+                        #Conversational AI #Researcher  
+                        <br>Participated in all project phases and led the development stage.
+                    `
+            },
+            {
+                side: 'left',
+                year: 2021.09,
+                title: 'Advancing Financial Chatbots via Voice Banking (with Taran UXD)',
+                subtitle: '2 months (Sep 2021-Oct 2021)',
+                id: 'd3d530dd1b144bb08d58515122bc0726',
+                details: `
+                        #Conversational AI #Researcher
+                        <br>Contributed to research and user interviews.
+                    `
+            },
+            {
+                side: 'left',
+                year: 2022.01,
+                title: 'Dream Journal Voice Agent (Lab pj)',
+                subtitle: '4 months (Jan 2022-Apr 2022)',
+                id: '7b9a2d1b3e4d4730a954a63ec4d30378',
+                details: `
+                        #Conversational AI #Project Manager
+                        <br>Led all phases of the project.
+                    `
+            },
+            {
+                side: 'left',
+                year: 2022.09,
+                title: 'Exhibition Mind Robots Integrated with AI (with KOCCA)',
+                subtitle: '4 months (Sep 2022-Dec 2022)',
+                id: 'cd10d260a5154d94825325fe6013ad60',
+                details: `
+                        #Conversational AI #Developer
+                        <br>Led the development stage.
+                    `
+            },
+            {
+                side: 'left',
+                year: 2024.05,
+                title: 'UX Evaluation of Text-Based Conversational Experiences (with LG)',
+                subtitle: '4 months (May 2024-Aug 2024)',
+                id: '118b4c07aa588086bd60f682d6403c7b',
+                details: `
+                        #Conversational AI #Project Manager
+                        <br>Led all phases of the project.
+                    `
+            },
+            {
+                side: 'right',
+                year: 2022.03,
+                title: 'UX Improvement for Shopping Platforms (with Naver Shopping)',
+                subtitle: '4 months (Mar 2022-Jun 2022)',
+                id: '0f5581ddde1646cba87031a0305453b9',
+                details: `
+                        #User Experience #Researcher
+                        <br>Conducted log data analysis and participated in user interviews.
+                    `
+            },
+            {
+                side: 'right',
+                year: 2022.07,
+                title: 'Opportunity Discovery for Home Appliance Subscription Services (with Samsung)',
+                subtitle: '4 months (Jul 2022-Oct 2022)',
+                id: '51972da67f87477a9138830cbc5f59fc',
+                details: `
+                        #User Experience #Project Manager
+                        <br>Led all phases of the project.
+                    `
+            },
+            {
+                side: 'right',
+                year: 2023.01,
+                title: 'Clothing Care Pilot for Shared Housing (with Samsung)',
+                subtitle: '3 months (Jan 2023-Mar 2023)',
+                id: '9221221ec6d940319b231302b77a5746',
+                details: `
+                        #User Experience #Developer
+                        <br>Contributed to backend development.
+                    `
+            },
+            {
+                side: 'right',
+                year: 2024.03,
+                title: 'Financial Hyper-Personalization Using MyData (with HiUX)',
+                subtitle: '6 months (Mar 2024-Aug 2024)',
+                id: '118b4c07aa588059ad4debdb5a5b70a3',
+                details: `
+                        #User Experience #Project Manager
+                        <br>Led all phases of the project.
+                    `
+            },
+            {
+                side: 'right',
+                year: 2024.11,
+                title: 'SNU Cultural Accessibility Site for People with Disabilities (with Institute for Culture and Arts)',
+                subtitle: '2 months (Nov 2024-Dec 2024)',
+                id: '170b4c07aa588075952eeba8235f7f32',
+                details: `
+                        #User Experience #Developer
+                        <br>Led the development stage.
+                    `
+            }
+        ]
+    };
+
     document.addEventListener("DOMContentLoaded", () => {
         let isDesktop = window.innerWidth > 640;
 
         const state = {
             isChatOpen: false,
             isFetching: false,
-            lastSuggestedQuestion: "",
+            lastSuggestedQuestion: ""
         };
 
+        const timelineContainer = document.querySelector(".timeline-container");
         const chatbotLink = document.getElementById("chatbot-link");
         const chatOverlay = document.getElementById("desktop-chat-overlay");
         const chatContainer = document.getElementById("desktop-chat-container");
         const closeButton = document.querySelector(".close-button");
-        const suggestionBox = document.getElementById("cursor-suggestion");
+        const timelineTabs = document.querySelectorAll(".tab-button");
 
         const chatBox = document.querySelector(isDesktop ? "#desktop-chat-overlay .chat-box" : "#mobile-chat-interface .chat-box");
         const userInput = document.querySelector(isDesktop ? "#desktop-chat-overlay .user-input" : "#mobile-chat-interface .user-input");
         const sendButton = document.querySelector(isDesktop ? "#desktop-chat-overlay .send-button" : "#mobile-chat-interface .send-button");
         const inputBox = document.querySelector(isDesktop ? "#desktop-chat-overlay .input-box" : "#mobile-chat-interface .input-box");
 
-        let cursorTimeout = null;
-        let lastMouseX = -1, lastMouseY = -1;
+        let activeTab = "education";
 
-        async function handleSuggestion(mouseX, mouseY, viewportWidth, viewportHeight) {
-            // const elements = document.elementsFromPoint(mouseX - window.pageXOffset, mouseY - window.pageYOffset);
+        // 타임라인 아이템 렌더링 함수
+        function renderTimelineItems(tab) {
+            timelineContainer.innerHTML = '<div class="timeline-line"></div>';
+            const items = timelineData[tab];
+            const timelineItems = items.map(item => ({
+                item: createTimelineItem(item, tab),
+                dot: createTimelineDot(item),
+            }));
 
-            const detectionRadius = 80; // 감지할 추가 반경 (px)
-            const expandedElements = [];
+            applyPosition(timelineItems);
+        }
 
-            // 감지 영역 확장을 위해 여러 점에서 감지 수행
-            for (let offsetX = -detectionRadius; offsetX <= detectionRadius; offsetX += 10) {
-                for (let offsetY = -detectionRadius; offsetY <= detectionRadius; offsetY += 10) {
-                    const detectedElements = document.elementsFromPoint(
-                        mouseX + offsetX - window.pageXOffset,
-                        mouseY + offsetY - window.pageYOffset
-                    );
-                    expandedElements.push(...detectedElements);
+        function createTimelineItem(item, tab) {
+            const timelineItem = document.createElement("div");
+            timelineItem.classList.add("timeline-item");
+            timelineItem.dataset.startYear = item.year;
+            timelineItem.dataset.side = item.side;
+            timelineItem.dataset.category = tab;
+            timelineItem.dataset.id = item.id;
+            timelineItem.dataset.title = item.title;
+
+            timelineItem.innerHTML = `
+            <h3>
+                ${tab == 'projects' ? `<a href="/project.html?id=${item.id}" target="_blank">${item.title}</a>` : item.title}
+            </h3>
+            <h5>${item.subtitle}</h5>
+            <p>${item.details}</p>
+        `;
+
+            return timelineItem;
+        }
+
+        function createTimelineDot(item) {
+            const timelineDot = document.createElement("div");
+            timelineDot.classList.add("timeline-dot");
+            timelineDot.dataset.id = item.id;
+            timelineDot.dataset.title = item.title;
+
+            timelineDot.addEventListener("mouseenter", () => showTooltip(timelineDot, item));
+            timelineDot.addEventListener("mouseleave", hideTooltip);
+            timelineDot.addEventListener("click", () => openChatWithItem(item));
+
+            return timelineDot;
+        }
+
+        // 위치 계산 및 적용 함수
+        function applyPosition(items) {
+            const sortedItems = items.sort((a, b) => parseFloat(a.item.dataset.startYear) - parseFloat(b.item.dataset.startYear));
+            let cumulativePosition = 50; // 첫 아이템 위치
+
+            sortedItems.forEach(({ item, dot }, index) => {
+                timelineContainer.appendChild(item);
+                const itemHeight = item.offsetHeight; // 실제 아이템의 높이
+
+                item.style.position = "absolute";
+                item.style.top = `${cumulativePosition}px`;
+
+                if (isDesktop) {
+                    const sideClass = item.dataset.side === "left" ? "timeline-left" : "timeline-right";
+                    item.classList.add(sideClass);
+                    dot.style.position = "absolute";
+                    dot.style.top = `${cumulativePosition + itemHeight / 2}px`;
+                    dot.style.left = "calc(50% - 5px)";
+                    timelineContainer.appendChild(dot);
+                } else {
+                    item.classList.remove("timeline-left", "timeline-right");
                 }
+
+                setTimeout(() => item.classList.add("visible"), index * 100);
+                cumulativePosition += itemHeight + (isDesktop ? 40 : 30);
+            });
+
+            timelineContainer.style.height = `${cumulativePosition}px`;
+        }
+
+        function showTooltip(dot, item) {
+            const tooltip = document.createElement('div');
+            tooltip.classList.add('tooltip');
+            tooltip.innerText = "...";
+
+            // 반대쪽 위치에 말풍선 표시
+            const side = item.side === 'left' ? 'left' : 'right';
+            tooltip.style.position = 'absolute';
+            tooltip.style.top = dot.style.top;
+            tooltip.style[side] = 'calc(50% + 20px)';
+
+            timelineContainer.appendChild(tooltip);
+            dot.tooltip = tooltip;
+
+            handleSuggestion(item)
+                .then(suggestionText => {
+                    tooltip.innerText = suggestionText || "Do you have a question? Click to ask!";
+                }).catch(error => {
+                    console.error("Error fetching suggestion:", error);
+                    tooltip.innerText = "Do you have a question? Click to ask!";
+                });
+        }
+
+        function hideTooltip(event) {
+            const dot = event.target;
+            if (dot.tooltip) {
+                timelineContainer.removeChild(dot.tooltip);
+                dot.tooltip = null;
             }
+        }
 
-            // 중복 요소 제거
-            const elements = [...new Set(expandedElements)];
+        function openChatWithItem(item) {
+            chatOverlay.style.display = "flex";
+            state.isChatOpen = true;
 
+            if (state.lastSuggestedQuestion && state.lastSuggestedQuestion !== "Do you have a question? Click to ask!") {
+                userInput.value = state.lastSuggestedQuestion;
+                sendMessage(chatBox, inputBox);
+            }
+        }
+
+        async function handleSuggestion(item) {
             let suggestionText = "Do you have a question? Click to ask!";
-            let timelineItem = null;
 
-            // 타임라인 아이템 탐지
-            for (const element of elements) {
-                if (element.classList.contains("timeline-item")) {
-                    timelineItem = element;
-                    break;
-                }
-            }
+            if (state.isFetching) return suggestionText;
+            state.isFetching = true;
 
-            if (timelineItem) {
-                const id = timelineItem.getAttribute("data-id") || "";
-                const title = timelineItem.getAttribute("data-title") || "";
-
-                if (state.isFetching) return;
-                state.isFetching = true;
-
-                suggestionBox.textContent = "...";
-                suggestionBox.classList.add("loading-indicator");
-                suggestionBox.style.visibility = "visible";
-
-                requestAnimationFrame(() => {
-                    updateSuggestionBoxPosition(mouseX, mouseY, viewportWidth, viewportHeight);
+            try {
+                const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/question', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ doc: item.id }),
                 });
 
-                try {
-                    const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/question', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ doc: id }),
-                        credentials: "include",
-                    });
-
-                    const data = await response.json();
-                    state.lastSuggestedQuestion = data?.question || "";
-                    suggestionText = 'Ask me about my work on ' + title + ', like ' + data?.question || suggestionText;
-                } catch (error) {
-                    console.error("Error:", error);
-                } finally {
-                    state.isFetching = false;
-
-                    suggestionBox.textContent = suggestionText;
-                    suggestionBox.classList.remove("loading-indicator");
-
-                    updateSuggestionBoxPosition(mouseX, mouseY, viewportWidth, viewportHeight);
-                }
-            } else {
-                suggestionBox.textContent = suggestionText;
-                suggestionBox.style.visibility = "visible";
-                updateSuggestionBoxPosition(mouseX, mouseY, viewportWidth, viewportHeight);
+                const data = await response.json();
+                state.lastSuggestedQuestion = `Ask me, like ${data.question}` || "";
+                suggestionText = `Ask me, like ${data.question}` || suggestionText;
+            } catch (error) {
+                console.error("Error fetching suggestion:", error);
+            } finally {
+                state.isFetching = false;
+                return suggestionText;
             }
-        }
-
-        function updateSuggestionBoxPosition(mouseX, mouseY, viewportWidth, viewportHeight) {
-            const suggestionBoxWidth = suggestionBox.offsetWidth;
-            const suggestionBoxHeight = suggestionBox.offsetHeight;
-
-            let suggestionLeft = mouseX + 20;
-            let suggestionTop = mouseY + 10;
-
-            if (mouseX + suggestionBoxWidth + 30 > viewportWidth) {
-                suggestionLeft = mouseX - suggestionBoxWidth;
-            }
-
-            if (mouseY + suggestionBoxHeight + 10 > viewportHeight) {
-                suggestionTop = mouseY - suggestionBoxHeight;
-            }
-
-            suggestionLeft = Math.max(suggestionLeft, 10);
-            suggestionTop = Math.max(suggestionTop, 10);
-
-            suggestionBox.style.left = `${suggestionLeft}px`;
-            suggestionBox.style.top = `${suggestionTop}px`;
-        }
-
-        if (isDesktop) {
-            document.addEventListener("mousemove", (e) => {
-                const mouseX = e.pageX;
-                const mouseY = e.pageY;
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;
-
-                if (state.isChatOpen || state.isFetching) {
-                    clearTimeout(cursorTimeout);
-                    suggestionBox.style.visibility = "hidden";
-                    document.body.classList.remove("custom-cursor");
-                    return;
-                }
-
-                if (mouseX !== lastMouseX || mouseY !== lastMouseY) {
-                    clearTimeout(cursorTimeout);
-                    suggestionBox.style.visibility = "hidden";
-                    document.body.classList.remove("custom-cursor");
-
-                    cursorTimeout = setTimeout(() => {
-                        if (state.isChatOpen) return;
-                        document.body.classList.add("custom-cursor");
-                        handleSuggestion(mouseX, mouseY, viewportWidth, viewportHeight);
-                    }, 3000);
-                }
-
-                lastMouseX = mouseX;
-                lastMouseY = mouseY;
-            });
-
-            document.addEventListener("click", (e) => {
-                if (document.body.classList.contains("custom-cursor")) {
-                    chatOverlay.style.display = "flex";
-                    state.isChatOpen = true;
-                    document.body.classList.remove("custom-cursor");
-                    suggestionBox.style.visibility = "hidden";
-
-                    if (state.lastSuggestedQuestion && state.lastSuggestedQuestion !== "Do you have a question? Click to ask!") {
-                        userInput.value = state.lastSuggestedQuestion;
-                        sendMessage(chatBox, inputBox);
-                    }
-                }
-            });
         }
 
         function setChatbotLinkBehavior() {
@@ -190,29 +365,41 @@ if (header) {
             closeButton.addEventListener("click", () => {
                 chatOverlay.style.display = "none";
                 state.isChatOpen = false;
-                document.body.classList.remove("custom-cursor");
-                clearTimeout(cursorTimeout);
             });
 
             chatOverlay.addEventListener("click", (e) => {
                 if (state.isChatOpen && !chatContainer.contains(e.target)) {
                     chatOverlay.style.display = "none";
                     state.isChatOpen = false;
-                    document.body.classList.remove("custom-cursor");
-                    clearTimeout(cursorTimeout);
                 }
             });
 
         }
 
         setChatbotLinkBehavior();
+        renderTimelineItems(activeTab);
+
+        timelineTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                timelineTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                activeTab = tab.dataset.tab;
+                startYear = activeTab === "education" ? 2017 : 2021;
+                endYear = activeTab === "education" ? 2024 : 2024;
+
+                timelineContainer.style.height = "0px";
+                setTimeout(() => renderTimelineItems(activeTab), 500);
+            });
+        });
 
         window.addEventListener("resize", () => {
             const newIsDesktop = window.innerWidth > 640;
             if (newIsDesktop !== isDesktop) {
                 isDesktop = newIsDesktop;
+                timelineContainer.innerHTML = '<div class="timeline-line"></div>';
                 setChatbotLinkBehavior();
             }
+            renderTimelineItems(activeTab);
         });
 
         async function sendMessage(chatBox, inputBox) {

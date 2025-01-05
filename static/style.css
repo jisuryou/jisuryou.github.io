@@ -87,24 +87,35 @@ header {
 
 /* About */
 #intro {
-    height: 35%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
     margin-top: 80px;
+    padding: 40px;
 }
 
-#intro-text {
-    flex: 1;
-    text-align: left;
-    padding: 20px;
+#intro-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+#intro-header h1 {
+    flex: 2;
     font-family: 'Noto Sans', sans-serif;
-    font-size: 1rem;
+    font-size: 1.5rem;
+    text-align: left;
+    margin: 0;
+    line-height: 1.5;
 }
 
 #intro-photo {
-    flex: 0.5;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,6 +126,15 @@ header {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#intro p {
+    max-width: 800px;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-align: left;
+    margin: 0;
 }
 
 /* 타임라인 */
@@ -219,54 +239,38 @@ header {
     z-index: 1;
 }
 
-.timeline-tooltip {
-    display: none;
-    position: absolute;
-    margin-top: 10px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: transform 0.5s ease, opacity 0.5s ease;
-    pointer-events: none;
-    visibility: hidden;
-    overflow: hidden;
-    font-size: 0.7rem;
-    line-height: 1.4;
+.timeline-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #fff; /* 기본 색상 */
+    border-radius: 50%;
+    border: 2px solid #000;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    position: relative;
+    z-index: 10;
 }
 
-.timeline-tooltip.visible {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-    pointer-events: auto;
+.timeline-dot:hover {
+    background-color: #000;
+    transform: scale(1.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    cursor: pointer;
+}
+
+.tooltip {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    z-index: 20;
+    pointer-events: none;
+    transition: opacity 0.3s;
 }
 
 /* Chatbot */
 #mobile-chat-interface {
     display: none;
-}
-
-body.custom-cursor {
-    cursor: url('/image_cursor.png'), auto;
-}
-
-#cursor-suggestion {
-    position: absolute;
-    font-size: 0.9rem;
-    color: #555;
-    background: #fff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    display: inline-block;
-    z-index: 1001;
-    pointer-events: none;
-    white-space: normal;
-    word-wrap: break-word;
-    max-width: calc(50% - 10px);
-    margin: 10px;
-    overflow-wrap: break-word;
-    visibility: hidden;
-    box-sizing: border-box;
 }
 
 #desktop-chat-overlay {
@@ -595,14 +599,6 @@ hr {
         display: none;
     }
 
-    #cursor-suggestion {
-        display: none;
-    }
-
-    body.custom-cursor {
-        cursor: auto;
-    }
-
     #mobile-chat-interface {
         height: 700px;
         display: flex;
@@ -624,15 +620,6 @@ hr {
     .chat-box {
         padding: 10px;
     }
-
-    /* .bot-message-container {
-                display: flex;
-                align-items: center;
-            } */
-
-    /* .bot-message-container img {
-                display: inline-block;
-            } */
 
     .timeline-container {
         flex-direction: column;
@@ -657,13 +644,6 @@ hr {
         padding-left: 50px;
         max-width: 90%;
         box-sizing: border-box;
-    }
-
-    .timeline-tooltip {
-        position: absolute;
-        width: 80vw;
-        max-width: 80vw;
-        text-align: left;
     }
 
     header {

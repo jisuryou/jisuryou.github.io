@@ -31,18 +31,17 @@
 
     <div class="content">
         <div id="intro" class="section">
-            <div id="intro-text">
-                <h1>Hi, I'm Jisu Ryou</h1>
-                <br>
-                <p>
-                    👋🏻 I'm a junior UX researcher with a Master's degree in AI application services.
-                    <br>☝🏻 I've primarily focused on conversational AI, having worked extensively with chatbots and voice agents.
-                    <br>✌🏻 I’m also skilled in user experience research and can develop full-stack UX prototypes.
-                </p>
+            <div id="intro-header">
+                <h1>👋🏻 I’m Jisu Ryou, <br>a junior UX researcher based in Seoul, South Korea</h1>
+                <div id="intro-photo">
+                    <img src="/image.png" alt="It's me!">
+                </div>
             </div>
-            <div id="intro-photo">
-                <img src="/image.png" alt="It's me!">
-            </div>
+            <p>
+                A UX researcher with a Master’s degree in AI application services, specializing in conversational AI. Extensive experience includes designing chatbots and voice agents, with a strong focus on creating user-centered solutions. This page even features a chatbot—feel free to give it a try!
+                <br>Also skilled in user experience research and full-stack prototyping, capable of transforming ideas into fully functional services. Equipped with the tools and expertise to research, design, and develop services anytime, anywhere.
+                <br>Feedback on this portfolio is greatly appreciated, and inquiries or connections are always welcome. Let’s collaborate to create something fun!
+            </p>
         </div>
 
         <div id="timeline-tabs">
@@ -98,7 +97,6 @@
         </div>
     </footer>
 
-    <div id="cursor-suggestion">Do you have a question? Click to ask!</div>
     <div id="desktop-chat-overlay">
         <div id="desktop-chat-container">
             <div class="chat-header">
@@ -119,276 +117,6 @@
         </div>
     </div>
 
-    <script>
-        const timelineTabs = document.querySelectorAll('.tab-button');
-        const timelineContainer = document.querySelector(".timeline-container");
-
-        const timelineData = {
-            education: [
-                {
-                    side: 'left',
-                    year: 2017,
-                    title: 'Sungkyunkwan University, Korea',
-                    subtitle: 'Mar 2017-Aug 2021',
-                    id: '170b4c07aa58801dac70cd2406559ca5',
-                    details: `
-                        <i>Bachelor of Engineering and Bachelor of Science in Psychology</i>
-                        <br>(1st) Dept. of Software, College of Software Convergence
-                        <br>(2nd) Dept. of Psychology, College of Social Sciences
-                    `
-                },
-                {
-                    side: 'left',
-                    year: 2019,
-                    title: 'The University of Texas at Dallas, United States',
-                    subtitle: 'Jan 2019-May 2019',
-                    id: '170b4c07aa588008903ed825d52ba812',
-                    details: `
-                        <i>Exchange Student</i>
-                    `
-                },
-                {
-                    side: 'left',
-                    year: 2021,
-                    title: 'Seoul National University, Korea',
-                    subtitle: 'Sep 2021-Feb 2024',
-                    id: '170b4c07aa58804e80faf5058ac08491',
-                    details: `
-                        <i>Master of Engineering</i>
-                        <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
-                        <br>Advisor: Prof. Joongseek Lee (UXLab)
-                        <br>* (Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving Long Entries in VA Journaling
-                    `
-                },
-                {
-                    side: 'right',
-                    year: 2020,
-                    title: 'Rihoz, Seoul, Korea',
-                    subtitle: 'Sep 2020-Dec 2020',
-                    id: '170b4c07aa5880049acac1fd0d5348af',
-                    details: `
-                        <i>Front-End Developer (Intern)</i>
-                        <br>• Contributed to the project ‘Dangjib (Your Smart Butler)’, a big data driven smart life service platform
-                        <br>• Focused on front-end development of the admin web page and the production app
-                    `
-                },
-                {
-                    side: 'right',
-                    year: 2024,
-                    title: 'SNU UXLab, Seoul, Korea',
-                    subtitle: 'March 2024-Aug 2024',
-                    id: '170b4c07aa5880768155e8c655941f3d',
-                    details: `
-                        <i>Project Manager (PM)</i>
-                        <br>• Led the project ‘Financial Hyper-Personalization Using MyData’ with HiUX
-                        <br>• Led the project ‘UX Evaluation of Text-Based Conversational Experiences’ with LG
-                    `
-                }
-            ],
-            projects: [
-                {
-                    side: 'left',
-                    year: 2021.07,
-                    title: 'Trend Recommendation Chatbot (Lab pj)',
-                    subtitle: '2 months (Jul 2021-Aug 2021)',
-                    id: '196b81a14320412ab2592b7c0a381c27',
-                    details: `
-                        #Conversational AI #Researcher  
-                        <br>Participated in all project phases and led the development stage.
-                    `
-                },
-                {
-                    side: 'left',
-                    year: 2021.09,
-                    title: 'Advancing Financial Chatbots via Voice Banking (with Taran UXD)',
-                    subtitle: '2 months (Sep 2021-Oct 2021)',
-                    id: 'd3d530dd1b144bb08d58515122bc0726',
-                    details: `
-                        #Conversational AI #Researcher
-                        <br>Contributed to research and user interviews.
-                    `
-                },
-                {
-                    side: 'left',
-                    year: 2022.01,
-                    title: 'Dream Journal Voice Agent (Lab pj)',
-                    subtitle: '4 months (Jan 2022-Apr 2022)',
-                    id: '7b9a2d1b3e4d4730a954a63ec4d30378',
-                    details: `
-                        #Conversational AI #Project Manager
-                        <br>Led all phases of the project.
-                    `
-                },
-                {
-                    side: 'left',
-                    year: 2022.09,
-                    title: 'Exhibition Mind Robots Integrated with AI (with KOCCA)',
-                    subtitle: '4 months (Sep 2022-Dec 2022)',
-                    id: 'cd10d260a5154d94825325fe6013ad60',
-                    details: `
-                        #Conversational AI #Developer
-                        <br>Led the development stage.
-                    `
-                },
-                {
-                    side: 'left',
-                    year: 2024.05,
-                    title: 'UX Evaluation of Text-Based Conversational Experiences (with LG)',
-                    subtitle: '4 months (May 2024-Aug 2024)',
-                    id: '118b4c07aa588086bd60f682d6403c7b',
-                    details: `
-                        #Conversational AI #Project Manager
-                        <br>Led all phases of the project.
-                    `
-                },
-                {
-                    side: 'right',
-                    year: 2022.03,
-                    title: 'UX Improvement for Shopping Platforms (with Naver Shopping)',
-                    subtitle: '4 months (Mar 2022-Jun 2022)',
-                    id: '0f5581ddde1646cba87031a0305453b9',
-                    details: `
-                        #User Experience #Researcher
-                        <br>Conducted log data analysis and participated in user interviews.
-                    `
-                },
-                {
-                    side: 'right',
-                    year: 2022.07,
-                    title: 'Opportunity Discovery for Home Appliance Subscription Services (with Samsung)',
-                    subtitle: '4 months (Jul 2022-Oct 2022)',
-                    id: '51972da67f87477a9138830cbc5f59fc',
-                    details: `
-                        #User Experience #Project Manager
-                        <br>Led all phases of the project.
-                    `
-                },
-                {
-                    side: 'right',
-                    year: 2023.01,
-                    title: 'Clothing Care Pilot for Shared Housing (with Samsung)',
-                    subtitle: '3 months (Jan 2023-Mar 2023)',
-                    id: '9221221ec6d940319b231302b77a5746',
-                    details: `
-                        #User Experience #Developer
-                        <br>Contributed to backend development.
-                    `
-                },
-                {
-                    side: 'right',
-                    year: 2024.03,
-                    title: 'Financial Hyper-Personalization Using MyData (with HiUX)',
-                    subtitle: '6 months (Mar 2024-Aug 2024)',
-                    id: '118b4c07aa588059ad4debdb5a5b70a3',
-                    details: `
-                        #User Experience #Project Manager
-                        <br>Led all phases of the project.
-                    `
-                },
-                {
-                    side: 'right',
-                    year: 2024.11,
-                    title: 'SNU Cultural Accessibility Site for People with Disabilities (with Institute for Culture and Arts)',
-                    subtitle: '2 months (Nov 2024-Dec 2024)',
-                    id: '170b4c07aa588075952eeba8235f7f32',
-                    details: `
-                        #User Experience #Developer
-                        <br>Led the development stage.
-                    `
-                }
-            ]
-        };
-
-        let activeTab = "education";
-        let startYear = 2017;
-        let endYear = 2024;
-
-        // 타임라인 아이템 렌더링 함수
-        function renderTimelineItems(tab) {
-            timelineContainer.innerHTML = `
-                <div class="timeline-line"></div>
-            `; // 타임라인 초기화
-
-            const items = timelineData[tab];
-            const timelineItems = [];
-
-            items.forEach(item => {
-                const timelineItem = document.createElement('div');
-                timelineItem.classList.add('timeline-item');
-                timelineItem.setAttribute('data-start-year', item.year);
-                timelineItem.setAttribute('data-side', item.side);
-                timelineItem.setAttribute('data-category', tab);
-                timelineItem.setAttribute('data-id', item.id);
-                timelineItem.setAttribute('data-title', item.title);
-                timelineItem.innerHTML = `
-                    <h3>
-                        ${tab == 'projects' ? `<a href="/project.html?id=${item.id}" target="_blank">${item.title}</a>` : item.title}    
-                    </h3>
-                    <h5>${item.subtitle}</h5>
-                    <p>${item.details}</p>
-                `;
-
-                timelineItems.push(timelineItem);
-            });
-
-            applyPosition(timelineItems);
-        }
-
-        // 위치 계산 및 적용 함수
-        function applyPosition(items) {
-            const sortedItems = Array.from(items).sort((a, b) => {
-                const yearA = parseFloat(a.getAttribute("data-start-year"));
-                const yearB = parseFloat(b.getAttribute("data-start-year"));
-                return yearA - yearB; // 시작 년도 기준 오름차순 정렬
-            });
-
-            let cumulativePosition = 50; // 첫 아이템 위치
-
-            sortedItems.forEach((item, index) => {
-                timelineContainer.appendChild(item);
-                const itemHeight = item.offsetHeight; // 실제 아이템의 높이
-
-                item.style.position = "absolute";
-                item.style.top = `${cumulativePosition}px`;
-
-                if (window.innerWidth > 640) {
-                    if (item.getAttribute("data-side") === "left") {
-                        item.classList.add("timeline-left");
-                        item.classList.remove("timeline-right");
-                    } else {
-                        item.classList.add("timeline-right");
-                        item.classList.remove("timeline-left");
-                    }
-                } else {
-                    item.classList.remove("timeline-left", "timeline-right");
-                }
-
-                cumulativePosition += itemHeight + (window.innerWidth > 640 ? 40 : 30);
-
-                setTimeout(() => {
-                    item.classList.add("visible");
-                }, index * 100);
-            });
-
-            timelineContainer.style.height = `${cumulativePosition}px`;
-        }
-
-        timelineTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                timelineTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                activeTab = tab.getAttribute('data-tab');
-                startYear = activeTab === "education" ? 2017 : 2021;
-                endYear = activeTab === "education" ? 2024 : 2024;
-
-                timelineContainer.style.height = "0px";
-                setTimeout(() => renderTimelineItems(activeTab), 500);
-            });
-        });
-
-        renderTimelineItems(activeTab);
-        window.addEventListener("resize", () => renderTimelineItems(activeTab));
-    </script>
     <script src="/static/script.js"></script>
 </body>
 
