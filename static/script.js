@@ -210,6 +210,8 @@ if (header) {
 
         let activeTab = "education";
 
+        const defaultQuestion = "Do you have a question? Click to ask!";
+
         // 타임라인 아이템 렌더링 함수
         function renderTimelineItems(tab) {
             timelineContainer.innerHTML = '<div class="timeline-line"></div>';
@@ -301,10 +303,10 @@ if (header) {
 
             handleSuggestion(item)
                 .then(suggestionText => {
-                    tooltip.innerText = suggestionText || "Do you have a question? Click to ask!";
+                    tooltip.innerText = suggestionText || defaultQuestion;
                 }).catch(error => {
                     console.error("Error fetching suggestion:", error);
-                    tooltip.innerText = "Do you have a question? Click to ask!";
+                    tooltip.innerText = defaultQuestion;
                 });
         }
 
@@ -320,14 +322,14 @@ if (header) {
             chatOverlay.style.display = "flex";
             state.isChatOpen = true;
 
-            if (state.lastSuggestedQuestion && state.lastSuggestedQuestion !== "Do you have a question? Click to ask!") {
+            if (state.lastSuggestedQuestion && state.lastSuggestedQuestion !== defaultQuestion) {
                 userInput.value = state.lastSuggestedQuestion;
                 sendMessage(chatBox, inputBox);
             }
         }
 
         async function handleSuggestion(item) {
-            let suggestionText = "Do you have a question? Click to ask!";
+            let suggestionText = defaultQuestion;
 
             if (state.isFetching) return suggestionText;
             state.isFetching = true;
@@ -340,10 +342,11 @@ if (header) {
                 });
 
                 const data = await response.json();
-                state.lastSuggestedQuestion = `Ask me, like ${data.question}` || "";
+                state.lastSuggestedQuestion = data.question || defaultQuestion;
                 suggestionText = `Ask me, like ${data.question}` || suggestionText;
             } catch (error) {
                 console.error("Error fetching suggestion:", error);
+                state.lastSuggestedQuestion = defaultQuestion;
             } finally {
                 state.isFetching = false;
                 return suggestionText;
