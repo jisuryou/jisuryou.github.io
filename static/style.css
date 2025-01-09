@@ -429,8 +429,9 @@ header {
     overflow-wrap: break-word;
 }
 
-.loading-indicator {
-    color: gray;
+.loading-indicator::after {
+    content: ".";
+    display: inline-block;
     animation: loadingDots 1s infinite;
 }
 
@@ -453,11 +454,11 @@ header {
     }
 }
 
-.loading-indicator .bot-message::after {
+/* .loading-indicator .bot-message::after {
     content: "";
     display: inline-block;
     animation: loadingDots 1s infinite;
-}
+} */
 
 .chat-header {
     display: flex;

@@ -289,7 +289,7 @@ if (header) {
 
         function showTooltip(dot, item) {
             const tooltip = document.createElement('div');
-            tooltip.classList.add('tooltip');
+            tooltip.classList.add("tooltip", "loading-indicator");
             tooltip.innerText = "...";
 
             // 반대쪽 위치에 말풍선 표시
@@ -304,9 +304,11 @@ if (header) {
             handleSuggestion(item)
                 .then(suggestionText => {
                     tooltip.innerText = suggestionText || defaultQuestion;
+                    tooltip.classList.remove("loading-indicator");
                 }).catch(error => {
                     console.error("Error fetching suggestion:", error);
                     tooltip.innerText = defaultQuestion;
+                    tooltip.classList.remove("loading-indicator");
                 });
         }
 
