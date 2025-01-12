@@ -52,7 +52,7 @@ if (header) {
                 side: 'right',
                 year: 2020,
                 title: 'Rihoz, Seoul, Korea',
-                subtitle: 'Sep 2020-Dec 2020',
+                subtitle: '4 months (Sep 2020-Dec 2020)',
                 id: '170b4c07aa5880049acac1fd0d5348af',
                 details: `
                         <i>Front-End Developer (Intern)</i>
@@ -64,7 +64,7 @@ if (header) {
                 side: 'right',
                 year: 2024,
                 title: 'SNU UXLab, Seoul, Korea',
-                subtitle: 'March 2024-Aug 2024',
+                subtitle: '6 months (March 2024-Aug 2024)',
                 id: '170b4c07aa5880768155e8c655941f3d',
                 details: `
                         <i>Project Manager (PM)</i>
