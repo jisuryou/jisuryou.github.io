@@ -81,11 +81,13 @@
                     <a href="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Projects-189b4c07aa588089b16adaac201dd005?pvs=4"
                         target="_blank" class="icon projects">
                         <i class="fa fa-folder-open"></i>
+                        <span class="badge">!</span>
                         <span>Projects</span>
                     </a>
                     <a href="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Publications-189b4c07aa588016a196ce7b0a6900ec?pvs=4"
                         target="_blank" class="icon publications">
                         <i class="fa fa-book"></i>
+                        <span class="badge">!</span>
                         <span>Publications</span>
                     </a>
                 </div>
@@ -477,20 +479,47 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         text-decoration: none;
         font-size: 14px;
         text-align: center;
         transition: transform 0.3s ease, color 0.3s ease;
         color: #565656;
-    }
-
-    #experience .icon i {
-        font-size: 30px;
-        margin-bottom: 5px;
+        width: 50px;
     }
 
     #experience .icon:hover {
         color: #00bcd4;
+    }
+
+    #experience .icon i {
+        position: relative;
+        font-size: 30px;
+        margin-bottom: 5px;
+    }
+
+    .badge {
+        position: absolute;
+        top: -5px; /* 🔹 i 태그보다 위쪽 */
+        right: -5px;
+        background-color: #E53935; /* 🔹 다홍색 */
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        z-index: 10;
+    }
+
+    #experience .icon i + .badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
     }
 
     /* 경력 */
