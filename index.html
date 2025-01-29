@@ -274,6 +274,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 90%;
+        max-width: 600px;
         justify-content: center;
         position: relative;
         top: calc(50% - 30vh);
@@ -305,6 +307,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%; 
+        max-width: 600px;
     }
 
     .intro-balloon {
@@ -315,12 +319,18 @@
         text-align: left;
         position: relative;
 
-        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+
+        width: 100%;
         max-width: 600px;
         height: 30vh;
         overflow-y: auto;
         overflow-x: hidden;
         font-size: 16px;
+        box-sizing: border-box;
     }
 
     .arrow-up {
@@ -337,12 +347,16 @@
     }
 
     .intro-text {
+        flex-grow: 1;
         line-height: 1.5;
+        width: 100%;
+        word-wrap: break-word;
     }
 
     /* 사용자 입력 영역 */
     .user-input-area {
-        width: 98%;
+        width: 100%;
+        max-width: 600px;
         display: flex;
         gap: 10px;
         margin-top: 20px;
@@ -585,7 +599,7 @@
         const sendButton = document.querySelector(".send-button");
         const introBalloon = document.querySelector(".intro-balloon .intro-text"); // 📌 말풍선 텍스트 요소 선택
 
-        let loadingInterval; 
+        let loadingInterval;
 
         async function sendMessage() {
             const userMessage = userInput.value.trim();
