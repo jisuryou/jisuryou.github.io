@@ -39,9 +39,9 @@
                 <div class="intro-container">
                     <div class="arrow-up"></div>
                     <div class="intro-balloon">
-                        <p class="intro-text">Hi, I'm Jisu Ryou, a UX researcher with a passion for conversational AI!
-                            <br>Skilled in UX research and full-stack development, transforming ideas into functional
-                            services. <br>Open to feedback and collaborations—let’s create something fun🤩
+                        <p class="intro-text">Hi, I'm Jisu Ryou, a UX researcher with a passion for <strong>conversational AI</strong>!
+                            <br>Skilled in <strong>UX research and full-stack development</strong>, transforming ideas into functional
+                            services. <br>Open to feedback and collaborations—let’s create meaningful UX🤩
                         </p>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
 
         <div id="education_employment">
             <div id="education">
-                <h2>Education</h2>
+                <h1>Education</h1>
                 <div class="block">
                     <h3>Sungkyunkwan University, Korea</h3><br>
                     <h5>Mar 2017-Aug 2021</h5><br>
@@ -124,8 +124,9 @@
                     </p>
                 </div>
             </div>
+            <br>
             <div id="employment">
-                <h2>Employment</h2>
+                <h1>Employment</h1>
                 <div class="block">
                     <h3>Rihoz, Seoul, Korea</h3><br>
                     <h5>4 months (Sep 2020-Dec 2020)</h5><br>
@@ -307,7 +308,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%; 
+        width: 100%;
         max-width: 600px;
     }
 
@@ -595,9 +596,30 @@
     window.addEventListener("load", adjustAlignment);
 
     document.addEventListener("DOMContentLoaded", () => {
+        const skillBlocks = document.querySelectorAll(".skill-block");
+        const introText = document.querySelector(".intro-text");
+
+        // 스킬별 설명 정의
+        const skillDescriptions = {
+            "Conversational AI Design": "I have experience in conversational AI design, working on various aspects from researching use cases to creating dialogue flows using <strong>Google Dialogflow</strong>. I work with <strong>NLP APIs, GPT models, and databases</strong> to create better interactions. My approach to conversational UX is informed by my experience with many chatbot and voicebot projects, including research work in voice-based interaction that has been published in CHI EA.",
+            "Project Management": "I have experience working with <strong>Agile methodology in small teams (5-6)</strong>, participating in research and development cycles. I help coordinate schedules, contribute to research methodologies, and work with stakeholders to support project execution. For project coordination, I use tools like <strong>Notion</strong> for documentation, <strong>Keynote</strong> for presentations, and <strong>Slack/Discord</strong> for team communication.",
+            "UX Research": "I have experience in mixed-method UX research, including behavioral analytics using <strong>Python</strong> for log data analysis and visualization. I conduct user interviews and workshops using various methods like <strong>Wizard of Oz testing, prototype evaluations, and think-aloud protocols</strong> for task-based studies. For deriving insights, I use techniques such as axial coding and affinity diagramming to analyze user data.",
+            "Full-stack Development": "I have experience developing full-stack applications with <strong>HTML, CSS, and JavaScript</strong>, using React and React Native for web and mobile platforms. I work with serverless architectures using <strong>Firebase and Google Cloud Functions</strong>, and integrate <strong>RESTful APIs and databases like Google Sheets and Firestore</strong>. I have also worked with cloud-based services on <strong>Google Cloud Run</strong> and use <strong>Git</strong> for version control."
+        };
+
+        // 각 스킬 블록 클릭 시 intro-balloon 업데이트
+        skillBlocks.forEach((block) => {
+            block.addEventListener("click", () => {
+                const skillName = block.querySelector(".skill-text").textContent;
+                if (skillDescriptions[skillName]) {
+                    introText.innerHTML = skillDescriptions[skillName];
+                }
+            });
+        });
+
         const userInput = document.querySelector(".user-input");
         const sendButton = document.querySelector(".send-button");
-        const introBalloon = document.querySelector(".intro-balloon .intro-text"); // 📌 말풍선 텍스트 요소 선택
+        // const introBalloon = document.querySelector(".intro-balloon .intro-text"); 
 
         let loadingInterval;
 
@@ -607,15 +629,15 @@
 
             userInput.value = "";
 
-            introBalloon.innerHTML = "";
+            introText.innerHTML = "";
 
             let loadingDots = "";
             let dotCount = 0;
 
             loadingInterval = setInterval(() => {
-                dotCount = (dotCount + 1) % 4; // 0, 1, 2, 3 순환
+                dotCount = (dotCount + 1) % 4;
                 loadingDots = ".".repeat(dotCount);
-                introBalloon.innerHTML = `...${loadingDots}`;
+                introText.innerHTML = `...${loadingDots}`;
             }, 500); // 0.5초마다 변화
 
             try {
@@ -629,10 +651,10 @@
                 const data = await response.json();
 
                 clearInterval(loadingInterval);
-                introBalloon.innerHTML = data.reply;
+                introText.innerHTML = data.reply;
             } catch (error) {
                 clearInterval(loadingInterval);
-                introBalloon.innerHTML = 'Oops! Something went wrong. Please try again.';
+                introText.innerHTML = 'Oops! Something went wrong. Please try again.';
                 console.error(error);
             }
         }
@@ -645,7 +667,6 @@
             }
         });
     });
-
 </script>
 
 </html>
