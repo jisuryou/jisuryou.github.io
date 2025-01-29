@@ -14,78 +14,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jisu Ryou's Portfolio</title>
-    <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
-    <!-- 헤더 -->
-    <header>
-        <div class="nav-links">
-            <a href="#intro">About</a>
-            <a href="#" id="chatbot-link">Chatbot</a>
-            <a href="#footer">Contact</a>
-        </div>
-        <a href="/CV_jisuryou_2024.pdf" target="_blank" class="download-cv">Download CV</a>
-    </header>
-
     <div class="content">
-        <div id="intro" class="section">
-            <div id="intro-header">
-                <div id="intro-photo">
-                    <img src="/image.png" alt="It's me!">
+        <div id="intro">
+            <div class="header">
+                <div class="status">
+                    <p>Freelancing & Job Seeking</p>
+                    <h2>Jisu Ryou</h2>
+                    <p>Project Manager</p>
+                    <p>/ UX Researcher</p>
                 </div>
-                <div id="intro-bubble" class="speech-bubble">
-                    <h1>👋🏻 I’m Jisu Ryou,<br>&nbsp; a junior UX researcher from Seoul</h1>
+                <div class="cv">
+                    <a href="/CV_jisuryou_2024.pdf" target="_blank" class="download-cv">Download CV</a>
+                    <p>Updated on Jan 28, 2025</p>
                 </div>
             </div>
-            <div id="intro-text" class="speech-bubble">
-                <p>
-                    A UX researcher with a Master’s degree in AI application services, specializing in <strong>conversational AI</strong>. Extensive experience includes designing chatbots and voice agents, with a strong focus on creating user-centered solutions. This page even features a chatbot—feel free to give it a try!
-                    <br>Also skilled in <strong>user experience research</strong> and <strong>full-stack development</strong>, capable of transforming ideas into fully functional services. Equipped with the tools and expertise to research, design, and develop services anytime, anywhere.
-                    <br>Feedback on this portfolio is greatly appreciated, and inquiries or connections are always welcome. Let’s create something fun!
-                </p>
+            <div class="central-content">
+                <div class="photo-container">
+                    <img src="/image.png" alt="jisuryou's photo" class="character-photo">
+                </div>
+                <div class="intro-container">
+                    <div class="arrow-up"></div>
+                    <div class="intro-balloon">
+                        <p class="intro-text">Hi, I'm Jisu Ryou, a UX researcher with a passion for conversational AI!
+                            <br>Skilled in UX research and full-stack development, transforming ideas into functional
+                            services. <br>Open to feedback and collaborations—let’s create something fun🤩
+                        </p>
+                    </div>
+                </div>
+                <div class="user-input-area">
+                    <input type="text" class="user-input" placeholder="Type your message..." />
+                    <button class="send-button"><i class="fa fa-paper-plane"></i></button>
+                </div>
             </div>
-        </div>
-        
-        <div id="timeline-tabs">
-            <button class="tab-button active" data-tab="education">Education & Employment</button>
-            <button class="tab-button" data-tab="projects">Projects</button>
-        </div>
-
-        <div id="timeline" class="section">
-            <div class="timeline-container">
-                <div class="timeline-left"></div>
-                <div class="timeline-line"></div>
-                <div class="timeline-right"></div>
-            </div>
-        </div>
-
-        <!-- 챗 인터페이스 -->
-        <div id="mobile-chat-interface" class="section">
-            <div id="mobile-chat-container">
-                <div class="chat-box">
-                    <div class="bot-message-container">
-                        <img src="/image.png" alt="It's me!" />
-                        <div class="message bot-message">For more information about my projects, please try to use this!
+            <div class="skills-experience-container">
+                <div id="skills">
+                    <div class="skill-block">
+                        <div class="hexagon">
+                            <i class="fa fa-robot"></i>
                         </div>
+                        <p class="skill-text">Conversational AI Design</p>
                     </div>
-                    <div class="input-box">
-                        <input type="text" class="user-input" placeholder="Type your message in English or Korean…" />
-                        <button class="send-button"><i class="fa fa-paper-plane"></i></button>
+                    <div class="skill-block">
+                        <div class="hexagon">
+                            <i class="fa fa-tasks"></i>
+                        </div>
+                        <p class="skill-text">Project Management</p>
                     </div>
+                    <div class="skill-block">
+                        <div class="hexagon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <p class="skill-text">UX Research</p>
+                    </div>
+                    <div class="skill-block">
+                        <div class="hexagon">
+                            <i class="fa fa-code"></i>
+                        </div>
+                        <p class="skill-text">Full-stack Development</p>
+                    </div>
+                </div>
+                <div id="experience">
+                    <a href="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Projects-189b4c07aa588089b16adaac201dd005?pvs=4"
+                        target="_blank" class="icon projects">
+                        <i class="fa fa-folder-open"></i>
+                        <span>Projects</span>
+                    </a>
+                    <a href="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Publications-189b4c07aa588016a196ce7b0a6900ec?pvs=4"
+                        target="_blank" class="icon publications">
+                        <i class="fa fa-book"></i>
+                        <span>Publications</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="education_employment">
+            <div id="education">
+                <h2>Education</h2>
+                <div class="block">
+                    <h3>Sungkyunkwan University, Korea</h3><br>
+                    <h5>Mar 2017-Aug 2021</h5><br>
+                    <p>
+                        <i>Bachelor of Engineering and Bachelor of Science in Psychology</i>
+                        <br>(1st) Dept. of Software, College of Software Convergence
+                        <br>(2nd) Dept. of Psychology, College of Social Sciences
+                    </p>
+                </div>
+                <div class="block">
+                    <h3>The University of Texas at Dallas, United States</h3><br>
+                    <h5>Jan 2019-May 2019</h5><br>
+                    <p>
+                        <i>Exchange Student</i>
+                    </p>
+                </div>
+                <div class="block">
+                    <h3>Seoul National University, Korea</h3><br>
+                    <h5>Sep 2021-Feb 2024</h5><br>
+                    <p>
+                        <i>Master of Engineering</i>
+                        <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and
+                        Technology (GSCST)
+                        <br>Advisor: Prof. Joongseek Lee (UXLab)
+                        <br>* (Best Paper) Study on a VA Journaling System: Focusing on Response Styles for Receiving
+                        Long Entries in VA Journaling
+                    </p>
+                </div>
+            </div>
+            <div id="employment">
+                <h2>Employment</h2>
+                <div class="block">
+                    <h3>Rihoz, Seoul, Korea</h3><br>
+                    <h5>4 months (Sep 2020-Dec 2020)</h5><br>
+                    <p>
+                        <i>Front-End Developer Intern (Full-time)</i>
+                        <br>• Contributed to the project ‘Dangjib (Your Smart Butler)’, a big data driven smart life
+                        service platform
+                        <br>• Focused on front-end development of the admin web page and the production app
+                    </p>
+                </div>
+                <div class="block">
+                    <h3>SNU UXLab, Seoul, Korea</h3><br>
+                    <h5>2 years (Sep 2021-Aug 2023)</h5><br>
+                    <p>
+                        <i>Student Researcher (Part-time)</i>
+                        <br>• Led the project 'Opportunity Discovery for Home Appliance Subscription Services'
+                        <br>• Led the project 'Dream Journal Voice Agent Development'
+                        <br>• Led the development phase of the project 'Exhibition Mind Robots Integrated with AI'
+                        <br>• Led the development phase of the project 'Clothing Care Pilot for Shared Housing'
+                        <br>• Participated in UX research for the project 'UX Improvement for Shopping Platforms'
+                        <br>• Participated in UX research for the project 'Advancing Financial Chatbots via Voice
+                        Banking'
+                    </p>
+                </div>
+                <div class="block">
+                    <h3>SNU UXLab, Seoul, Korea</h3><br>
+                    <h5>6 months (March 2024-Aug 2024)</h5><br>
+                    <p>
+                        <i>Project Manager (Full-time)</i>
+                        <br>• Led the project ‘Financial Hyper-Personalization Using MyData’ with HiUX
+                        <br>• Led the project ‘UX Evaluation of Text-Based Conversational Experiences’ with LG
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- 푸터 -->
-    <footer id="footer" class="section">
+    <footer id="footer">
         <div id="footer-text">
             <p>
                 &copy; 2024 Jisu Ryou. All rights reserved.
-                <br> The chatbot is still under development. Please understand that all conversations will be used for
-                chatbot training.
             </p>
         </div>
         <div id="footer-contact">
@@ -100,28 +182,456 @@
             </a>
         </div>
     </footer>
-
-    <div id="desktop-chat-overlay">
-        <div id="desktop-chat-container">
-            <div class="chat-header">
-                <span>Ask Me Anything</span>
-                <button class="close-button">&times;</button>
-            </div>
-            <div class="chat-box">
-                <div class="bot-message-container">
-                    <img src="/image.png" alt="It's me!">
-                    <div class="message bot-message">For more information about my projects, please try to use this!
-                    </div>
-                </div>
-                <div class="input-box">
-                    <input type="text" class="user-input" placeholder="Type your message in English or Korean…" />
-                    <button class="send-button"><i class="fa fa-paper-plane"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="/static/script.js"></script>
 </body>
+
+<style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        font-family: "Nanum Gothic", "Noto Sans KR", "Malgun Gothic", sans-serif;
+        background-color: #f5f5f5;
+        color: #333;
+        overflow-x: hidden;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+    }
+
+    #intro {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding-top: 150px;
+    }
+
+    .header {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 640px;
+        text-align: left;
+        height: 150px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    /* 좌측 상단 상태 */
+    .status {
+        position: relative;
+        z-index: 10;
+    }
+
+    .status p,
+    .status h2 {
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    .status p:first-child {
+        background-color: #00bcd4;
+    }
+
+    /* 우측 상단 다운로드 CV */
+    .cv {
+        position: relative;
+        text-align: right;
+    }
+
+    .cv a {
+        padding: 10px 15px;
+        background-color: #757575;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+    .cv a:hover {
+        background-color: #565656;
+    }
+
+    .cv p {
+        margin-top: 20px;
+        font-size: 12px;
+    }
+
+    .central-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        top: calc(50% - 30vh);
+        transform: translateY(-45%);
+    }
+
+    /* 중앙 캐릭터 이미지 */
+    .photo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 200px;
+        height: 200px;
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+    .character-photo {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 말풍선 */
+    .intro-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .intro-balloon {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 0 20px;
+        color: #333;
+        text-align: left;
+        position: relative;
+
+        width: 90%;
+        max-width: 600px;
+        height: 30vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        font-size: 16px;
+    }
+
+    .arrow-up {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid #ffffff;
+        z-index: 1;
+    }
+
+    .intro-text {
+        line-height: 1.5;
+    }
+
+    /* 사용자 입력 영역 */
+    .user-input-area {
+        width: 98%;
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .user-input {
+        flex: 1;
+        padding: 10px;
+        border: 2px solid #555;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .send-button {
+        padding: 10px;
+        width: 40px;
+        background-color: #757575;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .send-button:hover {
+        background-color: #565656;
+    }
+
+    .skills-experience-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: absolute;
+        width: 90vw;
+        max-width: 600px;
+    }
+
+    /* 자동 중앙 정렬 */
+    #skills {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        position: relative;
+    }
+
+    .skill-block {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .hexagon {
+        position: relative;
+        width: 40px;
+        height: 45px;
+        background-color: #e0e0e0;
+        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        overflow: visible !important;
+    }
+
+    .hexagon i {
+        font-size: 20px;
+        color: #333;
+        z-index: 2;
+    }
+
+    .skill-text {
+        position: absolute;
+        left: 100%;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        opacity: 0;
+        white-space: nowrap;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 1000;
+        background-color: #ffffff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .skill-block:hover .skill-text {
+        opacity: 1 !important;
+        transform: translateX(10px);
+    }
+
+    .skill-block:nth-child(odd) {
+        transform: translateX(0);
+        /* 홀수번째는 제자리 */
+    }
+
+    .skill-block:nth-child(even) {
+        transform: translateX(20px);
+        /* 짝수번째는 오른쪽으로 이동 */
+    }
+
+    #experience {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        position: relative;
+    }
+
+    #experience .icon {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        font-size: 14px;
+        text-align: center;
+        transition: transform 0.3s ease, color 0.3s ease;
+        color: #565656;
+    }
+
+    #experience .icon i {
+        font-size: 30px;
+        margin-bottom: 5px;
+    }
+
+    #experience .icon:hover {
+        color: #00bcd4;
+    }
+
+    /* 경력 */
+    #education_employment {
+        width: 100%;
+        line-height: 1.7;
+        padding: 0 20px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    .block {
+        margin-bottom: 10px;
+    }
+
+    .block h3,
+    .block h5,
+    .block p {
+        display: inline-block;
+        margin: 5px 0;
+    }
+
+    /* 푸터 */
+    #footer {
+        height: 15%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #footer-text {
+        font-family: 'Noto Sans', sans-serif;
+        font-size: 0.8rem;
+        padding: 20px;
+    }
+
+    #footer-contact {
+        display: flex;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .footer-link {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        color: #757575;
+        font-size: 1.5rem;
+    }
+
+    .footer-link:hover {
+        color: #565656;
+    }
+
+    @media screen and (max-width: 420px) {
+        .character-photo {
+            width: 150px;
+            height: 150px;
+        }
+
+        .hexagon {
+            width: 30px;
+            height: 35px;
+        }
+
+        .hexagon i {
+            font-size: 16px;
+        }
+
+        .skill-text {
+            font-size: 12px;
+        }
+
+        #experience .icon {
+            font-size: 12px;
+        }
+
+        #experience .icon i {
+            font-size: 25px;
+        }
+
+        .intro-balloon {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<script>
+    function adjustAlignment() {
+        const centralContent = document.querySelector(".central-content");
+        const photo = document.querySelector(".photo-container");
+        const skillsExpContainer = document.querySelector(".skills-experience-container");
+
+        // `central-content` 기준으로 `photo-container`의 중앙 위치 계산
+        const P_center = photo.getBoundingClientRect().top + window.scrollY + (photo.offsetHeight / 2);
+
+        // `skills-experience-container`의 높이 계산
+        const containerHeight = skillsExpContainer.offsetHeight;
+
+        // 정확한 중앙 정렬을 위해 `top` 조정 (부모 기준 유지)
+        skillsExpContainer.style.top = `${P_center - (containerHeight / 2)}px`;
+    }
+
+    // 화면 크기 변경 시 자동 조정
+    window.addEventListener("resize", adjustAlignment);
+    window.addEventListener("load", adjustAlignment);
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const userInput = document.querySelector(".user-input");
+        const sendButton = document.querySelector(".send-button");
+        const introBalloon = document.querySelector(".intro-balloon .intro-text"); // 📌 말풍선 텍스트 요소 선택
+
+        let loadingInterval; 
+
+        async function sendMessage() {
+            const userMessage = userInput.value.trim();
+            if (!userMessage) return;
+
+            userInput.value = "";
+
+            introBalloon.innerHTML = "";
+
+            let loadingDots = "";
+            let dotCount = 0;
+
+            loadingInterval = setInterval(() => {
+                dotCount = (dotCount + 1) % 4; // 0, 1, 2, 3 순환
+                loadingDots = ".".repeat(dotCount);
+                introBalloon.innerHTML = `...${loadingDots}`;
+            }, 500); // 0.5초마다 변화
+
+            try {
+                const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userMessage }),
+                    credentials: "include",
+                });
+
+                const data = await response.json();
+
+                clearInterval(loadingInterval);
+                introBalloon.innerHTML = data.reply;
+            } catch (error) {
+                clearInterval(loadingInterval);
+                introBalloon.innerHTML = 'Oops! Something went wrong. Please try again.';
+                console.error(error);
+            }
+        }
+
+        sendButton.addEventListener("click", sendMessage);
+        userInput.addEventListener("keypress", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+    });
+
+</script>
 
 </html>
