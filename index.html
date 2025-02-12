@@ -25,14 +25,11 @@
                     <p>Freelancing & Job Seeking</p>
                     <h2>Jisu Ryou</h2>
                     <p>Project Manager</p>
-                    <p>/ UX Researcher</p>
                 </div>
                 <div class="cv">
                     <a href="/CV_jisuryou_2024 (en).pdf" 
                         target="_blank" 
-                        class="download-cv" 
-                        data-ko="/CV_jisuryou_2024 (ko).pdf"
-                        data-en="/CV_jisuryou_2024 (en).pdf">
+                        class="download-cv">
                         Download CV
                     </a>
                     <p>Updated on Feb 12, 2025</p>
@@ -711,6 +708,7 @@
 
     document.addEventListener("DOMContentLoaded", () => {
         const langOptions = document.querySelectorAll(".lang-option");
+        const cvLink = document.querySelector(".download-cv");
         const introText = document.querySelector(".intro-text");
         const skillBlocks = document.querySelectorAll(".skill-block");
         const userInput = document.querySelector(".user-input");
@@ -718,7 +716,6 @@
         const introBalloon = document.querySelector(".intro-balloon");
         const blocks = document.querySelectorAll(".block");
         const experienceLinks = document.querySelectorAll("#experience .icon");
-
 
         let selectedLang = localStorage.getItem("selectedLang") || "en";
 
@@ -766,6 +763,10 @@
                     link.setAttribute("href", newHref);
                 }
             });
+
+            if (cvLink) {
+                cvLink.setAttribute("href", lang === "ko" ? "/CV_jisuryou_2024 (ko).pdf" : "/CV_jisuryou_2024 (en).pdf");
+            }
 
             const currentSkill = document.querySelector(".skill-block.active")?.querySelector(".skill-text").textContent;
             if (currentSkill && skillDescriptions[currentSkill]) {
