@@ -15,6 +15,513 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jisu Ryou's Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: "Nanum Gothic", "Noto Sans KR", "Malgun Gothic", sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        #intro {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding-top: 150px;
+        }
+
+        .header {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 640px;
+            text-align: left;
+            height: 150px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* 좌측 상단 상태 */
+        .status {
+            position: relative;
+            z-index: 10;
+        }
+
+        .status p,
+        .status h2 {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .status p:first-child {
+            background-color: #00bcd4;
+        }
+
+        /* 우측 상단 다운로드 CV */
+        .cv {
+            position: relative;
+            text-align: right;
+        }
+
+        .cv a {
+            padding: 10px 15px;
+            background-color: #757575;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cv a:hover {
+            background-color: #565656;
+        }
+
+        .cv p {
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        .central-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 600px;
+            justify-content: center;
+            position: relative;
+            top: calc(50% - 30vh);
+            transform: translateY(-45%);
+        }
+
+        /* 중앙 캐릭터 이미지 */
+        .photo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .character-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 말풍선 */
+        .intro-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .intro-balloon {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 0 20px;
+            color: #333;
+            text-align: left;
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+
+            width: 100%;
+            max-width: 600px;
+            height: 30vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .arrow-up {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #ffffff;
+            z-index: 1;
+        }
+
+        .intro-text {
+            flex-grow: 1;
+            line-height: 1.5;
+            width: 100%;
+            word-wrap: break-word;
+        }
+
+        /* 사용자 입력 영역 */
+        .user-input-area {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .user-input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #555;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .send-button {
+            padding: 10px;
+            width: 40px;
+            background-color: #757575;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .send-button:hover {
+            background-color: #565656;
+        }
+
+        .skills-experience-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: absolute;
+            width: 90vw;
+            max-width: 600px;
+        }
+
+        /* 자동 중앙 정렬 */
+        #skills {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .skill-block {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .hexagon {
+            position: relative;
+            width: 40px;
+            height: 45px;
+            background-color: #e0e0e0;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            overflow: visible !important;
+        }
+
+        .hexagon i {
+            font-size: 20px;
+            color: #333;
+            z-index: 2;
+        }
+
+        .skill-text {
+            position: absolute;
+            left: 100%;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            opacity: 0;
+            white-space: nowrap;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 1000;
+            background-color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-block:hover .skill-text {
+            opacity: 1 !important;
+            transform: translateX(10px);
+        }
+
+        .skill-block:hover .hexagon {
+            color: #00bcd4;
+        }
+
+        .skill-block:nth-child(odd) {
+            transform: translateX(0);
+            /* 홀수번째는 제자리 */
+        }
+
+        .skill-block:nth-child(even) {
+            transform: translateX(20px);
+            /* 짝수번째는 오른쪽으로 이동 */
+        }
+
+        #experience {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        #experience .icon {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 14px;
+            text-align: center;
+            transition: transform 0.3s ease, color 0.3s ease;
+            color: #565656;
+            width: 50px;
+        }
+
+        #experience .icon:hover {
+            color: #00bcd4;
+        }
+
+        #experience .icon i {
+            position: relative;
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #E53935;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        #experience .icon i+.badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        /* 경력 */
+        #education_employment {
+            width: 100%;
+            line-height: 1.7;
+            padding: 0 20px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .block {
+            margin-bottom: 10px;
+        }
+
+        .block h3,
+        .block h5,
+        .block p {
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .block h5 {
+            font-size: 10px;
+        }
+
+        .block p {
+            font-size: 12px;
+        }
+
+        /* 푸터 */
+        #footer {
+            height: 15%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #footer-text {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 0.8rem;
+            padding: 20px;
+        }
+
+        #footer-contact {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            color: #757575;
+            font-size: 1.5rem;
+        }
+
+        .footer-link:hover {
+            color: #565656;
+        }
+
+        .lang-select {
+            position: absolute;
+            top: -40px;
+            display: flex;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .lang-option {
+            cursor: pointer;
+            padding: 3px 6px;
+            border-radius: 5px;
+            transition: 0.3s ease;
+        }
+
+        .lang-option:hover {
+            background-color: #ddd;
+        }
+
+        .lang-option.active {
+            color: #00bcd4;
+            font-weight: bold;
+            border-bottom: 2px solid #00bcd4;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #notionFrame {
+            width: 100%;
+            height: calc(100% - 40px);
+            border: none;
+        }
+
+        .project-link {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: #00bcd4;
+        }
+
+        @media screen and (max-width: 420px) {
+            .character-photo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .hexagon {
+                width: 30px;
+                height: 35px;
+            }
+
+            .hexagon i {
+                font-size: 16px;
+            }
+
+            .skill-text {
+                font-size: 12px;
+            }
+
+            #experience .icon {
+                font-size: 12px;
+            }
+
+            #experience .icon i {
+                font-size: 25px;
+            }
+
+            .intro-balloon {
+                font-size: 14px;
+            }
+
+            .lang-select {
+                top: -15px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -27,9 +534,7 @@
                     <p>Project Manager</p>
                 </div>
                 <div class="cv">
-                    <a href="/CV_jisuryou_2024 (en).pdf" 
-                        target="_blank" 
-                        class="download-cv">
+                    <a href="/CV_jisuryou_2024 (en).pdf" target="_blank" class="download-cv">
                         Download CV
                     </a>
                     <p>Updated on Feb 12, 2025</p>
@@ -130,16 +635,18 @@
                     <h5>2019년 1월 - 2019년 5월</h5><br>
                     <p><i>교환학생</i></p>'>
                 </div>
-                <div class="block" data-en='<h3>Seoul National University, Korea</h3><br>
+                <div class="block"
+                    data-en='<h3>Seoul National University, Korea</h3><br>
                     <h5>Sep 2021 - Feb 2024</h5><br>
                     <p><i>Master of Engineering</i>
                         <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
                         <br>Advisor: Prof. Joongseek Lee (UXLab)
-                        <br>* (Best Paper) Study on a VA Journaling System</p>' data-ko='<h3>서울대학교, 대한민국</h3><br>
+                        <br>* (Best Paper Graduation) Study on a VA Journaling System : Focusing on Response Styles for Receiving Long Utterances in VA Journaling</p>'
+                    data-ko='<h3>서울대학교, 대한민국</h3><br>
                     <h5>2021년 9월 - 2024년 2월</h5><br>
                     <p><i>공학 석사</i><br>융합과학기술대학원 지능정보융합학과
-                        <br>UX 사용자 경험 연구실 (지도교수 이중식)
-                        <br>* (우수 논문) 음성 에이전트를 활용한 일기 시스템에 관한 연구</p>'>
+                        <br>사용자 경험 연구실 (지도교수 이중식)
+                        <br>* (우수 논문 졸업) 음성 에이전트를 활용한 일기 시스템에 관한 연구 : VA 저널링에서 긴 기록을 받기 위한 응답 스타일을 중심으로</p>'>
                 </div>
             </div>
             <br>
@@ -159,60 +666,132 @@
                 <div class="block" data-en='<h3>SNU UXLab, Seoul, Korea</h3><br>
                     <h5>2 years (Sep 2021 - Aug 2023)</h5><br>
                     <p><i>Student Researcher (Part-time)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">Advancing Financial Chatbots via Voice Banking</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880bd8447ec5061c02ea5" class="project-link">
+                                Advancing Financial Chatbots via Voice Banking
+                            </a>
+                        </strong>
                         <br>• Conducted prototype testing and user interviews
-                        <br><strong style="display: inline-block; margin-top: 10px;">Dream Journal Voice Agent Development</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58803b86f3f24e5df10f3a" class="project-link">
+                                Dream Journal Voice Agent Development
+                            </a>
+                        </strong>
                         <br>• Managed project
                         <br>• Explored use cases and planned services, designed conversation flows and implemented technical solutions, and conducted user interviews and analyzed data
-                        <br><strong style="display: inline-block; margin-top: 10px;">UX Improvement for Shopping Platforms</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a727f220e1655943" class="project-link">
+                                UX Improvement for Shopping Platforms
+                            </a>
+                        </strong>
                         <br>• Analyzed shopping sequences and app UI layouts, and conducted user interviews
-                        <br><strong style="display: inline-block; margin-top: 10px;">Opportunity Discovery for Home Appliance Subscription Services</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880e88b2efcb03654e7bd" class="project-link">
+                                Opportunity Discovery for Home Appliance Subscription Services
+                            </a>
+                        </strong>
                         <br>• Managed project
                         <br>• Researched subscription service case studies and market trends, ideated, and proposed strategic recommendations
-                        <br><strong style="display: inline-block; margin-top: 10px;">Exhibition Mind Robots Integrated with AI</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a3d5c5b4ffcf7365" class="project-link">
+                                Exhibition Mind Robots Integrated with AI
+                            </a>
+                        </strong>
                         <br>• Designed conversation flows and implemented technical solutions
-                        <br><strong style="display: inline-block; margin-top: 10px;">Clothing Care Pilot for Shared Housing</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58800ca588cdc57059784d" class="project-link">
+                                Clothing Care Pilot for Shared Housing
+                            </a>
+                        </strong>
                         <br>• Designed database and developed backend
                     </p>' data-ko='<h3>서울대학교 UXLab, 서울, 대한민국</h3><br>
                     <h5>2년 (2021년 9월 - 2023년 8월)</h5><br>
                     <p><i>학생 연구원 (파트타임)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">말로 하는 은행을 통한 금융 챗봇 발전 방향 탐구 프로젝트</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881149193f914215f97a6" class="project-link">
+                                말로 하는 은행을 통한 금융 챗봇 발전 방향 탐구 프로젝트
+                            </a>
+                        </strong>
                         <br>• 프로토타입 사용 실험 진행 및 유저 인터뷰
-                        <br><strong style="display: inline-block; margin-top: 10px;">꿈기록 보이스 에이전트 개발 프로젝트</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881299241c5b3fdfec5ed" class="project-link">
+                                꿈기록 보이스 에이전트 개발 프로젝트
+                            </a>
+                        </strong>
                         <br>• 프로젝트 관리
                         <br>• 유즈케이스 탐색 및 서비스 기획, 대화 설계 및 기술 구현, 유저 인터뷰 및 데이터 분석
-                        <br><strong style="display: inline-block; margin-top: 10px;">사용자 로그 데이터 기반 네이버 쇼핑 UX 개선 프로젝트</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881e4b30bdb1f4e63f4b2" class="project-link">
+                                사용자 로그 데이터 기반 네이버 쇼핑 UX 개선 프로젝트
+                            </a>
+                        </strong>
                         <br>• 쇼핑 시퀀스 및 앱 UI 레이아웃 분석, 유저 인터뷰
-                        <br><strong style="display: inline-block; margin-top: 10px;">가전 구독 서비스 전략 및 기회 발굴 조사 프로젝트</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881bea7aaf56b25cc02a7" class="project-link">
+                                가전 구독 서비스 전략 및 기회 발굴 조사 프로젝트
+                            </a>
+                        </strong>
                         <br>• 프로젝트 관리
                         <br>• 구독 서비스 사례와 시장 트렌드 조사, 아이디에이션 및 전략 제안
-                        <br><strong style="display: inline-block; margin-top: 10px;">AI와 결합한 전시/공연용 휴머노이드 로봇・마인드 로봇 개발 프로젝트</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881f0abb4ca9290c23e7c" class="project-link">
+                                AI와 결합한 전시/공연용 휴머노이드 로봇・마인드 로봇 개발 프로젝트
+                            </a>
+                        </strong>
                         <br>• 대화 설계 및 기술 구현
-                        <br><strong style="display: inline-block; margin-top: 10px;">공유 주거 clothing care pilot 개발 프로젝트</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881548e21eeced44877ba" class="project-link">
+                                공유 주거 clothing care pilot 개발 프로젝트
+                            </a>
+                        </strong>
                         <br>• 데이터베이스 설계, 백엔드 개발
                         </p>'>
                 </div>
                 <div class="block" data-en='<h3>SNU UXLab, Seoul, Korea</h3><br>
                     <h5>6 months (March 2024 - Aug 2024)</h5><br>
                     <p><i>Project Manager (Full-time)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">Financial Hyper-Personalization Using MyData</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58805dbd09f97347440344" class="project-link">
+                                Financial Hyper-Personalization Using MyData
+                            </a>
+                        </strong>
                         <br>• Managed project
                         <br>• Conducted fintech app research and user interviews, proposed strategic recommendations, performed data analysis, and designed financial alerts
-                        <br><strong style="display: inline-block; margin-top: 10px;">UX Evaluation of Text-Based Conversational Experiences</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588070bc09ec7e68938e06" class="project-link">
+                                UX Evaluation of Text-Based Conversational Experiences
+                            </a>
+                        </strong>
                         <br>• Managed project
                         <br>• Engineered LLM prompts and developed an automated evaluation system
                     </p>' data-ko='<h3>서울대학교 UXLab, 서울, 대한민국</h3><br>
                     <h5>6개월 (2024년 3월 - 2024년 8월)</h5><br>
                     <p><i>프로젝트 매니저 (풀타임)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">마이데이터 활용한 금융 초개인화 방안 탐색 프로젝트</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881a1a9e5cfbc953eb03f" class="project-link">
+                                마이데이터 활용한 금융 초개인화 방안 탐색 프로젝트
+                            </a>
+                        </strong>
                         <br>• 프로젝트 관리
                         <br>• 핀테크 앱 리서치 및 유저 인터뷰, 전략 제안, 데이터 분석 및 금융 알림 설계
-                        <br><strong style="display: inline-block; margin-top: 10px;">텍스트 기반 대화 경험의 UX 평가 프로젝트</strong>
+                        <br><strong style="display: inline-block; margin-top: 10px;">
+                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa58817dbf88f76dce8b33a7" class="project-link">
+                                텍스트 기반 대화 경험의 UX 평가 프로젝트
+                            </a>
+                        </strong>
                         <br>• 프로젝트 관리
                         <br>• LLM 프롬프트 엔지니어링, 자동화 평가 시스템 설계 및 개발
                     </p>'>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 노션 모달 팝업 -->
+    <div id="notionModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <iframe id="notionFrame" src="" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -235,626 +814,199 @@
             </a>
         </div>
     </footer>
-</body>
 
-<style>
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        font-family: "Nanum Gothic", "Noto Sans KR", "Malgun Gothic", sans-serif;
-        background-color: #f5f5f5;
-        color: #333;
-        overflow-x: hidden;
-    }
+    <script>
+        function adjustAlignment() {
+            const centralContent = document.querySelector(".central-content");
+            const photo = document.querySelector(".photo-container");
+            const skillsExpContainer = document.querySelector(".skills-experience-container");
 
-    .content {
-        width: 100%;
-        max-width: 640px;
-        margin: 0 auto;
-    }
+            const P_center = photo.getBoundingClientRect().top + window.scrollY + (photo.offsetHeight / 2);
 
-    #intro {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        padding-top: 150px;
-    }
+            const containerHeight = skillsExpContainer.offsetHeight;
 
-    .header {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        max-width: 640px;
-        text-align: left;
-        height: 150px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    /* 좌측 상단 상태 */
-    .status {
-        position: relative;
-        z-index: 10;
-    }
-
-    .status p,
-    .status h2 {
-        margin: 0;
-        line-height: 1.4;
-    }
-
-    .status p:first-child {
-        background-color: #00bcd4;
-    }
-
-    /* 우측 상단 다운로드 CV */
-    .cv {
-        position: relative;
-        text-align: right;
-    }
-
-    .cv a {
-        padding: 10px 15px;
-        background-color: #757575;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 14px;
-        transition: background-color 0.3s ease;
-    }
-
-    .cv a:hover {
-        background-color: #565656;
-    }
-
-    .cv p {
-        margin-top: 20px;
-        font-size: 12px;
-    }
-
-    .central-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 90%;
-        max-width: 600px;
-        justify-content: center;
-        position: relative;
-        top: calc(50% - 30vh);
-        transform: translateY(-45%);
-    }
-
-    /* 중앙 캐릭터 이미지 */
-    .photo-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 200px;
-        height: 200px;
-        position: relative;
-        margin-bottom: 30px;
-    }
-
-    .character-photo {
-        width: 200px;
-        height: 200px;
-        border-radius: 50%;
-        border: 4px solid #fff;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    }
-
-    /* 말풍선 */
-    .intro-container {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        max-width: 600px;
-    }
-
-    .intro-balloon {
-        background-color: #ffffff;
-        border-radius: 15px;
-        padding: 0 20px;
-        color: #333;
-        text-align: left;
-        position: relative;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: stretch;
-
-        width: 100%;
-        max-width: 600px;
-        height: 30vh;
-        overflow-y: auto;
-        overflow-x: hidden;
-        font-size: 16px;
-        box-sizing: border-box;
-    }
-
-    .arrow-up {
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-bottom: 10px solid #ffffff;
-        z-index: 1;
-    }
-
-    .intro-text {
-        flex-grow: 1;
-        line-height: 1.5;
-        width: 100%;
-        word-wrap: break-word;
-    }
-
-    /* 사용자 입력 영역 */
-    .user-input-area {
-        width: 100%;
-        max-width: 600px;
-        display: flex;
-        gap: 10px;
-        margin-top: 20px;
-    }
-
-    .user-input {
-        flex: 1;
-        padding: 10px;
-        border: 2px solid #555;
-        border-radius: 5px;
-        font-size: 14px;
-    }
-
-    .send-button {
-        padding: 10px;
-        width: 40px;
-        background-color: #757575;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .send-button:hover {
-        background-color: #565656;
-    }
-
-    .skills-experience-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: absolute;
-        width: 90vw;
-        max-width: 600px;
-    }
-
-    /* 자동 중앙 정렬 */
-    #skills {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        position: relative;
-    }
-
-    .skill-block {
-        position: relative;
-        display: flex;
-        align-items: center;
-    }
-
-    .hexagon {
-        position: relative;
-        width: 40px;
-        height: 45px;
-        background-color: #e0e0e0;
-        clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        overflow: visible !important;
-    }
-
-    .hexagon i {
-        font-size: 20px;
-        color: #333;
-        z-index: 2;
-    }
-
-    .skill-text {
-        position: absolute;
-        left: 100%;
-        font-size: 14px;
-        font-weight: bold;
-        color: #333;
-        opacity: 0;
-        white-space: nowrap;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-        z-index: 1000;
-        background-color: #ffffff;
-        padding: 5px 10px;
-        border-radius: 5px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .skill-block:hover .skill-text {
-        opacity: 1 !important;
-        transform: translateX(10px);
-    }
-
-    .skill-block:hover .hexagon {
-        color: #00bcd4;
-    }
-
-    .skill-block:nth-child(odd) {
-        transform: translateX(0);
-        /* 홀수번째는 제자리 */
-    }
-
-    .skill-block:nth-child(even) {
-        transform: translateX(20px);
-        /* 짝수번째는 오른쪽으로 이동 */
-    }
-
-    #experience {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        position: relative;
-    }
-
-    #experience .icon {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        font-size: 14px;
-        text-align: center;
-        transition: transform 0.3s ease, color 0.3s ease;
-        color: #565656;
-        width: 50px;
-    }
-
-    #experience .icon:hover {
-        color: #00bcd4;
-    }
-
-    #experience .icon i {
-        position: relative;
-        font-size: 30px;
-        margin-bottom: 5px;
-    }
-
-    .badge {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background-color: #E53935;
-        color: white;
-        font-size: 10px;
-        font-weight: bold;
-        width: 16px;
-        height: 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-        z-index: 10;
-    }
-
-    #experience .icon i+.badge {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-    }
-
-    /* 경력 */
-    #education_employment {
-        width: 100%;
-        line-height: 1.7;
-        padding: 0 20px;
-        box-sizing: border-box;
-        font-size: 14px;
-    }
-
-    .block {
-        margin-bottom: 10px;
-    }
-
-    .block h3,
-    .block h5,
-    .block p {
-        display: inline-block;
-        margin: 5px 0;
-    }
-
-    .block h5 {
-        font-size: 10px;
-    }
-
-    .block p {
-        font-size: 12px;
-    }
-
-    /* 푸터 */
-    #footer {
-        height: 15%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    #footer-text {
-        font-family: 'Noto Sans', sans-serif;
-        font-size: 0.8rem;
-        padding: 20px;
-    }
-
-    #footer-contact {
-        display: flex;
-        gap: 15px;
-        padding: 20px;
-    }
-
-    .footer-link {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        color: #757575;
-        font-size: 1.5rem;
-    }
-
-    .footer-link:hover {
-        color: #565656;
-    }
-
-    .lang-select {
-        position: absolute;
-        top: -40px;
-        display: flex;
-        gap: 10px;
-        font-size: 14px;
-        font-weight: bold;
-        color: #666;
-    }
-
-    .lang-option {
-        cursor: pointer;
-        padding: 3px 6px;
-        border-radius: 5px;
-        transition: 0.3s ease;
-    }
-
-    .lang-option:hover {
-        background-color: #ddd;
-    }
-
-    .lang-option.active {
-        color: #00bcd4;
-        font-weight: bold;
-        border-bottom: 2px solid #00bcd4;
-    }
-
-    @media screen and (max-width: 420px) {
-        .character-photo {
-            width: 150px;
-            height: 150px;
+            skillsExpContainer.style.top = `${P_center - (containerHeight / 2)}px`;
         }
 
-        .hexagon {
-            width: 30px;
-            height: 35px;
-        }
+        // 화면 크기 변경 시 자동 조정
+        window.addEventListener("resize", adjustAlignment);
+        window.addEventListener("load", adjustAlignment);
 
-        .hexagon i {
-            font-size: 16px;
-        }
+        document.addEventListener("DOMContentLoaded", () => {
+            const langOptions = document.querySelectorAll(".lang-option");
+            const cvLink = document.querySelector(".download-cv");
+            const introText = document.querySelector(".intro-text");
+            const skillBlocks = document.querySelectorAll(".skill-block");
+            const userInput = document.querySelector(".user-input");
+            const sendButton = document.querySelector(".send-button");
+            const introBalloon = document.querySelector(".intro-balloon");
+            const blocks = document.querySelectorAll(".block");
+            const experienceLinks = document.querySelectorAll("#experience .icon");
+            const projectLinks = document.querySelectorAll(".project-link");
+            const modal = document.getElementById("notionModal");
+            const iframe = document.getElementById("notionFrame");
+            const closeBtn = document.querySelector(".close");
 
-        .skill-text {
-            font-size: 12px;
-        }
+            let selectedLang = localStorage.getItem("selectedLang") || "en";
 
-        #experience .icon {
-            font-size: 12px;
-        }
+            const skillDescriptions = {
+                "Conversational AI Design": {
+                    en: "I mainly have experience in conversational AI design, working on various aspects from researching use cases to creating dialogue flows using <strong>Google Dialogflow</strong>. I work with <strong>NLP APIs, GPT models, and databases</strong> to create better interactions. My approach to conversational UX is informed by my experience with many chatbot and voicebot projects, including research papers.",
+                    ko: "대화형 AI 설계 경험이 있으며, 주로 <strong>Google Dialogflow</strong>를 사용해 대화 흐름을 설계하고 <strong>NLP API, GPT 모델, 데이터베이스</strong>를 활용하여 상호작용을 개선했습니다. 다수의 챗봇 및 음성봇 프로젝트를 통해 얻은 경험과 논문을 바탕으로 대화형 UX를 설계합니다."
+                },
+                "Project Management": {
+                    en: "I have experience participating in research and development cycles using <strong>Agile methodologies</strong> with small teams (5-6 people), especially managing multiple projects simultaneously. I help coordinate schedules, contribute to research methodologies, and work with stakeholders to support project execution. For project coordination, I use tools like <strong>Notion</strong> for documentation, <strong>Keynote</strong> for presentations, and <strong>Slack/Discord</strong> for team communication.",
+                    ko: "소규모 팀(5-6명)과 함께 <strong>Agile 방법론</strong>을 사용하여 연구 및 개발 사이클에 참여하고, 특히 여러 개의 프로젝트를 동시에 관리해 본 경험이 있습니다. 일정 조율, 연구 방법론 기여, 이해관계자와 협업을 통해 프로젝트 실행을 지원합니다. 문서화 도구로는 <strong>Notion</strong>, 문서 작성에는 <strong>Keynote</strong>, 팀 커뮤니케이션에는 <strong>Slack/Discord</strong>를 사용했습니다."
+                },
+                "UX Research": {
+                    en: "I have experience in mixed-method UX research, including behavioral analytics using <strong>Python</strong> for log data analysis and visualization. I conduct user interviews and workshops using various methods like <strong>Wizard of Oz testing, prototype evaluations, and think-aloud protocols</strong> for task-based studies. For deriving insights, I use techniques such as axial coding and affinity diagramming to analyze user data.",
+                    ko: "정량-정성 혼합 방법론을 활용한 UX 리서치 경험이 있습니다. 정량적 분석, 특히 로그 데이터 분석 및 시각화를 위해 <strong>Python</strong>을 사용했으며, 정성적 분석을 위해서는 <strong>Wizard of Oz 테스트, 프로토타입 평가, Think-aloud</strong>와 같은 방법을 사용해 유저 인터뷰와 워크숍을 진행했습니다. 축 코딩, 어피니티 다이어그램 등을 통해 사용자 데이터를 분석하고 통찰을 도출했습니다."
+                },
+                "Full-stack Development": {
+                    en: "I have experience developing full-stack applications with <strong>HTML, CSS, and JavaScript</strong>, using React and React Native for web and mobile platforms. I work with serverless architectures using <strong>Firebase and Google Cloud Functions</strong>, and integrate <strong>RESTful APIs and databases like Google Sheets and Firestore</strong>. I have also worked with cloud-based services on <strong>Google Cloud Run</strong> and use <strong>Git</strong> for version control.",
+                    ko: "<strong>HTML, CSS, JavaScript</strong>를 사용해 풀스택 애플리케이션을 개발한 경험이 있으며, React와 React Native로 웹 및 모바일 플랫폼을 구현했습니다. <strong>Firebase와 Google Cloud Functions</strong> 같은 서버리스 아키텍처를 사용하며, <strong>RESTful API와 Google Sheets, Firestore</strong> 데이터베이스를 통합했습니다. 또한 <strong>Google Cloud Run</strong>에서 클라우드 기반 서비스를 구축한 경험이 있으며, Git으로 버전 관리를 수행했습니다."
+                }
+            };
 
-        #experience .icon i {
-            font-size: 25px;
-        }
-
-        .intro-balloon {
-            font-size: 14px;
-        }
-
-        .lang-select {
-            top: -15px;
-        }
-    }
-</style>
-
-<script>
-    function adjustAlignment() {
-        const centralContent = document.querySelector(".central-content");
-        const photo = document.querySelector(".photo-container");
-        const skillsExpContainer = document.querySelector(".skills-experience-container");
-
-        const P_center = photo.getBoundingClientRect().top + window.scrollY + (photo.offsetHeight / 2);
-
-        const containerHeight = skillsExpContainer.offsetHeight;
-
-        skillsExpContainer.style.top = `${P_center - (containerHeight / 2)}px`;
-    }
-
-    // 화면 크기 변경 시 자동 조정
-    window.addEventListener("resize", adjustAlignment);
-    window.addEventListener("load", adjustAlignment);
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const langOptions = document.querySelectorAll(".lang-option");
-        const cvLink = document.querySelector(".download-cv");
-        const introText = document.querySelector(".intro-text");
-        const skillBlocks = document.querySelectorAll(".skill-block");
-        const userInput = document.querySelector(".user-input");
-        const sendButton = document.querySelector(".send-button");
-        const introBalloon = document.querySelector(".intro-balloon");
-        const blocks = document.querySelectorAll(".block");
-        const experienceLinks = document.querySelectorAll("#experience .icon");
-
-        let selectedLang = localStorage.getItem("selectedLang") || "en";
-
-        const skillDescriptions = {
-            "Conversational AI Design": {
-                en: "I mainly have experience in conversational AI design, working on various aspects from researching use cases to creating dialogue flows using <strong>Google Dialogflow</strong>. I work with <strong>NLP APIs, GPT models, and databases</strong> to create better interactions. My approach to conversational UX is informed by my experience with many chatbot and voicebot projects, including research papers.",
-                ko: "대화형 AI 설계 경험이 있으며, 주로 <strong>Google Dialogflow</strong>를 사용해 대화 흐름을 설계하고 <strong>NLP API, GPT 모델, 데이터베이스</strong>를 활용하여 상호작용을 개선했습니다. 다수의 챗봇 및 음성봇 프로젝트를 통해 얻은 경험과 논문을 바탕으로 대화형 UX를 설계합니다."
-            },
-            "Project Management": {
-                en: "I have experience participating in research and development cycles using <strong>Agile methodologies</strong> with small teams (5-6 people), especially managing multiple projects simultaneously. I help coordinate schedules, contribute to research methodologies, and work with stakeholders to support project execution. For project coordination, I use tools like <strong>Notion</strong> for documentation, <strong>Keynote</strong> for presentations, and <strong>Slack/Discord</strong> for team communication.",
-                ko: "소규모 팀(5-6명)과 함께 <strong>Agile 방법론</strong>을 사용하여 연구 및 개발 사이클에 참여하고, 특히 여러 개의 프로젝트를 동시에 관리해 본 경험이 있습니다. 일정 조율, 연구 방법론 기여, 이해관계자와 협업을 통해 프로젝트 실행을 지원합니다. 문서화 도구로는 <strong>Notion</strong>, 문서 작성에는 <strong>Keynote</strong>, 팀 커뮤니케이션에는 <strong>Slack/Discord</strong>를 사용했습니다."
-            },
-            "UX Research": {
-                en: "I have experience in mixed-method UX research, including behavioral analytics using <strong>Python</strong> for log data analysis and visualization. I conduct user interviews and workshops using various methods like <strong>Wizard of Oz testing, prototype evaluations, and think-aloud protocols</strong> for task-based studies. For deriving insights, I use techniques such as axial coding and affinity diagramming to analyze user data.",
-                ko: "정량-정성 혼합 방법론을 활용한 UX 리서치 경험이 있습니다. 정량적 분석, 특히 로그 데이터 분석 및 시각화를 위해 <strong>Python</strong>을 사용했으며, 정성적 분석을 위해서는 <strong>Wizard of Oz 테스트, 프로토타입 평가, Think-aloud</strong>와 같은 방법을 사용해 유저 인터뷰와 워크숍을 진행했습니다. 축 코딩, 어피니티 다이어그램 등을 통해 사용자 데이터를 분석하고 통찰을 도출했습니다."
-            },
-            "Full-stack Development": {
-                en: "I have experience developing full-stack applications with <strong>HTML, CSS, and JavaScript</strong>, using React and React Native for web and mobile platforms. I work with serverless architectures using <strong>Firebase and Google Cloud Functions</strong>, and integrate <strong>RESTful APIs and databases like Google Sheets and Firestore</strong>. I have also worked with cloud-based services on <strong>Google Cloud Run</strong> and use <strong>Git</strong> for version control.",
-                ko: "<strong>HTML, CSS, JavaScript</strong>를 사용해 풀스택 애플리케이션을 개발한 경험이 있으며, React와 React Native로 웹 및 모바일 플랫폼을 구현했습니다. <strong>Firebase와 Google Cloud Functions</strong> 같은 서버리스 아키텍처를 사용하며, <strong>RESTful API와 Google Sheets, Firestore</strong> 데이터베이스를 통합했습니다. 또한 <strong>Google Cloud Run</strong>에서 클라우드 기반 서비스를 구축한 경험이 있으며, Git으로 버전 관리를 수행합니다."
-            }
-        };
-
-        function scrollToTop() {
-            introBalloon.scrollTop = 0;
-        }
-
-        function updateLanguage(lang) {
-            selectedLang = lang;
-            localStorage.setItem("selectedLang", lang);
-
-            langOptions.forEach(opt => opt.classList.remove("active"));
-            document.querySelector(`.lang-option[data-lang="${lang}"]`)?.classList.add("active");
-
-            if (introText.hasAttribute(`data-${lang}`)) {
-                introText.innerHTML = introText.getAttribute(`data-${lang}`);
+            function scrollToTop() {
+                introBalloon.scrollTop = 0;
             }
 
-            blocks.forEach(block => {
-                block.innerHTML = block.getAttribute(`data-${lang}`);
+            function updateLanguage(lang) {
+                selectedLang = lang;
+                localStorage.setItem("selectedLang", lang);
+
+                langOptions.forEach(opt => opt.classList.remove("active"));
+                document.querySelector(`.lang-option[data-lang="${lang}"]`)?.classList.add("active");
+
+                if (introText.hasAttribute(`data-${lang}`)) {
+                    introText.innerHTML = introText.getAttribute(`data-${lang}`);
+                }
+
+                blocks.forEach(block => {
+                    block.innerHTML = block.getAttribute(`data-${lang}`);
+                });
+
+                experienceLinks.forEach(link => {
+                    const newHref = link.getAttribute(`data-${lang}`);
+                    if (newHref) {
+                        link.setAttribute("href", newHref);
+                    }
+                });
+
+                if (cvLink) {
+                    cvLink.setAttribute("href", lang === "ko" ? "/CV_jisuryou_2024 (ko).pdf" : "/CV_jisuryou_2024 (en).pdf");
+                }
+
+                const currentSkill = document.querySelector(".skill-block.active")?.querySelector(".skill-text").textContent;
+                if (currentSkill && skillDescriptions[currentSkill]) {
+                    updateSkillDescription(currentSkill);
+                }
+            }
+
+            function updateSkillDescription(skillName) {
+                if (skillDescriptions[skillName] && skillDescriptions[skillName][selectedLang]) {
+                    introText.innerHTML = skillDescriptions[skillName][selectedLang];
+                    scrollToTop();
+                }
+            }
+
+            skillBlocks.forEach((block) => {
+                block.addEventListener("click", () => {
+                    // 기존 선택 해제 후 새로운 블록 활성화
+                    skillBlocks.forEach(b => b.classList.remove("active"));
+                    block.classList.add("active");
+
+                    const skillName = block.querySelector(".skill-text").textContent;
+                    updateSkillDescription(skillName);
+                });
             });
 
-            experienceLinks.forEach(link => {
-                const newHref = link.getAttribute(`data-${lang}`);
-                if (newHref) {
-                    link.setAttribute("href", newHref);
+            let loadingInterval;
+            async function sendMessage() {
+                const userMessage = userInput.value.trim();
+                if (!userMessage) return;
+
+                userInput.value = "";
+                introText.innerHTML = "";
+
+                scrollToTop();
+
+                let loadingDots = "";
+                let dotCount = 0;
+                loadingInterval = setInterval(() => {
+                    dotCount = (dotCount + 1) % 4;
+                    loadingDots = ".".repeat(dotCount);
+                    introText.innerHTML = `...${loadingDots}`;
+                }, 500);
+
+                try {
+                    const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: userMessage }),
+                        credentials: "include",
+                    });
+
+                    const data = await response.json();
+                    clearInterval(loadingInterval);
+                    introText.innerHTML = data.reply;
+                    scrollToTop();
+                } catch (error) {
+                    clearInterval(loadingInterval);
+                    introText.innerHTML = 'Oops! Something went wrong. Please try again.';
+                    console.error(error);
+                    scrollToTop();
+                }
+            }
+
+            sendButton.addEventListener("click", sendMessage);
+            userInput.addEventListener("keypress", (event) => {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    sendMessage();
                 }
             });
 
-            if (cvLink) {
-                cvLink.setAttribute("href", lang === "ko" ? "/CV_jisuryou_2024 (ko).pdf" : "/CV_jisuryou_2024 (en).pdf");
-            }
-
-            const currentSkill = document.querySelector(".skill-block.active")?.querySelector(".skill-text").textContent;
-            if (currentSkill && skillDescriptions[currentSkill]) {
-                updateSkillDescription(currentSkill);
-            }
-        }
-
-        function updateSkillDescription(skillName) {
-            if (skillDescriptions[skillName] && skillDescriptions[skillName][selectedLang]) {
-                introText.innerHTML = skillDescriptions[skillName][selectedLang];
-                scrollToTop();
-            }
-        }
-
-        skillBlocks.forEach((block) => {
-            block.addEventListener("click", () => {
-                // 기존 선택 해제 후 새로운 블록 활성화
-                skillBlocks.forEach(b => b.classList.remove("active"));
-                block.classList.add("active");
-
-                const skillName = block.querySelector(".skill-text").textContent;
-                updateSkillDescription(skillName);
-            });
-        });
-
-        let loadingInterval;
-        async function sendMessage() {
-            const userMessage = userInput.value.trim();
-            if (!userMessage) return;
-
-            userInput.value = "";
-            introText.innerHTML = "";
-
-            scrollToTop();
-
-            let loadingDots = "";
-            let dotCount = 0;
-            loadingInterval = setInterval(() => {
-                dotCount = (dotCount + 1) % 4;
-                loadingDots = ".".repeat(dotCount);
-                introText.innerHTML = `...${loadingDots}`;
-            }, 500);
-
-            try {
-                const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: userMessage }),
-                    credentials: "include",
+            langOptions.forEach(option => {
+                option.addEventListener("click", () => {
+                    updateLanguage(option.getAttribute("data-lang"));
                 });
+            });
 
-                const data = await response.json();
-                clearInterval(loadingInterval);
-                introText.innerHTML = data.reply;
-                scrollToTop();
-            } catch (error) {
-                clearInterval(loadingInterval);
-                introText.innerHTML = 'Oops! Something went wrong. Please try again.';
-                console.error(error);
-                scrollToTop();
-            }
-        }
+            updateLanguage(selectedLang);
 
-        sendButton.addEventListener("click", sendMessage);
-        userInput.addEventListener("keypress", (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                sendMessage();
-            }
-        });
+            // 닫기 버튼 클릭 시 모달 닫기
+            closeBtn.addEventListener("click", () => {
+                modal.style.display = "none";
+                iframe.src = "";
+            });
 
-        langOptions.forEach(option => {
-            option.addEventListener("click", () => {
-                updateLanguage(option.getAttribute("data-lang"));
+            // 모달 바깥 클릭 시 모달 닫기
+            window.addEventListener("click", (event) => {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                    iframe.src = "";
+                }
             });
         });
 
-        updateLanguage(selectedLang);
-    });
+        document.addEventListener("click", (e) => {
+            const projectLink = e.target.closest(".project-link");
+            if (projectLink) {
+                e.preventDefault();
+                e.stopPropagation();
 
-</script>
+                const url = projectLink.getAttribute("href");
+                const embedUrl = url.includes("?") ? `${url}&embed=1` : `${url}?embed=1`;
+                const modal = document.getElementById("notionModal");
+                const iframe = document.getElementById("notionFrame");
+                iframe.src = embedUrl;
+                modal.style.display = "block";
+            }
+        });
+
+    </script>
+</body>
 
 </html>
