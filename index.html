@@ -546,7 +546,7 @@
                         <span class="lang-option active" data-lang="ko">KO</span>
                         <span class="lang-option" data-lang="en">EN</span>
                     </div>
-                    <img src="/image.png" alt="jisuryou's photo" class="character-photo">
+                    <img src="/character-photos/default.png" alt="default" class="character-photo">
                 </div>
                 <div class="intro-container">
                     <div class="arrow-up"></div>
@@ -846,6 +846,7 @@
             const modal = document.getElementById("notionModal");
             const iframe = document.getElementById("notionFrame");
             const closeBtn = document.querySelector(".close");
+            const photo = document.querySelector(".character-photo");
 
             let selectedLang = localStorage.getItem("selectedLang") || "en";
 
@@ -929,6 +930,8 @@
 
                 userInput.value = "";
                 introText.innerHTML = "";
+                photo.src = "/character-photos/thinking.png";
+                photo.alt = "thinking";
 
                 scrollToTop();
 
@@ -950,8 +953,16 @@
 
                     const data = await response.json();
                     clearInterval(loadingInterval);
-                    introText.innerHTML = data.reply;
+                    introText.innerHTML = data.reply.split('#')[0];
                     scrollToTop();
+
+                    if (data.reply.includes('#')) {
+                        photo.src = "/character-photos/" + data.reply.split('#')[1] + ".png";
+                        photo.alt = data.reply.split('#')[1];
+                    } else {
+                        photo.src = "/character-photos/default.png";
+                        photo.alt = "default";
+                    }
                 } catch (error) {
                     clearInterval(loadingInterval);
                     introText.innerHTML = 'Oops! Something went wrong. Please try again.';
