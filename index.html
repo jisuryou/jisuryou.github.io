@@ -958,9 +958,10 @@
                 if (!message) return;
                 chatInput.value = "";
 
+                generatedTopics.clear();
+                suggestionContainer.innerHTML = "";
                 suggestionContainer.style.display = "none";
                 document.querySelector(".input-container").style.display = "none";
-                generatedTopics.clear();
 
                 const loadingSlide = document.createElement("div");
                 loadingSlide.classList.add("chat-slide", "loading-slide");
@@ -991,9 +992,7 @@
 
                     const replyParts = data.reply.split('#');
                     const mainReply = replyParts[0].trim();
-                    // extraTopics: 0~2개의 주제 (빈 문자열은 제외)
                     const extraTopics = replyParts.slice(1).map(s => s.trim()).filter(s => s !== "");
-                    // 각 추가 주제는 generatedTopics에 추가 (중복 없이)
                     extraTopics.forEach(topic => generatedTopics.add(topic));
 
                     addTurn(message, mainReply, "defaultBot");
