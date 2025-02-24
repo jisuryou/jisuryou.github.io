@@ -750,13 +750,13 @@
 
             const defaultBotMessage = {
                 ko: `안녕하세요! 주니어 UX 엔지니어 유지수입니다.
-    사용자 경험 연구와 다수의 PM 경험을 통해 소규모 팀에서 연구 및 개발 사이클을 성공적으로 이끌었습니다.
-    또한 UX 리서치와 풀스택 개발 역량을 갖추고 있어서 아이디어를 실제 서비스로 구현할 수 있습니다.
-    피드백과 협업을 환영합니다! 의미 있는 UX에 기여하고 싶습니다🤩`,
+사용자 경험 연구와 다수의 PM 경험을 통해 소규모 팀에서 연구 및 개발 사이클을 성공적으로 이끌었습니다.
+또한 UX 리서치와 풀스택 개발 역량을 갖추고 있어서 아이디어를 실제 서비스로 구현할 수 있습니다.
+피드백과 협업을 환영합니다! 의미 있는 UX에 기여하고 싶습니다🤩`,
                 en: `Hi, I'm Jisu Ryou, a junior UX engineer with a master's degree in AI applied services.
-    I have successfully led research and development cycles in small teams through multiple PM experiences.
-    I also have a background in UX research and full-stack development, which allows me to turn ideas into real services.
-    Open to feedback and collaborations—let’s create meaningful UX🤩`
+I have successfully led research and development cycles in small teams through multiple PM experiences.
+I also have a background in UX research and full-stack development, which allows me to turn ideas into real services.
+Open to feedback and collaborations—let’s create meaningful UX🤩`
             };
 
             function getSkillDescription(skill) {
@@ -924,10 +924,11 @@
                         btn.setAttribute("data-type", "skill");
                         btn.innerText = skill;
                         btn.addEventListener("click", () => {
-                            // skill 버튼 클릭 시 입력창에 해당 스킬 텍스트 넣고 턴 추가
-                            addTurn(skill, getSkillDescription(skill), skill);
+                            // 수정: 추천 질문 클릭 시 입력창에 해당 스킬 텍스트 설정 후 /chat API 호출
+                            chatInput.value = skill;
                             clickedSkills.add(skill);
                             updateSuggestions();
+                            sendMessage();
                         });
                         suggestionContainer.appendChild(btn);
                     }
@@ -941,8 +942,10 @@
                         btn.setAttribute("data-type", "generated");
                         btn.innerText = topic;
                         btn.addEventListener("click", () => {
+                            chatInput.value = topic;
                             clickedSkills.add(topic);
                             updateSuggestions();
+                            sendMessage();
                         });
                         suggestionContainer.appendChild(btn);
                     }
@@ -1156,6 +1159,7 @@
 
             updateNavigationVisibility();
         });
+
     </script>
 
 </body>
