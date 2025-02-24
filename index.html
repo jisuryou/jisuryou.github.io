@@ -346,7 +346,6 @@
         .lang-toggle {
             display: flex;
             flex-direction: column;
-            /* 세로 배열 */
             gap: 10px;
         }
 
@@ -765,7 +764,6 @@
             }
 
             // --- Typewriter Function ---
-            // 이제 ". " (마침표+공백)을 구분자로 쓴 텍스트를 그대로 출력합니다.
             function typeWriter(text, textElem, speed, callback) {
                 if (!textElem) {
                     if (callback) callback();
@@ -960,6 +958,10 @@
                 if (!message) return;
                 chatInput.value = "";
 
+                suggestionContainer.style.display = "none";
+                document.querySelector(".input-container").style.display = "none";
+                generatedTopics.clear();
+
                 const loadingSlide = document.createElement("div");
                 loadingSlide.classList.add("chat-slide", "loading-slide");
                 const loadingContainer = document.createElement("div");
@@ -1005,7 +1007,6 @@
             }
 
             async function sendSuggestion(topic) {
-                // 옵션: 버튼 클릭 시에도 입력창 없이 바로 전송
                 // addTurn를 호출하여 사용자의 요청 메시지를 먼저 출력
                 addTurn(topic, "Loading...", "defaultBot");
 
