@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
     <!-- Google tag (gtag.js) -->
@@ -15,427 +15,254 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jisu Ryou's Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
         html,
         body {
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            font-family: "Nanum Gothic", "Noto Sans KR", "Malgun Gothic", sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            overflow-x: hidden;
+            font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+        }
+
+        body {
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+
+        /* 컨테이너 및 화면 전환 (네비게이션 요소는 container 외부에 둠) */
+        .container {
+            display: flex;
+            width: 200vw;
+            transition: transform 0.5s ease-in-out;
             overflow-x: hidden;
         }
 
-        .content {
+        .move-right {
+            transform: translateX(-100vw);
+        }
+
+        /* 각 화면 */
+        .screen {
+            width: 100vw;
+            height: 100vh;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        /* 채팅 화면 */
+        #chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px);
+        }
+
+        #chat-box {
+            width: 80%;
+            margin-top: 10%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            height: 60vh;
+        }
+
+        .chat-slide {
+            flex: 0 0 60vh;
+            scroll-snap-align: start;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sentence-container {
+            height: 100%;
             width: 100%;
-            max-width: 640px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .sentence-slide {
+            position: relative;
+            display: none;
+        }
+
+        .next-btn {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: transparent;
+            border: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+            z-index: 10;
+            padding: 5px 10px;
+            color: #00bcd4;
+        }
+
+        .user-message {
+            font-size: 0.8rem;
+            position: absolute;
+            top: 30px;
+            right: 10px;
+            text-align: right;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        /* 추천 질문 영역 */
+        #suggestions {
+            width: 80%;
+            margin: 10px auto 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .suggestion-btn {
+            background: none;
+            border: 1px solid #00bcd4;
+            border-radius: 4px;
+            padding: 6px 10px;
+            font-size: 16px;
+            color: #00bcd4;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .suggestion-btn:hover {
+            color: #fff;
+            background: #00bcd4;
+        }
+
+        /* 입력창 영역 */
+        .input-container {
+            width: 80%;
+            margin: 0 auto 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-bottom: 2px solid #00bcd4;
+            outline: none;
+            background: none;
+        }
+
+        #send-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #00bcd4;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        #send-btn:hover {
+            color: #007399;
+        }
+
+        /* CV 화면 */
+        #cv-container {
+            width: 100vw;
+            height: 100vh;
+            overflow-x: hidden;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+
+        .cv-content {
+            width: 80%;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        #intro {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding-top: 150px;
-        }
-
-        .header {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 640px;
-            text-align: left;
-            height: 150px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        /* 좌측 상단 상태 */
-        .status {
-            position: relative;
-            z-index: 10;
-        }
-
-        .status p,
-        .status h2 {
-            margin: 0;
-            line-height: 1.4;
-        }
-
-        .status p:first-child {
-            background-color: #00bcd4;
-        }
-
-        /* 우측 상단 다운로드 CV */
-        .cv {
-            position: relative;
-            text-align: right;
-        }
-
-        .cv a {
-            padding: 10px 15px;
-            background-color: #757575;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: background-color 0.3s ease;
-        }
-
-        .cv a:hover {
-            background-color: #565656;
-        }
-
-        .cv p {
-            margin-top: 20px;
-            font-size: 12px;
-        }
-
-        .central-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 90%;
-            max-width: 600px;
-            justify-content: center;
-            position: relative;
-            top: calc(50% - 30vh);
-            transform: translateY(-45%);
-        }
-
-        /* 중앙 캐릭터 이미지 */
-        .photo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 200px;
-            height: 200px;
-            position: relative;
-            margin-bottom: 30px;
-        }
-
-        .character-photo {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 4px solid #fff;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-        }
-
-        /* 말풍선 */
-        .intro-container {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .intro-balloon {
-            background-color: #ffffff;
-            border-radius: 15px;
-            padding: 0 20px;
+        .cv-header h1 {
+            font-size: 32px;
             color: #333;
-            text-align: left;
-            position: relative;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: stretch;
-
-            width: 100%;
-            max-width: 600px;
-            height: 30vh;
-            overflow-y: auto;
-            overflow-x: hidden;
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        .arrow-up {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 10px solid #ffffff;
-            z-index: 1;
-        }
-
-        .intro-text {
-            flex-grow: 1;
-            line-height: 1.5;
-            width: 100%;
-            word-wrap: break-word;
-        }
-
-        /* 사용자 입력 영역 */
-        .user-input-area {
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .user-input {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #555;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .send-button {
-            padding: 10px;
-            width: 40px;
-            background-color: #757575;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .send-button:hover {
-            background-color: #565656;
-        }
-
-        .skills-experience-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: absolute;
-            width: 90vw;
-            max-width: 600px;
-        }
-
-        /* 자동 중앙 정렬 */
-        #skills {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            position: relative;
-        }
-
-        .skill-block {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .hexagon {
-            position: relative;
-            width: 40px;
-            height: 45px;
-            background-color: #e0e0e0;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            overflow: visible !important;
-        }
-
-        .hexagon i {
-            font-size: 20px;
-            color: #333;
-            z-index: 2;
-        }
-
-        .skill-text {
-            position: absolute;
-            left: 100%;
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-            opacity: 0;
-            white-space: nowrap;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            z-index: 1000;
-            background-color: #ffffff;
-            padding: 5px 10px;
-            border-radius: 5px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .skill-block:hover .skill-text {
-            opacity: 1 !important;
-            transform: translateX(10px);
-        }
-
-        .skill-block:hover .hexagon {
-            color: #00bcd4;
-        }
-
-        .skill-block:nth-child(odd) {
-            transform: translateX(0);
-            /* 홀수번째는 제자리 */
-        }
-
-        .skill-block:nth-child(even) {
-            transform: translateX(20px);
-            /* 짝수번째는 오른쪽으로 이동 */
-        }
-
-        #experience {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            position: relative;
-        }
-
-        #experience .icon {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 14px;
-            text-align: center;
-            transition: transform 0.3s ease, color 0.3s ease;
-            color: #565656;
-            width: 50px;
-        }
-
-        #experience .icon:hover {
-            color: #00bcd4;
-        }
-
-        #experience .icon i {
-            position: relative;
-            font-size: 30px;
-            margin-bottom: 5px;
-        }
-
-        .badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background-color: #E53935;
-            color: white;
-            font-size: 10px;
-            font-weight: bold;
-            width: 16px;
-            height: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-            z-index: 10;
-        }
-
-        #experience .icon i+.badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-        }
-
-        /* 경력 */
-        #education_employment {
-            width: 100%;
-            line-height: 1.7;
-            padding: 0 20px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-
-        .block {
             margin-bottom: 10px;
         }
 
-        .block h3,
-        .block h5,
-        .block p {
+        .cv-header p {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .cv-links {
+            margin-bottom: 30px;
+        }
+
+        .download-cv {
             display: inline-block;
-            margin: 5px 0;
+            margin-bottom: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #00bcd4;
+            border: 1px solid #00bcd4;
+            padding: 6px 10px;
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .download-cv:hover {
+            background: #00bcd4;
+            color: #fff;
+        }
+
+        .cv-date {
+            font-size: 14px;
+            color: #999;
+            margin: 0;
+        }
+
+        #cv-text {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .block {
+            margin-bottom: 20px;
+        }
+
+        .block h3 {
+            font-size: 20px;
+            margin-bottom: 5px !important;
         }
 
         .block h5 {
-            font-size: 10px;
+            font-size: 12px;
+            margin-bottom: 5px !important;
+            color: #777;
         }
 
         .block p {
-            font-size: 12px;
-        }
-
-        /* 푸터 */
-        #footer {
-            height: 15%;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        #footer-text {
-            font-family: 'Noto Sans', sans-serif;
-            font-size: 0.8rem;
-            padding: 20px;
-        }
-
-        #footer-contact {
-            display: flex;
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .footer-link {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            color: #757575;
-            font-size: 1.5rem;
-        }
-
-        .footer-link:hover {
-            color: #565656;
-        }
-
-        .lang-select {
-            position: absolute;
-            top: -40px;
-            display: flex;
-            gap: 10px;
             font-size: 14px;
-            font-weight: bold;
-            color: #666;
-        }
-
-        .lang-option {
-            cursor: pointer;
-            padding: 3px 6px;
-            border-radius: 5px;
-            transition: 0.3s ease;
-        }
-
-        .lang-option:hover {
-            background-color: #ddd;
-        }
-
-        .lang-option.active {
-            color: #00bcd4;
-            font-weight: bold;
-            border-bottom: 2px solid #00bcd4;
+            margin-bottom: 0 !important;
         }
 
         .modal {
@@ -486,306 +313,337 @@
             color: #00bcd4;
         }
 
+        /* 네비게이션 요소 (container 외부) */
+        .nav-left,
+        .nav-right {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .nav-left.visible,
+        .nav-right.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .nav-left {
+            left: 20px;
+        }
+
+        .nav-right {
+            right: 20px;
+            align-items: flex-end;
+        }
+
+        .lang-toggle {
+            display: flex;
+            flex-direction: column;
+            /* 세로 배열 */
+            gap: 10px;
+        }
+
+        .lang-option {
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            color: #999;
+            transition: color 0.3s;
+        }
+
+        .lang-option.active {
+            color: #00bcd4;
+        }
+
+        .arrow {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00bcd4;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .arrow:hover {
+            color: #007399;
+        }
+
+        /* 푸터 */
+        #footer {
+            height: 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #footer-text {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 0.8rem;
+            padding: 20px;
+        }
+
+        #footer-contact {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .footer-link {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            color: #757575;
+            font-size: 1.5rem;
+        }
+
+        .footer-link:hover {
+            color: #565656;
+        }
+
+        /* 반응형 디자인 */
         @media screen and (max-width: 420px) {
-            .character-photo {
-                width: 150px;
-                height: 150px;
+            .message {
+                font-size: 20px;
             }
 
-            .hexagon {
-                width: 30px;
-                height: 35px;
-            }
-
-            .hexagon i {
-                font-size: 16px;
-            }
-
-            .skill-text {
-                font-size: 12px;
-            }
-
-            #experience .icon {
-                font-size: 12px;
-            }
-
-            #experience .icon i {
-                font-size: 25px;
-            }
-
-            .intro-balloon {
+            .suggestion-btn {
                 font-size: 14px;
             }
 
-            .lang-select {
-                top: -15px;
+            #cv-container {
+                padding: 10px;
+            }
+
+            .cv-header h1 {
+                font-size: 28px;
+            }
+
+            .cv-header p {
+                font-size: 18px;
+            }
+
+            #cv-text {
+                font-size: 16px;
+            }
+
+            .lang-option {
+                font-size: 16px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="content">
-        <div id="intro">
-            <div class="header">
-                <div class="status">
-                    <p>Freelancing & Job Seeking</p>
-                    <h2>Jisu Ryou</h2>
+    <!-- 화면 컨테이너 -->
+    <div class="container">
+        <!-- 채팅 화면 -->
+        <section id="chat-container" class="screen">
+            <div id="chat-box"></div>
+            <div id="suggestions"></div>
+            <div class="input-container">
+                <input type="text" id="chat-input" placeholder="Type your message..." />
+                <button id="send-btn" class="send-button"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </section>
+        <!-- CV 화면 -->
+        <section id="cv-container" class="screen">
+            <div class="cv-content">
+                <div class="cv-header">
+                    <h1>Jisu Ryou</h1>
                     <p>Project Manager</p>
                 </div>
-                <div class="cv">
-                    <a href="/CV_jisuryou_2024 (en).pdf" target="_blank" class="download-cv">
-                        Download CV
-                    </a>
-                    <p>Updated on Feb 21, 2025</p>
+                <div class="cv-links">
+                    <a href="/CV_jisuryou_2024 (ko).pdf" target="_blank" class="download-cv">Download CV</a>
+                    <p class="cv-date">Updated on Feb 21, 2025</p>
                 </div>
-            </div>
-            <div class="central-content">
-                <div class="photo-container">
-                    <div class="lang-select">
-                        <span class="lang-option active" data-lang="ko">KO</span>
-                        <span class="lang-option" data-lang="en">EN</span>
-                    </div>
-                    <img src="/character-photos/default.png" alt="default" class="character-photo">
-                </div>
-                <div class="intro-container">
-                    <div class="arrow-up"></div>
-                    <div class="intro-balloon">
-                        <p class="intro-text" data-ko="안녕하세요! 주니어 UX 엔지니어 유지수입니다.
-                            <br><strong>사용자 경험 연구와 다수의 PM 경험</strong>을 통해 소규모 팀에서 연구 및 개발 사이클을 성공적으로 이끌었습니다.
-                            <br>또한 <strong>UX 리서치와 풀스택 개발</strong> 역량을 갖추고 있어서 아이디어를 실제 서비스로 구현할 수 있습니다.
-                            <br>피드백과 협업을 환영합니다! 의미 있는 UX에 기여하고 싶습니다🤩" data-en="Hi, I'm Jisu Ryou, a junior UX engineer with a master's degree in AI applied services.
-                            <br>I have successfully led research and development cycles in small teams through multiple <strong>PM experiences</strong>.
-                            <br>I also have a background in <strong>UX research and full-stack development</strong>, which allows me to turn ideas into real services.
-                            <br>Open to feedback and collaborations—let’s create meaningful UX🤩">
-                        </p>
-                    </div>
-                </div>
-                <div class="user-input-area">
-                    <input type="text" class="user-input" placeholder="Type your message..." />
-                    <button class="send-button"><i class="fa fa-paper-plane"></i></button>
-                </div>
-            </div>
-            <div class="skills-experience-container">
-                <div id="skills">
-                    <div class="skill-block">
-                        <div class="hexagon">
-                            <i class="fa fa-robot"></i>
-                        </div>
-                        <p class="skill-text">Conversational AI Design</p>
-                    </div>
-                    <div class="skill-block">
-                        <div class="hexagon">
-                            <i class="fa fa-tasks"></i>
-                        </div>
-                        <p class="skill-text">Project Management</p>
-                    </div>
-                    <div class="skill-block">
-                        <div class="hexagon">
-                            <i class="fa fa-search"></i>
-                        </div>
-                        <p class="skill-text">UX Research</p>
-                    </div>
-                    <div class="skill-block">
-                        <div class="hexagon">
-                            <i class="fa fa-code"></i>
-                        </div>
-                        <p class="skill-text">Full-stack Development</p>
-                    </div>
-                </div>
-                <div id="experience">
-                    <a href="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Projects-189b4c07aa588089b16adaac201dd005?pvs=4"
-                        target="_blank" class="icon projects"
-                        data-en="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Projects-189b4c07aa588089b16adaac201dd005?pvs=4"
-                        data-ko="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Projects-ko-190b4c07aa58800aaa93e1b7564814a7?pvs=4">
-                        <i class="fa fa-folder-open"></i>
-                        <span class="badge">!</span>
-                        <span>Projects</span>
-                    </a>
-                    <a href="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Publications-189b4c07aa588016a196ce7b0a6900ec?pvs=4"
-                        target="_blank" class="icon publications"
-                        data-en="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Publications-189b4c07aa588016a196ce7b0a6900ec?pvs=4"
-                        data-ko="https://imaginary-chimpanzee-a72.notion.site/Jisu-Ryou-s-Publications-ko-190b4c07aa58801889bde31900a3544b?pvs=4">
-                        <i class="fa fa-book"></i>
-                        <span class="badge">!</span>
-                        <span>Publications</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div id="education_employment">
-            <div id="education">
-                <h1>Education</h1>
-                <div class="block" data-en='
-                    <h3>Sungkyunkwan University, Korea</h3><br>
-                    <h5>Mar 2017 - Aug 2021</h5><br>
+                <div id="cv-text">
+                    <div id="education">
+                        <h1>Education</h1>
+                        <div class="block" data-en='
+                    <h3>Sungkyunkwan University, Korea</h3>
+                    <h5>Mar 2017 - Aug 2021</h5>
                     <p><i>Bachelor of Engineering and Bachelor of Science in Psychology</i>
                         <br>(1st) Dept. of Software, College of Software Convergence
                         <br>(2nd) Dept. of Psychology, College of Social Sciences
                     </p>' data-ko='
-                    <h3>성균관대학교, 대한민국</h3><br>
-                    <h5>2017년 3월 - 2021년 8월</h5><br>
+                    <h3>성균관대학교, 대한민국</h3>
+                    <h5>2017년 3월 - 2021년 8월</h5>
                     <p><i>공학 학사 및 심리학 학사</i>
                         <br>(1전공) 소프트웨어융합대학 소프트웨어학과
                         <br>(2전공) 사회과학대학 심리학과</p>'>
-                </div>
-                <div class="block" data-en='<h3>The University of Texas at Dallas, United States</h3><br>
-                    <h5>Jan 2019 - May 2019</h5><br>
-                    <p><i>Exchange Student</i></p>' data-ko='<h3>The University of Texas at Dallas, 미국</h3><br>
-                    <h5>2019년 1월 - 2019년 5월</h5><br>
+                        </div>
+                        <div class="block" data-en='
+                    <h3>The University of Texas at Dallas, United States</h3>
+                    <h5>Jan 2019 - May 2019</h5>
+                    <p><i>Exchange Student</i></p>' data-ko='
+                    <h3>The University of Texas at Dallas, 미국</h3>
+                    <h5>2019년 1월 - 2019년 5월</h5>
                     <p><i>교환학생</i></p>'>
-                </div>
-                <div class="block"
-                    data-en='<h3>Seoul National University, Korea</h3><br>
-                    <h5>Sep 2021 - Feb 2024</h5><br>
+                        </div>
+                        <div class="block"
+                            data-en='
+                    <h3>Seoul National University, Korea</h3>
+                    <h5>Sep 2021 - Feb 2024</h5>
                     <p><i>Master of Engineering</i>
                         <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
                         <br>Advisor: Prof. Joongseek Lee (UXLab)
                         <br>* (Best Paper Graduation) Study on a VA Journaling System : Focusing on Response Styles for Receiving Long Utterances in VA Journaling</p>'
-                    data-ko='<h3>서울대학교, 대한민국</h3><br>
-                    <h5>2021년 9월 - 2024년 2월</h5><br>
+                            data-ko='
+                    <h3>서울대학교, 대한민국</h3>
+                    <h5>2021년 9월 - 2024년 2월</h5>
                     <p><i>공학 석사</i><br>융합과학기술대학원 지능정보융합학과
                         <br>사용자 경험 연구실 (지도교수 이중식)
                         <br>* (우수 논문 졸업) 음성 에이전트를 활용한 일기 시스템에 관한 연구 : VA 저널링에서 긴 기록을 받기 위한 응답 스타일을 중심으로</p>'>
+                        </div>
+                    </div>
+                    <div id="employment">
+                        <h1>Employment</h1>
+                        <div class="block"
+                            data-en='<h3>Rihoz, Seoul, Korea</h3>
+                                <h5>4 months (Sep 2020 - Dec 2020)</h5>
+                                <p><i>Front-End Developer Intern (Full-time)</i>
+                                    <br><strong style="display: inline-block; margin-top: 10px;">‘Dangjib (Your Smart Butler)’, a big data driven smart life service platform</strong>
+                                    <br>• Focused on front-end development of the admin web page and the production app</p>' data-ko='<h3>리호즈, 서울, 대한민국</h3>
+                                <h5>4개월 (2020년 9월 - 2020년 12월)</h5>
+                                <p><i>프론트엔드 개발 인턴 (풀타임)</i>
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/1a0b4c07aa5880e78b03c43a434cfdc7" class="project-link">
+                                            빅데이터 기반 스마트 라이프 서비스 플랫폼 ‘당신의 집사(Dangjib)’ 프로젝트
+                                        </a>
+                                    </strong>
+                                    <br>• 관리자 웹 페이지 및 서비스 앱 프론트엔드 개발</p>'>
+                        </div>
+                        <div class="block" data-en='<h3>SNU UXLab, Seoul, Korea</h3>
+                                <h5>2 years (Sep 2021 - Aug 2023)</h5>
+                                <p><i>Student Researcher (Part-time)</i>
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880bd8447ec5061c02ea5" class="project-link">
+                                            Advancing Financial Chatbots via Voice Banking
+                                        </a>
+                                    </strong>
+                                    <br>• Conducted prototype testing and user interviews
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58803b86f3f24e5df10f3a" class="project-link">
+                                            Dream Journal Voice Agent Development
+                                        </a>
+                                    </strong>
+                                    <br>• Managed project
+                                    <br>• Explored use cases and planned services, designed conversation flows and implemented technical solutions, and conducted user interviews and analyzed data
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a727f220e1655943" class="project-link">
+                                            UX Improvement for Shopping Platforms
+                                        </a>
+                                    </strong>
+                                    <br>• Analyzed shopping sequences and app UI layouts, and conducted user interviews
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880e88b2efcb03654e7bd" class="project-link">
+                                            Opportunity Discovery for Home Appliance Subscription Services
+                                        </a>
+                                    </strong>
+                                    <br>• Managed project
+                                    <br>• Researched subscription service case studies and market trends, ideated, and proposed strategic recommendations
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a3d5c5b4ffcf7365" class="project-link">
+                                            Exhibition Mind Robots Integrated with AI
+                                        </a>
+                                    </strong>
+                                    <br>• Designed conversation flows and implemented technical solutions
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58800ca588cdc57059784d" class="project-link">
+                                            Clothing Care Pilot for Shared Housing
+                                        </a>
+                                    </strong>
+                                    <br>• Designed database and developed backend
+                                </p>' data-ko='<h3>서울대학교 UXLab, 서울, 대한민국</h3>
+                                <h5>2년 (2021년 9월 - 2023년 8월)</h5>
+                                <p><i>학생 연구원 (파트타임)</i>
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881149193f914215f97a6" class="project-link">
+                                            말로 하는 은행을 통한 금융 챗봇 발전 방향 탐구 프로젝트
+                                        </a>
+                                    </strong>
+                                    <br>• 프로토타입 사용 실험 진행 및 유저 인터뷰
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881299241c5b3fdfec5ed" class="project-link">
+                                            꿈기록 보이스 에이전트 개발 프로젝트
+                                        </a>
+                                    </strong>
+                                    <br>• 프로젝트 관리
+                                    <br>• 유즈케이스 탐색 및 서비스 기획, 대화 설계 및 기술 구현, 유저 인터뷰 및 데이터 분석
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881e4b30bdb1f4e63f4b2" class="project-link">
+                                            사용자 로그 데이터 기반 네이버 쇼핑 UX 개선 프로젝트
+                                        </a>
+                                    </strong>
+                                    <br>• 쇼핑 시퀀스 및 앱 UI 레이아웃 분석, 유저 인터뷰
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881bea7aaf56b25cc02a7" class="project-link">
+                                            가전 구독 서비스 전략 및 기회 발굴 조사 프로젝트
+                                        </a>
+                                    </strong>
+                                    <br>• 프로젝트 관리
+                                    <br>• 구독 서비스 사례와 시장 트렌드 조사, 아이디에이션 및 전략 제안
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881f0abb4ca9290c23e7c" class="project-link">
+                                            AI와 결합한 전시/공연용 휴머노이드 로봇・마인드 로봇 개발 프로젝트
+                                        </a>
+                                    </strong>
+                                    <br>• 대화 설계 및 기술 구현
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881548e21eeced44877ba" class="project-link">
+                                            공유 주거 clothing care pilot 개발 프로젝트
+                                        </a>
+                                    </strong>
+                                    <br>• 데이터베이스 설계, 백엔드 개발
+                                    </p>'>
+                        </div>
+                        <div class="block" data-en='<h3>SNU UXLab, Seoul, Korea</h3>
+                                <h5>6 months (March 2024 - Aug 2024)</h5>
+                                <p><i>Project Manager (Full-time)</i>
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58805dbd09f97347440344" class="project-link">
+                                            Financial Hyper-Personalization Using MyData
+                                        </a>
+                                    </strong>
+                                    <br>• Managed project
+                                    <br>• Conducted fintech app research and user interviews, proposed strategic recommendations, performed data analysis, and designed financial alerts
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588070bc09ec7e68938e06" class="project-link">
+                                            UX Evaluation of Text-Based Conversational Experiences
+                                        </a>
+                                    </strong>
+                                    <br>• Managed project
+                                    <br>• Engineered LLM prompts and developed an automated evaluation system
+                                </p>' data-ko='<h3>서울대학교 UXLab, 서울, 대한민국</h3>
+                                <h5>6개월 (2024년 3월 - 2024년 8월)</h5>
+                                <p><i>프로젝트 매니저 (풀타임)</i>
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881a1a9e5cfbc953eb03f" class="project-link">
+                                            마이데이터 활용한 금융 초개인화 방안 탐색 프로젝트
+                                        </a>
+                                    </strong>
+                                    <br>• 프로젝트 관리
+                                    <br>• 핀테크 앱 리서치 및 유저 인터뷰, 전략 제안, 데이터 분석 및 금융 알림 설계
+                                    <br><strong style="display: inline-block; margin-top: 10px;">
+                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa58817dbf88f76dce8b33a7" class="project-link">
+                                            텍스트 기반 대화 경험의 UX 평가 프로젝트
+                                        </a>
+                                    </strong>
+                                    <br>• 프로젝트 관리
+                                    <br>• LLM 프롬프트 엔지니어링, 자동화 평가 시스템 설계 및 개발
+                                </p>'>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <br>
-            <div id="employment">
-                <h1>Employment</h1>
-                <div class="block" data-en='<h3>Rihoz, Seoul, Korea</h3><br>
-                    <h5>4 months (Sep 2020 - Dec 2020)</h5><br>
-                    <p><i>Front-End Developer Intern (Full-time)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">‘Dangjib (Your Smart Butler)’, a big data driven smart life service platform</strong>
-                        <br>• Focused on front-end development of the admin web page and the production app</p>'
-                    data-ko='<h3>리호즈, 서울, 대한민국</h3><br>
-                    <h5>4개월 (2020년 9월 - 2020년 12월)</h5><br>
-                    <p><i>프론트엔드 개발 인턴 (풀타임)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">빅데이터 기반 스마트 라이프 서비스 플랫폼 ‘당신의 집사(Dangjib)’ 프로젝트</strong>
-                        <br>• 관리자 웹 페이지 및 서비스 앱 프론트엔드 개발</p>'>
-                </div>
-                <div class="block" data-en='<h3>SNU UXLab, Seoul, Korea</h3><br>
-                    <h5>2 years (Sep 2021 - Aug 2023)</h5><br>
-                    <p><i>Student Researcher (Part-time)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880bd8447ec5061c02ea5" class="project-link">
-                                Advancing Financial Chatbots via Voice Banking
-                            </a>
-                        </strong>
-                        <br>• Conducted prototype testing and user interviews
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58803b86f3f24e5df10f3a" class="project-link">
-                                Dream Journal Voice Agent Development
-                            </a>
-                        </strong>
-                        <br>• Managed project
-                        <br>• Explored use cases and planned services, designed conversation flows and implemented technical solutions, and conducted user interviews and analyzed data
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a727f220e1655943" class="project-link">
-                                UX Improvement for Shopping Platforms
-                            </a>
-                        </strong>
-                        <br>• Analyzed shopping sequences and app UI layouts, and conducted user interviews
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880e88b2efcb03654e7bd" class="project-link">
-                                Opportunity Discovery for Home Appliance Subscription Services
-                            </a>
-                        </strong>
-                        <br>• Managed project
-                        <br>• Researched subscription service case studies and market trends, ideated, and proposed strategic recommendations
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a3d5c5b4ffcf7365" class="project-link">
-                                Exhibition Mind Robots Integrated with AI
-                            </a>
-                        </strong>
-                        <br>• Designed conversation flows and implemented technical solutions
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58800ca588cdc57059784d" class="project-link">
-                                Clothing Care Pilot for Shared Housing
-                            </a>
-                        </strong>
-                        <br>• Designed database and developed backend
-                    </p>' data-ko='<h3>서울대학교 UXLab, 서울, 대한민국</h3><br>
-                    <h5>2년 (2021년 9월 - 2023년 8월)</h5><br>
-                    <p><i>학생 연구원 (파트타임)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881149193f914215f97a6" class="project-link">
-                                말로 하는 은행을 통한 금융 챗봇 발전 방향 탐구 프로젝트
-                            </a>
-                        </strong>
-                        <br>• 프로토타입 사용 실험 진행 및 유저 인터뷰
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881299241c5b3fdfec5ed" class="project-link">
-                                꿈기록 보이스 에이전트 개발 프로젝트
-                            </a>
-                        </strong>
-                        <br>• 프로젝트 관리
-                        <br>• 유즈케이스 탐색 및 서비스 기획, 대화 설계 및 기술 구현, 유저 인터뷰 및 데이터 분석
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881e4b30bdb1f4e63f4b2" class="project-link">
-                                사용자 로그 데이터 기반 네이버 쇼핑 UX 개선 프로젝트
-                            </a>
-                        </strong>
-                        <br>• 쇼핑 시퀀스 및 앱 UI 레이아웃 분석, 유저 인터뷰
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881bea7aaf56b25cc02a7" class="project-link">
-                                가전 구독 서비스 전략 및 기회 발굴 조사 프로젝트
-                            </a>
-                        </strong>
-                        <br>• 프로젝트 관리
-                        <br>• 구독 서비스 사례와 시장 트렌드 조사, 아이디에이션 및 전략 제안
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881f0abb4ca9290c23e7c" class="project-link">
-                                AI와 결합한 전시/공연용 휴머노이드 로봇・마인드 로봇 개발 프로젝트
-                            </a>
-                        </strong>
-                        <br>• 대화 설계 및 기술 구현
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881548e21eeced44877ba" class="project-link">
-                                공유 주거 clothing care pilot 개발 프로젝트
-                            </a>
-                        </strong>
-                        <br>• 데이터베이스 설계, 백엔드 개발
-                        </p>'>
-                </div>
-                <div class="block" data-en='<h3>SNU UXLab, Seoul, Korea</h3><br>
-                    <h5>6 months (March 2024 - Aug 2024)</h5><br>
-                    <p><i>Project Manager (Full-time)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58805dbd09f97347440344" class="project-link">
-                                Financial Hyper-Personalization Using MyData
-                            </a>
-                        </strong>
-                        <br>• Managed project
-                        <br>• Conducted fintech app research and user interviews, proposed strategic recommendations, performed data analysis, and designed financial alerts
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588070bc09ec7e68938e06" class="project-link">
-                                UX Evaluation of Text-Based Conversational Experiences
-                            </a>
-                        </strong>
-                        <br>• Managed project
-                        <br>• Engineered LLM prompts and developed an automated evaluation system
-                    </p>' data-ko='<h3>서울대학교 UXLab, 서울, 대한민국</h3><br>
-                    <h5>6개월 (2024년 3월 - 2024년 8월)</h5><br>
-                    <p><i>프로젝트 매니저 (풀타임)</i>
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881a1a9e5cfbc953eb03f" class="project-link">
-                                마이데이터 활용한 금융 초개인화 방안 탐색 프로젝트
-                            </a>
-                        </strong>
-                        <br>• 프로젝트 관리
-                        <br>• 핀테크 앱 리서치 및 유저 인터뷰, 전략 제안, 데이터 분석 및 금융 알림 설계
-                        <br><strong style="display: inline-block; margin-top: 10px;">
-                            <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa58817dbf88f76dce8b33a7" class="project-link">
-                                텍스트 기반 대화 경험의 UX 평가 프로젝트
-                            </a>
-                        </strong>
-                        <br>• 프로젝트 관리
-                        <br>• LLM 프롬프트 엔지니어링, 자동화 평가 시스템 설계 및 개발
-                    </p>'>
-                </div>
-            </div>
-        </div>
+        </section>
     </div>
 
     <!-- 노션 모달 팝업 -->
@@ -816,216 +674,517 @@
         </div>
     </footer>
 
+    <!-- 네비게이션: container 외부에 분리 -->
+    <div class="nav-left">
+        <div class="lang-toggle" id="nav-lang-left">
+            <span class="lang-option" data-lang="ko">KO</span>
+            <span class="lang-option" data-lang="en">EN</span>
+        </div>
+        <div class="arrow" id="arrow-left"><i class="fas fa-angle-left"></i></div>
+    </div>
+    <div class="nav-right">
+        <div class="arrow" id="arrow-right"><i class="fas fa-angle-right"></i></div>
+        <div class="lang-toggle" id="nav-lang-right">
+            <span class="lang-option" data-lang="ko">KO</span>
+            <span class="lang-option" data-lang="en">EN</span>
+        </div>
+    </div>
     <script>
-        function adjustAlignment() {
-            const centralContent = document.querySelector(".central-content");
-            const photo = document.querySelector(".photo-container");
-            const skillsExpContainer = document.querySelector(".skills-experience-container");
-
-            const P_center = photo.getBoundingClientRect().top + window.scrollY + (photo.offsetHeight / 2);
-
-            const containerHeight = skillsExpContainer.offsetHeight;
-
-            skillsExpContainer.style.top = `${P_center - (containerHeight / 2)}px`;
-        }
-
-        // 화면 크기 변경 시 자동 조정
-        window.addEventListener("resize", adjustAlignment);
-        window.addEventListener("load", adjustAlignment);
-
         document.addEventListener("DOMContentLoaded", () => {
+            // --- Modal Setup ---
+            const notionModal = document.getElementById("notionModal");
+            const notionFrame = document.getElementById("notionFrame");
+            const closeBtn = notionModal.querySelector(".close");
+            document.addEventListener("click", (e) => {
+                if (e.target.closest(".project-link")) {
+                    e.preventDefault();
+                    const link = e.target.closest(".project-link");
+                    notionFrame.src = link.href;
+                    notionModal.style.display = "block";
+                }
+            });
+            closeBtn.addEventListener("click", () => {
+                notionModal.style.display = "none";
+                notionFrame.src = "";
+            });
+            window.addEventListener("click", (e) => {
+                if (e.target === notionModal) {
+                    notionModal.style.display = "none";
+                    notionFrame.src = "";
+                }
+            });
+
+            // --- Basic Element Selections ---
+            const container = document.querySelector(".container");
+            const chatBox = document.getElementById("chat-box");
+            const chatInput = document.getElementById("chat-input");
+            const sendBtn = document.getElementById("send-btn");
+            const suggestionContainer = document.getElementById("suggestions");
+            const arrowRight = document.getElementById("arrow-right");
+            const arrowLeft = document.getElementById("arrow-left");
             const langOptions = document.querySelectorAll(".lang-option");
-            const cvLink = document.querySelector(".download-cv");
-            const introText = document.querySelector(".intro-text");
-            const skillBlocks = document.querySelectorAll(".skill-block");
-            const userInput = document.querySelector(".user-input");
-            const sendButton = document.querySelector(".send-button");
-            const introBalloon = document.querySelector(".intro-balloon");
-            const blocks = document.querySelectorAll(".block");
-            const experienceLinks = document.querySelectorAll("#experience .icon");
-            const projectLinks = document.querySelectorAll(".project-link");
-            const modal = document.getElementById("notionModal");
-            const iframe = document.getElementById("notionFrame");
-            const closeBtn = document.querySelector(".close");
-            const photo = document.querySelector(".character-photo");
 
-            let selectedLang = localStorage.getItem("selectedLang") || "en";
+            let isChatVisible = true;
+            let selectedLang = localStorage.getItem("selectedLang") || "ko";
+            const clickedSkills = new Set();
+            const generatedTopics = new Set();
 
+            // --- Language Text Data ---
             const skillDescriptions = {
                 "Conversational AI Design": {
-                    en: "I mainly have experience in conversational AI design, working on various aspects from researching use cases to creating dialogue flows using <strong>Google Dialogflow</strong>. I work with <strong>NLP APIs, GPT models, and databases</strong> to create better interactions. My approach to conversational UX is informed by my experience with many chatbot and voicebot projects, including research papers.",
-                    ko: "대화형 AI 설계 경험이 있으며, 주로 <strong>Google Dialogflow</strong>를 사용해 대화 흐름을 설계하고 <strong>NLP API, GPT 모델, 데이터베이스</strong>를 활용하여 상호작용을 개선했습니다. 다수의 챗봇 및 음성봇 프로젝트를 통해 얻은 경험과 논문을 바탕으로 대화형 UX를 설계합니다.",
-                    status: "thumbs-up"
+                    en: "I mainly have experience in conversational AI design, working on various aspects from researching use cases to creating dialogue flows using Google Dialogflow. I work with NLP APIs, GPT models, and databases to create better interactions. My approach to conversational UX is informed by my experience with many chatbot and voicebot projects, including research papers.",
+                    ko: "대화형 AI 설계 경험이 있으며, 주로 Google Dialogflow를 사용해 대화 흐름을 설계하고 NLP API, GPT 모델, 데이터베이스를 활용하여 상호작용을 개선했습니다. 다수의 챗봇 및 음성봇 프로젝트를 통해 얻은 경험과 논문을 바탕으로 대화형 UX를 설계합니다."
                 },
                 "Project Management": {
-                    en: "I have experience participating in research and development cycles using <strong>Agile methodologies</strong> with small teams (5-6 people), especially managing multiple projects simultaneously. I help coordinate schedules, contribute to research methodologies, and work with stakeholders to support project execution. For project coordination, I use tools like <strong>Notion</strong> for documentation, <strong>Keynote</strong> for presentations, and <strong>Slack/Discord</strong> for team communication.",
-                    ko: "소규모 팀(5-6명)과 함께 <strong>Agile 방법론</strong>을 사용하여 연구 및 개발 사이클에 참여하고, 특히 여러 개의 프로젝트를 동시에 관리해 본 경험이 있습니다. 일정 조율, 연구 방법론 기여, 이해관계자와 협업을 통해 프로젝트 실행을 지원했습니다. 문서화 도구로는 <strong>Notion</strong>, 문서 작성에는 <strong>Keynote</strong>, 팀 커뮤니케이션에는 <strong>Slack/Discord</strong>를 사용했습니다.",
-                    status: "welcoming"
+                    en: "I have experience participating in research and development cycles using Agile methodologies with small teams (5-6 people), especially managing multiple projects simultaneously. I help coordinate schedules, contribute to research methodologies, and work with stakeholders to support project execution. For project coordination, I use tools like Notion for documentation, Keynote for presentations, and Slack/Discord for team communication.",
+                    ko: "소규모 팀(5-6명)과 함께 Agile 방법론을 사용하여 연구 및 개발 사이클에 참여하고, 특히 여러 개의 프로젝트를 동시에 관리해 본 경험이 있습니다. 일정 조율, 연구 방법론 기여, 이해관계자와 협업을 통해 프로젝트 실행을 지원했습니다. 문서화 도구로는 Notion, 문서 작성에는 Keynote, 팀 커뮤니케이션에는 Slack/Discord를 사용했습니다."
                 },
                 "UX Research": {
-                    en: "I have experience in mixed-method UX research, including behavioral analytics using <strong>Python</strong> for log data analysis and visualization. I conduct user interviews and workshops using various methods like <strong>Wizard of Oz testing, prototype evaluations, and think-aloud protocols</strong> for task-based studies. For deriving insights, I use techniques such as axial coding and affinity diagramming to analyze user data.",
-                    ko: "정량-정성 혼합 방법론을 활용한 UX 리서치 경험이 있습니다. 정량적 분석, 특히 로그 데이터 분석 및 시각화를 위해 <strong>Python</strong>을 사용했으며, 정성적 분석을 위해서는 <strong>Wizard of Oz 테스트, 프로토타입 평가, Think-aloud</strong>와 같은 방법을 사용해 유저 인터뷰와 워크숍을 진행했습니다. 축 코딩, 어피니티 다이어그램 등을 통해 사용자 데이터를 분석하고 통찰을 도출했습니다.",
-                    status: "ringing-a-bell"
+                    en: "I have experience in mixed-method UX research, including behavioral analytics using Python for log data analysis and visualization. I conduct user interviews and workshops using various methods like Wizard of Oz testing, prototype evaluations, and think-aloud protocols for task-based studies. For deriving insights, I use techniques such as axial coding and affinity diagramming to analyze user data.",
+                    ko: "정량-정성 혼합 방법론을 활용한 UX 리서치 경험이 있습니다. 정량적 분석, 특히 로그 데이터 분석 및 시각화를 위해 Python을 사용했으며, 정성적 분석을 위해서는 Wizard of Oz 테스트, 프로토타입 평가, Think-aloud와 같은 방법을 사용해 유저 인터뷰와 워크숍을 진행했습니다. 축 코딩, 어피니티 다이어그램 등을 통해 사용자 데이터를 분석하고 통찰을 도출했습니다."
                 },
                 "Full-stack Development": {
-                    en: "I have experience developing full-stack applications with <strong>HTML, CSS, and JavaScript</strong>, using React and React Native for web and mobile platforms. I work with serverless architectures using <strong>Firebase and Google Cloud Functions</strong>, and integrate <strong>RESTful APIs and databases like Google Sheets and Firestore</strong>. I have also worked with cloud-based services on <strong>Google Cloud Run</strong> and use <strong>Git</strong> for version control.",
-                    ko: "<strong>HTML, CSS, JavaScript</strong>를 사용해 풀스택 애플리케이션을 개발한 경험이 있으며, React와 React Native로 웹 및 모바일 플랫폼을 구현했습니다. <strong>Firebase와 Google Cloud Functions</strong> 같은 서버리스 아키텍처를 사용하며, <strong>RESTful API와 Google Sheets, Firestore</strong> 데이터베이스를 통합했습니다. 또한 <strong>Google Cloud Run</strong>에서 클라우드 기반 서비스를 구축한 경험이 있으며, Git으로 버전 관리를 수행했습니다.",
-                    status: "focusing"
+                    en: "I have experience developing full-stack applications with HTML, CSS, and JavaScript, using React and React Native for web and mobile platforms. I work with serverless architectures using Firebase and Google Cloud Functions, and integrate RESTful APIs and databases like Google Sheets and Firestore. I have also worked with cloud-based services on Google Cloud Run and use Git for version control.",
+                    ko: "HTML, CSS, JavaScript를 사용해 풀스택 애플리케이션을 개발한 경험이 있으며, React와 React Native로 웹 및 모바일 플랫폼을 구현했습니다. Firebase와 Google Cloud Functions 같은 서버리스 아키텍처를 사용하며, RESTful API와 Google Sheets, Firestore 데이터베이스를 통합했습니다. 또한 Google Cloud Run에서 클라우드 기반 서비스를 구축한 경험이 있으며, Git으로 버전 관리를 수행했습니다."
                 }
             };
 
-            function scrollToTop() {
-                introBalloon.scrollTop = 0;
+            const defaultBotMessage = {
+                ko: `안녕하세요! 주니어 UX 엔지니어 유지수입니다.
+    사용자 경험 연구와 다수의 PM 경험을 통해 소규모 팀에서 연구 및 개발 사이클을 성공적으로 이끌었습니다.
+    또한 UX 리서치와 풀스택 개발 역량을 갖추고 있어서 아이디어를 실제 서비스로 구현할 수 있습니다.
+    피드백과 협업을 환영합니다! 의미 있는 UX에 기여하고 싶습니다🤩`,
+                en: `Hi, I'm Jisu Ryou, a junior UX engineer with a master's degree in AI applied services.
+    I have successfully led research and development cycles in small teams through multiple PM experiences.
+    I also have a background in UX research and full-stack development, which allows me to turn ideas into real services.
+    Open to feedback and collaborations—let’s create meaningful UX🤩`
+            };
+
+            function getSkillDescription(skill) {
+                return skillDescriptions[skill] ? skillDescriptions[skill][selectedLang] : "";
             }
 
-            function updateLanguage(lang) {
-                selectedLang = lang;
-                localStorage.setItem("selectedLang", lang);
-
-                langOptions.forEach(opt => opt.classList.remove("active"));
-                document.querySelector(`.lang-option[data-lang="${lang}"]`)?.classList.add("active");
-
-                if (introText.hasAttribute(`data-${lang}`)) {
-                    introText.innerHTML = introText.getAttribute(`data-${lang}`);
+            // --- Typewriter Function ---
+            // 이제 ". " (마침표+공백)을 구분자로 쓴 텍스트를 그대로 출력합니다.
+            function typeWriter(text, textElem, speed, callback) {
+                if (!textElem) {
+                    if (callback) callback();
+                    return;
                 }
+                if (textElem._typingTimeout) {
+                    clearTimeout(textElem._typingTimeout);
+                    textElem._typingTimeout = null;
+                }
+                textElem.innerHTML = "";
+                let i = 0;
+                function type() {
+                    if (!textElem) return;
+                    if (i < text.length) {
+                        textElem.innerHTML += text.charAt(i);
+                        i++;
+                        textElem._typingTimeout = setTimeout(type, speed);
+                    } else {
+                        textElem._typingTimeout = null;
+                        if (callback) callback();
+                    }
+                }
+                type();
+            }
 
-                blocks.forEach(block => {
-                    block.innerHTML = block.getAttribute(`data-${lang}`);
-                });
+            function setupNextButton(slide, sentenceDivs) {
+                // 먼저 기존 버튼 제거
+                let existingBtn = slide.querySelector(".next-btn");
+                if (existingBtn) existingBtn.remove();
 
-                experienceLinks.forEach(link => {
-                    const newHref = link.getAttribute(`data-${lang}`);
-                    if (newHref) {
-                        link.setAttribute("href", newHref);
+                // next 버튼 생성
+                const nextBtn = document.createElement("button");
+                nextBtn.classList.add("next-btn");
+                nextBtn.textContent = ">>Next>>";
+
+                nextBtn.addEventListener("click", () => {
+                    // 버튼 숨김 후 다음 문장으로 전환
+                    nextBtn.style.display = "none";
+                    sentenceDivs[slide.currentIndex].style.display = "none";
+                    slide.currentIndex++;
+                    if (slide.currentIndex < sentenceDivs.length) {
+                        // 새 문장을 typeWriter로 애니메이션 실행
+                        sentenceDivs[slide.currentIndex].style.display = "block";
+                        const newTextElem = sentenceDivs[slide.currentIndex].querySelector(".sentence-text");
+                        typeWriter(slide.sentences[slide.currentIndex], newTextElem, 50, () => {
+                            // 문장이 끝나면 다음 버튼을 다시 붙임(마지막 문장이 아니라면)
+                            if (slide.currentIndex < sentenceDivs.length - 1) {
+                                setupNextButton(slide, sentenceDivs);
+                            } else {
+                                // 마지막 문장인 경우, 버튼 제거 후 입력 영역 표시
+                                document.getElementById("suggestions").style.display = "flex";
+                                document.querySelector(".input-container").style.display = "flex";
+                                slide.classList.add("complete");
+                            }
+                        });
                     }
                 });
 
-                if (cvLink) {
-                    cvLink.setAttribute("href", lang === "ko" ? "/CV_jisuryou_2024 (ko).pdf" : "/CV_jisuryou_2024 (en).pdf");
-                }
-
-                const currentSkill = document.querySelector(".skill-block.active")?.querySelector(".skill-text").textContent;
-                if (currentSkill && skillDescriptions[currentSkill]) {
-                    updateSkillDescription(currentSkill);
-                }
+                // 현재 문장에 버튼 추가
+                sentenceDivs[slide.currentIndex].appendChild(nextBtn);
+                nextBtn.style.display = "block";
             }
 
-            function updateSkillDescription(skillName) {
-                if (skillDescriptions[skillName] && skillDescriptions[skillName][selectedLang]) {
-                    introText.innerHTML = skillDescriptions[skillName][selectedLang];
-                    scrollToTop();
-
-                    photo.src = "/character-photos/"+ skillDescriptions[skillName].status + ".png";
-                    photo.alt = skillDescriptions[skillName].status;
-                }
-            }
-
-            skillBlocks.forEach((block) => {
-                block.addEventListener("click", () => {
-                    // 기존 선택 해제 후 새로운 블록 활성화
-                    skillBlocks.forEach(b => b.classList.remove("active"));
-                    block.classList.add("active");
-
-                    const skillName = block.querySelector(".skill-text").textContent;
-                    updateSkillDescription(skillName);
+            // --- addTurn Function ---
+            function addTurn(userText, botText, langKey) {
+                const slideContainer = document.createElement("div");
+                slideContainer.classList.add("chat-slide");
+                slideContainer.currentIndex = 0;
+                slideContainer.sentences = botText.split(/\.\s+/).filter(s => s.trim() !== "").map(s => {
+                    s = s.trim();
+                    return s.endsWith(".") ? s : s + ".";
                 });
-            });
 
+                const sentenceContainer = document.createElement("div");
+                sentenceContainer.classList.add("sentence-container", "bot-message");
+                sentenceContainer.setAttribute("data-lang-key", langKey);
+
+                if (userText.trim() !== "") {
+                    const userDiv = document.createElement("div");
+                    userDiv.classList.add("user-message");
+                    userDiv.innerHTML = userText;
+                    sentenceContainer.appendChild(userDiv);
+                }
+                document.getElementById("suggestions").style.display = "none";
+                document.querySelector(".input-container").style.display = "none";
+
+                // 문장별 div 생성
+                const sentenceDivs = slideContainer.sentences.map(sentence => {
+                    const div = document.createElement("div");
+                    div.classList.add("sentence-slide");
+                    div.style.display = "none";
+                    const textElem = document.createElement("div");
+                    textElem.classList.add("sentence-text");
+                    div.appendChild(textElem);
+                    return div;
+                });
+                sentenceDivs.forEach(div => sentenceContainer.appendChild(div));
+                slideContainer.sentenceDivs = sentenceDivs;
+                slideContainer.appendChild(sentenceContainer);
+                chatBox.appendChild(slideContainer);
+
+                // 첫 문장 실행
+                sentenceDivs[0].style.display = "block";
+                const textElem = sentenceDivs[0].querySelector(".sentence-text");
+                typeWriter(slideContainer.sentences[0], textElem, 50, () => {
+                    if (sentenceDivs.length > 1) {
+                        setupNextButton(slideContainer, sentenceDivs);
+                    } else {
+                        document.getElementById("suggestions").style.display = "flex";
+                        document.querySelector(".input-container").style.display = "flex";
+                        slideContainer.classList.add("complete");
+                    }
+                });
+                resetPreviousSlides();
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+
+            // --- resetPreviousSlides Function ---
+            function resetPreviousSlides() {
+                const slides = chatBox.querySelectorAll(".chat-slide");
+                slides.forEach((slide, index) => {
+                    if (index < slides.length - 1) {
+                        resetSlide(slide);
+                    }
+                });
+            }
+
+            // --- resetSlide Function ---
+            // complete된 슬라이드는 첫 번째 문장(타이핑된 상태)을 그대로 보이게 하고, Next 버튼을 새로 생성하여 이벤트를 등록합니다.
+            function resetSlide(slide) {
+                const sentenceContainer = slide.querySelector(".sentence-container");
+                if (!sentenceContainer) return;
+                const sentenceDivs = sentenceContainer.querySelectorAll(".sentence-slide");
+                // 모든 문장은 숨기고 첫 문장만 표시
+                sentenceDivs.forEach((s, idx) => {
+                    s.style.display = (idx === 0 ? "block" : "none");
+                    const textElem = s.querySelector(".sentence-text");
+                    if (textElem) textElem.innerHTML = "";
+                });
+                slide.currentIndex = 0;
+                // 첫 문장을 타이핑 효과로 재실행
+                const firstTextElem = sentenceDivs[0].querySelector(".sentence-text");
+                typeWriter(slide.sentences[0], firstTextElem, 50, () => {
+                    if (sentenceDivs.length > 1) {
+                        setupNextButton(slide, sentenceDivs);
+                    }
+                });
+            }
+
+            // --- updateSuggestions Function ---
+            function updateSuggestions() {
+                suggestionContainer.innerHTML = "";
+                for (let skill in skillDescriptions) {
+                    if (!clickedSkills.has(skill)) {
+                        const btn = document.createElement("button");
+                        btn.classList.add("suggestion-btn");
+                        btn.setAttribute("data-skill", skill);
+                        btn.setAttribute("data-type", "skill");
+                        btn.innerText = skill;
+                        btn.addEventListener("click", () => {
+                            // 이미 정의된 스킬이면 미리 작성된 텍스트 사용
+                            addTurn(skill, getSkillDescription(skill), skill);
+                            clickedSkills.add(skill);
+                            updateSuggestions();
+                        });
+                        suggestionContainer.appendChild(btn);
+                    }
+                }
+
+                generatedTopics.forEach(topic => {
+                    if (!clickedSkills.has(topic)) {
+                        const btn = document.createElement("button");
+                        btn.classList.add("suggestion-btn");
+                        btn.setAttribute("data-skill", topic);
+                        btn.setAttribute("data-type", "generated");
+                        btn.innerText = topic;
+                        btn.addEventListener("click", () => {
+                            // 생성된 주제 클릭 시 실제 /chat에 전송
+                            sendSuggestion(topic);
+                            clickedSkills.add(topic);
+                            updateSuggestions();
+                        });
+                        suggestionContainer.appendChild(btn);
+                    }
+                });
+            }
+
+            // --- sendMessage Function ---
             let loadingInterval;
             async function sendMessage() {
-                const userMessage = userInput.value.trim();
-                if (!userMessage) return;
+                const message = chatInput.value.trim();
+                if (!message) return;
+                chatInput.value = "";
 
-                userInput.value = "";
-                introText.innerHTML = "";
-                photo.src = "/character-photos/thinking.png";
-                photo.alt = "thinking";
+                const loadingSlide = document.createElement("div");
+                loadingSlide.classList.add("chat-slide", "loading-slide");
+                const loadingContainer = document.createElement("div");
+                loadingContainer.classList.add("sentence-container");
+                loadingContainer.innerHTML = "Loading";
+                loadingSlide.appendChild(loadingContainer);
+                chatBox.appendChild(loadingSlide);
+                chatBox.scrollTop = chatBox.scrollHeight;
 
-                scrollToTop();
-
-                let loadingDots = "";
+                // 로딩 애니메이션: 0~3개의 점이 순환
                 let dotCount = 0;
                 loadingInterval = setInterval(() => {
                     dotCount = (dotCount + 1) % 4;
-                    loadingDots = ".".repeat(dotCount);
-                    introText.innerHTML = `...${loadingDots}`;
+                    loadingContainer.innerHTML = "Loading" + ".".repeat(dotCount);
                 }, 500);
 
                 try {
                     const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ message: userMessage }),
-                        credentials: "include",
+                        body: JSON.stringify({ message }),
+                        credentials: "include"
                     });
-
                     const data = await response.json();
                     clearInterval(loadingInterval);
-                    introText.innerHTML = data.reply.split('#')[0];
-                    scrollToTop();
+                    loadingSlide.remove();
 
-                    if (data.reply.includes('#')) {
-                        photo.src = "/character-photos/" + data.reply.split('#')[1] + ".png";
-                        photo.alt = data.reply.split('#')[1];
-                    } else {
-                        photo.src = "/character-photos/default.png";
-                        photo.alt = "default";
-                    }
+                    const replyParts = data.reply.split('#');
+                    const mainReply = replyParts[0].trim();
+                    // extraTopics: 0~2개의 주제 (빈 문자열은 제외)
+                    const extraTopics = replyParts.slice(1).map(s => s.trim()).filter(s => s !== "");
+                    // 각 추가 주제는 generatedTopics에 추가 (중복 없이)
+                    extraTopics.forEach(topic => generatedTopics.add(topic));
+
+                    addTurn(message, mainReply, "defaultBot");
+                    updateSuggestions();
                 } catch (error) {
                     clearInterval(loadingInterval);
-                    introText.innerHTML = 'Oops! Something went wrong. Please try again.';
-                    console.error(error);
-                    scrollToTop();
+                    loadingSlide.remove();
+                    addTurn(message, "Oops, there's an error.", "defaultBot");
+                    console.error("Error:", error);
                 }
             }
 
-            sendButton.addEventListener("click", sendMessage);
-            userInput.addEventListener("keypress", (event) => {
-                if (event.key === "Enter") {
-                    event.preventDefault();
-                    sendMessage();
-                }
-            });
+            async function sendSuggestion(topic) {
+                // 옵션: 버튼 클릭 시에도 입력창 없이 바로 전송
+                // addTurn를 호출하여 사용자의 요청 메시지를 먼저 출력
+                addTurn(topic, "Loading...", "defaultBot");
 
+                try {
+                    const response = await fetch('https://chatbot-833717518964.asia-northeast3.run.app/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: topic }),
+                        credentials: "include"
+                    });
+                    const data = await response.json();
+                    const replyParts = data.reply.split('#');
+                    const mainReply = replyParts[0].trim();
+                    // 추가 주제가 있다면 generatedTopics에 추가
+                    const extraTopics = replyParts.slice(1).map(s => s.trim()).filter(s => s !== "");
+                    extraTopics.forEach(t => generatedTopics.add(t));
+                    addTurn(topic, mainReply, "generated");
+                    updateSuggestions();
+                } catch (error) {
+                    addTurn(topic, "Oops, there's an error.", "generated");
+                    console.error("Error:", error);
+                }
+            }
+
+            // --- updateDisplayedBotMessage Function ---
+            function updateDisplayedBotMessage() {
+                const slides = chatBox.querySelectorAll(".chat-slide");
+                slides.forEach(slide => {
+                    const message = slide.querySelector(".bot-message");
+                    if (!message) return;
+                    const key = message.getAttribute("data-lang-key");
+                    let newText = "";
+                    if (key === "defaultBot") {
+                        newText = defaultBotMessage[selectedLang];
+                    } else if (skillDescriptions[key]) {
+                        newText = skillDescriptions[key][selectedLang];
+                    }
+                    // 새 문장 배열 생성
+                    slide.sentences = newText.split(/\.\s+/).filter(s => s.trim() !== "").map(s => {
+                        s = s.trim();
+                        return s.endsWith(".") ? s : s + ".";
+                    });
+                    // 슬라이드 재구성: 모든 기존 자식 제거 후 새 div 생성
+                    const sentenceContainer = document.createElement("div");
+                    sentenceContainer.classList.add("sentence-container", "bot-message");
+                    sentenceContainer.setAttribute("data-lang-key", key);
+                    // 만약 유저 메시지가 있었다면 그대로 복원
+                    const existingUserMsg = message.querySelector(".user-message");
+                    if (existingUserMsg) {
+                        sentenceContainer.appendChild(existingUserMsg.cloneNode(true));
+                    }
+                    const sentenceDivs = slide.sentences.map(() => {
+                        const div = document.createElement("div");
+                        div.classList.add("sentence-slide");
+                        div.style.display = "none";
+                        const textElem = document.createElement("div");
+                        textElem.classList.add("sentence-text");
+                        div.appendChild(textElem);
+                        return div;
+                    });
+                    sentenceDivs.forEach(div => sentenceContainer.appendChild(div));
+                    // 슬라이드 교체
+                    slide.innerHTML = "";
+                    slide.appendChild(sentenceContainer);
+                    slide.sentenceDivs = sentenceDivs;
+                    slide.currentIndex = 0;
+                    // 첫 문장 타이핑
+                    if (sentenceDivs.length > 0) {
+                        sentenceDivs[0].style.display = "block";
+                        const firstTextElem = sentenceDivs[0].querySelector(".sentence-text");
+                        typeWriter(slide.sentences[0], firstTextElem, 50, () => {
+                            if (sentenceDivs.length > 1) {
+                                setupNextButton(slide, sentenceDivs);
+                            }
+                        });
+                    }
+                });
+            }
+
+            // --- updateCVContent Function ---
+            function updateCVContent(lang) {
+                const blocks = document.querySelectorAll("#cv-text .block");
+                blocks.forEach(block => {
+                    if (block.hasAttribute(`data-${lang}`)) {
+                        block.innerHTML = block.getAttribute(`data-${lang}`);
+                    }
+                });
+            }
+
+            // --- setLanguage Function ---
+            function setLanguage(lang) {
+                selectedLang = lang;
+                langOptions.forEach(option => option.classList.remove("active"));
+                document.querySelectorAll(`.lang-option[data-lang="${lang}"]`)
+                    .forEach(option => option.classList.add("active"));
+            }
+
+            // --- Navigator Handling ---
+            const navLeft = document.querySelector('.nav-left');
+            const navRight = document.querySelector('.nav-right');
+            let navTimeout;
+            function showNavigator() {
+                navLeft.classList.add('visible');
+                navRight.classList.add('visible');
+                clearTimeout(navTimeout);
+                navTimeout = setTimeout(() => {
+                    navLeft.classList.remove('visible');
+                    navRight.classList.remove('visible');
+                }, 1000);
+            }
+            document.addEventListener('mousemove', showNavigator);
+
+            // --- updateNavigationVisibility Function ---
+            function updateNavigationVisibility() {
+                const footer = document.getElementById("footer");
+                if (isChatVisible) {
+                    footer.style.position = "fixed";
+                    footer.style.bottom = "0";
+                    footer.style.left = "0";
+                    footer.style.width = "100%";
+                    document.body.style.overflow = "hidden";
+                    document.getElementById("nav-lang-left").style.display = 'flex';
+                    document.getElementById("nav-lang-right").style.display = 'none';
+                    arrowRight.style.display = 'flex';
+                    arrowLeft.style.display = 'none';
+                } else {
+                    footer.style.position = "static";
+                    document.body.style.overflow = "auto";
+                    document.getElementById("nav-lang-left").style.display = 'none';
+                    document.getElementById("nav-lang-right").style.display = 'flex';
+                    arrowRight.style.display = 'none';
+                    arrowLeft.style.display = 'flex';
+                }
+            }
+
+            // --- Language Toggle Event Handler ---
             langOptions.forEach(option => {
                 option.addEventListener("click", () => {
-                    updateLanguage(option.getAttribute("data-lang"));
+                    const lang = option.getAttribute("data-lang");
+                    setLanguage(lang);
+                    localStorage.setItem("selectedLang", lang);
+                    updateSuggestions();
+                    updateCVContent(lang);
+                    document.querySelector(".download-cv").href =
+                        lang === "ko" ? "/CV_jisuryou_2024 (ko).pdf" : "/CV_jisuryou_2024 (en).pdf";
+                    // 기존 슬라이드의 bot 메시지 업데이트 (타이핑 효과 포함)
+                    updateDisplayedBotMessage();
                 });
             });
 
-            updateLanguage(selectedLang);
+            // --- Initial Setup ---
+            setLanguage(selectedLang);
+            document.querySelector(".download-cv").href =
+                selectedLang === "ko" ? "/CV_jisuryou_2024 (ko).pdf" : "/CV_jisuryou_2024 (en).pdf";
+            updateSuggestions();
+            updateCVContent(selectedLang);
+            addTurn("", defaultBotMessage[selectedLang], "defaultBot");
 
-            // 닫기 버튼 클릭 시 모달 닫기
-            closeBtn.addEventListener("click", () => {
-                modal.style.display = "none";
-                iframe.src = "";
+            // --- Register Send Message Events ---
+            sendBtn.addEventListener("click", sendMessage);
+            chatInput.addEventListener("keypress", (e) => {
+                if (e.key === "Enter") sendMessage();
             });
 
-            // 모달 바깥 클릭 시 모달 닫기
-            window.addEventListener("click", (event) => {
-                if (event.target === modal) {
-                    modal.style.display = "none";
-                    iframe.src = "";
-                }
+            arrowRight.addEventListener("click", () => {
+                container.classList.add("move-right");
+                isChatVisible = false;
+                updateNavigationVisibility();
             });
+            arrowLeft.addEventListener("click", () => {
+                container.classList.remove("move-right");
+                isChatVisible = true;
+                updateNavigationVisibility();
+            });
+
+            updateNavigationVisibility();
         });
-
-        document.addEventListener("click", (e) => {
-            const projectLink = e.target.closest(".project-link");
-            if (projectLink) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                const url = projectLink.getAttribute("href");
-                const embedUrl = url.includes("?") ? `${url}&embed=1` : `${url}?embed=1`;
-                const modal = document.getElementById("notionModal");
-                const iframe = document.getElementById("notionFrame");
-                iframe.src = embedUrl;
-                modal.style.display = "block";
-            }
-        });
-
     </script>
+
 </body>
 
 </html>
