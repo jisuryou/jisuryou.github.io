@@ -90,7 +90,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             font-weight: bold;
             text-align: center;
             overflow: hidden;
@@ -253,20 +253,23 @@
             margin-bottom: 20px;
         }
 
-        .block h3 {
-            font-size: 20px;
-            margin-bottom: 5px !important;
-        }
-
         .block h5 {
             font-size: 12px;
+            margin-top: 5px !important;
             margin-bottom: 5px !important;
             color: #777;
         }
 
         .block p {
             font-size: 14px;
+            line-height: 1.8;
             margin-bottom: 0 !important;
+        }
+
+        .role-block {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         .modal {
@@ -464,222 +467,206 @@
                 </div>
                 <div class="cv-links">
                     <a href="/CV_jisuryou_2024 (ko).pdf" target="_blank" class="download-cv">Download CV</a>
-                    <p class="cv-date">Updated on Feb 21, 2025</p>
+                    <p class="cv-date">Updated on March 5, 2025</p>
                 </div>
                 <div id="cv-text">
                     <div id="education">
                         <h1>Education</h1>
                         <div class="block" data-en='
-                    <h3>Sungkyunkwan University, Korea</h3>
-                    <h5>Mar 2017 - Aug 2021</h5>
-                    <p><i>Bachelor of Engineering and Bachelor of Science in Psychology</i>
-                        <br>(1st) Dept. of Software, College of Software Convergence
-                        <br>(2nd) Dept. of Psychology, College of Social Sciences
-                    </p>' data-ko='
-                    <h3>성균관대학교, 대한민국</h3>
-                    <h5>2017년 3월 - 2021년 8월</h5>
-                    <p><i>공학 학사 및 심리학 학사</i>
-                        <br>(1전공) 소프트웨어융합대학 소프트웨어학과
-                        <br>(2전공) 사회과학대학 심리학과</p>'>
+                            <h3>Master’s Degree in Intelligence & Information</h3>
+                            <h5>Sep 2021 - Feb 2024</h5>
+                            <p>GSCST of Seoul National University, Korea
+                                <i><br>User Experience Lab (Best Paper Graduation)</i>
+                            </p>' data-ko='
+                            <h3>공학 석사</h3>
+                            <h5>2021년 9월 - 2024년 2월</h5>
+                            <p>서울대학교 융합과학기술대학원 지능정보융합학과 (사용자 경험 연구실)
+                                <i><br>(우수 논문 졸업) 음성 에이전트를 활용한 일기 시스템에 관한 연구 : VA 저널링에서 긴 기록을 받기 위한 응답 스타일을 중심으로</i>
+                            </p>'>
                         </div>
                         <div class="block" data-en='
-                    <h3>The University of Texas at Dallas, United States</h3>
-                    <h5>Jan 2019 - May 2019</h5>
-                    <p><i>Exchange Student</i></p>' data-ko='
-                    <h3>The University of Texas at Dallas, 미국</h3>
-                    <h5>2019년 1월 - 2019년 5월</h5>
-                    <p><i>교환학생</i></p>'>
+                            <h3>Bachelor’s Degree in Software & Psychology</h3>
+                            <h5>Mar 2017 - Aug 2021</h5>
+                            <p>Sungkyunkwan University, Korea
+                                <i><br>(1st) Dept. of Software, College of Software Convergence
+                                <br>(2nd) Dept. of Psychology, College of Social Sciences</i>
+                            </p>' data-ko='
+                            <h3>공학 학사 및 심리학 학사</h3>
+                            <h5>2017년 3월 - 2021년 8월</h5>
+                            <p>성균관대학교 소프트웨어학과(주전공), 심리학과(복수전공)</p>'>
                         </div>
-                        <div class="block"
-                            data-en='
-                    <h3>Seoul National University, Korea</h3>
-                    <h5>Sep 2021 - Feb 2024</h5>
-                    <p><i>Master of Engineering</i>
-                        <br>Dept. of Intelligence and Information, The Graduate School of Convergence Science and Technology (GSCST)
-                        <br>Advisor: Prof. Joongseek Lee (UXLab)
-                        <br>* (Best Paper Graduation) Study on a VA Journaling System : Focusing on Response Styles for Receiving Long Utterances in VA Journaling</p>'
-                            data-ko='
-                    <h3>서울대학교, 대한민국</h3>
-                    <h5>2021년 9월 - 2024년 2월</h5>
-                    <p><i>공학 석사</i><br>융합과학기술대학원 지능정보융합학과
-                        <br>사용자 경험 연구실 (지도교수 이중식)
-                        <br>* (우수 논문 졸업) 음성 에이전트를 활용한 일기 시스템에 관한 연구 : VA 저널링에서 긴 기록을 받기 위한 응답 스타일을 중심으로</p>'>
+                        <div class="block" data-en='
+                            <h3>Exchange Student</h3>
+                            <h5>Jan 2019 - May 2019</h5>
+                            <p>The University of Texas at Dallas, United States</p>' data-ko='
+                            <h3>교환 학생</h3>
+                            <h5>2019년 1월 - 2019년 5월</h5>
+                            <p>The University of Texas at Dallas, United States</p>'>
                         </div>
                     </div>
                     <div id="employment">
                         <h1>Employment</h1>
-                        <div class="block"
-                            data-en='<h3>Rihoz, Seoul, Korea</h3>
-                                <h5>4 months (Sep 2020 - Dec 2020)</h5>
-                                <p><i>Front-End Developer Intern (Full-time)</i>
-                                    <br><strong style="display: inline-block; margin-top: 10px;">‘Dangjib (Your Smart Butler)’, a big data driven smart life service platform</strong>
-                                    <br>• Focused on front-end development of the admin web page and the production app</p>' data-ko='<h3>리호즈, 서울, 대한민국</h3>
-                                <h5>4개월 (2020년 9월 - 2020년 12월)</h5>
-                                <p><i>프론트엔드 개발 인턴 (풀타임)</i>
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/1a0b4c07aa5880e78b03c43a434cfdc7" class="project-link">
-                                            빅데이터 기반 스마트 라이프 서비스 플랫폼 ‘당신의 집사(Dangjib)’ 프로젝트
-                                        </a>
-                                    </strong>
-                                    <br>• 관리자 웹 페이지 및 서비스 앱 프론트엔드 개발</p>'>
-                        </div>
-                        <div class="block" data-en='<h3>SNU UXLab, Seoul, Korea</h3>
-                                <h5>2 years (Sep 2021 - Aug 2023)</h5>
-                                <p><i>Student Researcher (Part-time)</i>
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880bd8447ec5061c02ea5" class="project-link">
-                                            Advancing Financial Chatbots via Voice Banking
-                                        </a>
-                                    </strong>
-                                    <br>• Conducted prototype testing and user interviews
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58803b86f3f24e5df10f3a" class="project-link">
-                                            Dream Journal Voice Agent Development
-                                        </a>
-                                    </strong>
-                                    <br>• Managed project
-                                    <br>• Explored use cases and planned services, designed conversation flows and implemented technical solutions, and conducted user interviews and analyzed data
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a727f220e1655943" class="project-link">
-                                            UX Improvement for Shopping Platforms
-                                        </a>
-                                    </strong>
-                                    <br>• Analyzed shopping sequences and app UI layouts, and conducted user interviews
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880e88b2efcb03654e7bd" class="project-link">
-                                            Opportunity Discovery for Home Appliance Subscription Services
-                                        </a>
-                                    </strong>
-                                    <br>• Managed project
-                                    <br>• Researched subscription service case studies and market trends, ideated, and proposed strategic recommendations
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a3d5c5b4ffcf7365" class="project-link">
-                                            Exhibition Mind Robots Integrated with AI
-                                        </a>
-                                    </strong>
-                                    <br>• Designed conversation flows and implemented technical solutions
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58800ca588cdc57059784d" class="project-link">
-                                            Clothing Care Pilot for Shared Housing
-                                        </a>
-                                    </strong>
-                                    <br>• Designed database and developed backend
-                                </p>' data-ko='<h3>서울대학교 UXLab, 서울, 대한민국</h3>
-                                <h5>2년 (2021년 9월 - 2023년 8월)</h5>
-                                <p><i>학생 연구원 (파트타임)</i>
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881149193f914215f97a6" class="project-link">
-                                            말로 하는 은행을 통한 금융 챗봇 발전 방향 탐구 프로젝트
-                                        </a>
-                                    </strong>
-                                    <br>• 프로토타입 사용 실험 진행 및 유저 인터뷰
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881299241c5b3fdfec5ed" class="project-link">
-                                            꿈기록 보이스 에이전트 개발 프로젝트
-                                        </a>
-                                    </strong>
-                                    <br>• 프로젝트 관리
-                                    <br>• 유즈케이스 탐색 및 서비스 기획, 대화 설계 및 기술 구현, 유저 인터뷰 및 데이터 분석
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881e4b30bdb1f4e63f4b2" class="project-link">
-                                            사용자 로그 데이터 기반 네이버 쇼핑 UX 개선 프로젝트
-                                        </a>
-                                    </strong>
-                                    <br>• 쇼핑 시퀀스 및 앱 UI 레이아웃 분석, 유저 인터뷰
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881bea7aaf56b25cc02a7" class="project-link">
-                                            가전 구독 서비스 전략 및 기회 발굴 조사 프로젝트
-                                        </a>
-                                    </strong>
-                                    <br>• 프로젝트 관리
-                                    <br>• 구독 서비스 사례와 시장 트렌드 조사, 아이디에이션 및 전략 제안
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881f0abb4ca9290c23e7c" class="project-link">
-                                            AI와 결합한 전시/공연용 휴머노이드 로봇・마인드 로봇 개발 프로젝트
-                                        </a>
-                                    </strong>
-                                    <br>• 대화 설계 및 기술 구현
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881548e21eeced44877ba" class="project-link">
-                                            공유 주거 clothing care pilot 개발 프로젝트
-                                        </a>
-                                    </strong>
-                                    <br>• 데이터베이스 설계, 백엔드 개발
-                                    </p>'>
-                        </div>
-                        <div class="block" data-en='<h3>SNU UXLab, Seoul, Korea</h3>
-                                <h5>6 months (March 2024 - Aug 2024)</h5>
-                                <p><i>Project Manager (Full-time)</i>
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58805dbd09f97347440344" class="project-link">
-                                            Financial Hyper-Personalization Using MyData
-                                        </a>
-                                    </strong>
-                                    <br>• Managed project
-                                    <br>• Conducted fintech app research and user interviews, proposed strategic recommendations, performed data analysis, and designed financial alerts
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588070bc09ec7e68938e06" class="project-link">
-                                            UX Evaluation of Text-Based Conversational Experiences
-                                        </a>
-                                    </strong>
-                                    <br>• Managed project
-                                    <br>• Engineered LLM prompts and developed an automated evaluation system
-                                </p>' data-ko='<h3>서울대학교 UXLab, 서울, 대한민국</h3>
-                                <h5>6개월 (2024년 3월 - 2024년 8월)</h5>
-                                <p><i>프로젝트 매니저 (풀타임)</i>
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881a1a9e5cfbc953eb03f" class="project-link">
-                                            마이데이터 활용한 금융 초개인화 방안 탐색 프로젝트
-                                        </a>
-                                    </strong>
-                                    <br>• 프로젝트 관리
-                                    <br>• 핀테크 앱 리서치 및 유저 인터뷰, 전략 제안, 데이터 분석 및 금융 알림 설계
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa58817dbf88f76dce8b33a7" class="project-link">
-                                            텍스트 기반 대화 경험의 UX 평가 프로젝트
-                                        </a>
-                                    </strong>
-                                    <br>• 프로젝트 관리
-                                    <br>• LLM 프롬프트 엔지니어링, 자동화 평가 시스템 설계 및 개발
-                                </p>'>
-                        </div>
                         <div class="block" data-en='<h3>Freelancing</h3>
-                                <h5>4 months - (Nov 2024 - )</h5>
-                                <p><i>Developer/Researcher (Part-time)</i>
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880049c72cdb0ebfe93cf" class="project-link">
-                                            SNU Cultural Accessibility Site for People with Disabilities
-                                        </a>
-                                    </strong>
-                                    <br>• Constructed a database and developed a website
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        Electric Vehicle Charging Experience Enhancement
-                                    </strong>
-                                    <br>• Conducted user workshops and performed data visualization
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        UX Evaluation of Voice-Based Conversational Experiences
-                                    </strong>
-                                    <br>• Conducted technical research and developed prototypes
-                                </p>' data-ko='<h3>프리랜서</h3>
-                                <h5>4개월 - (2024년 11월 - )</h5>
-                                <p><i>개발자 및 연구원 (파트타임)</i>
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881b283c9d3ad4764066e" class="project-link">
-                                            SNU 장애인 문화 접근성 사이트 개발
-                                        </a>
-                                    </strong>
-                                    <br>• 데이터베이스 구축, 웹사이트 개발
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881f69370c1c324933a20" class="project-link">
-                                            전기차 충전 경험 개선
-                                        </a>
-                                    </strong>
-                                    <br>• 유저 워크샵 진행, 데이터 시각화
-                                    <br><strong style="display: inline-block; margin-top: 10px;">
-                                        Voice 중심 대화 경험의 UX 평가 프로젝트
-                                    </strong>
-                                    <br>• 기술 리서치, 프로토타입 제작
+                            <h5>Nov 2024 - (5 months - )</h5>
+                            <p>
+                                Simultaneously participated in multiple projects.
+                                <span class="role-block">
+                                    <strong>Full-stack Developer</strong>
+                                    <br><i>: Constructed a database and developed a website</i>
+                                </span>
+                                <span class="role-block">
+                                    <strong>UX Researcher</strong>
+                                    <br><i>: Conducted user workshops and performed data visualization</i>
+                                    <br><i>: Conducted technical research and developed prototypes</i>
+                                </span>
+                                <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880049c72cdb0ebfe93cf" class="project-link">
+                                    • SNU Cultural Accessibility Site for People with Disabilities | Institute for Culture and Arts (2 months)
+                                </a>
+                                <br>• Electric Vehicle Charging Experience Enhancement (2 months -)
+                                <br>• UX Evaluation of Voice-Based Conversational Experiences | LG (3 months -)
+                            </p>' data-ko='<h3>프리랜서</h3>
+                            <h5>2024년 11월 - (5개월 - )</h5>
+                            <p>
+                                여러 프로젝트에 다양한 역할로 동시에 참여 중입니다.
+                                <span class="role-block">
+                                    <strong>풀스택 개발자</strong>
+                                    <br><i>: 데이터베이스 구축, 웹사이트 개발</i>
+                                </span>
+                                <span class="role-block">
+                                    <strong>UX 연구원</strong>
+                                    <br><i>: 유저 워크샵 진행, 데이터 시각화</i>
+                                    <br><i>: 기술 리서치, 프로토타입 제작</i>
+                                </span>
+                                <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881b283c9d3ad4764066e" class="project-link">
+                                    • SNU 장애인 문화 접근성 사이트 개발 | 서울대 문화예술원 (2 개월)
+                                </a>
+                                <br><a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881f69370c1c324933a20" class="project-link">
+                                    • 전기차 충전 경험 개선 프로젝트 (2 개월 -)
+                                </a>
+                                <br>• Voice 중심 대화 경험의 UX 평가 프로젝트 | LG전자 (3 개월 -)
+                            </p>'>
+                        </div>
+                        <div class="block" data-en='<h3>SNU UXLab, Seoul, Korea</h3>
+                            <h5>Sep 2021 - Aug 2024 (3 years)</h5>
+                            <p>
+                                Simultaneously participated in multiple projects.
+                                <span class="role-block">
+                                    <strong>Project Manager</strong>
+                                    <i><br>: Allocated tasks and managed stakeholder communication.
+                                    <br>: Defined and adapted research directions and methodologies agilely.
+                                    <br>: Led user research, data analysis, and prototype development.</i>
+                                </span>
+                                <span class="role-block">
+                                    <strong>UX Researcher</strong>
+                                    <i><br>: Designed and conducted prototype testing and user interviews.
+                                    <br>: Analyzed user behavior and provided data-driven insights.</i>
+                                </span>
+                                <span class="role-block">
+                                    <strong>Back-end Developer</strong>
+                                    <i><br>: Designed conversation flows and developed chatbots and voice agents.
+                                    <br>: Designed the database and integrated APIs.</i>
+                                </span>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588070bc09ec7e68938e06" class="project-link">
+                                        • UX Evaluation of Text-Based Conversational Experiences | LG (4 months)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58805dbd09f97347440344" class="project-link">
+                                        • Financial Hyper-Personalization Using MyData | HiUX (6 months)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58800ca588cdc57059784d" class="project-link">
+                                        • Clothing Care Pilot for Shared Housing | Samsung (3 months)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a3d5c5b4ffcf7365" class="project-link">
+                                        • Exhibition Mind Robots Integrated with AI | KOCCA (4 months)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880e88b2efcb03654e7bd" class="project-link">
+                                        • Opportunity Discovery for Home Appliance Subscription Services | Samsung (4 months)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa588063a727f220e1655943" class="project-link">
+                                        • UX Improvement for Shopping Platforms | Naver Shopping (4 months)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa58803b86f3f24e5df10f3a" class="project-link">
+                                        • Dream Journal Voice Agent Development (4 months)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/189b4c07aa5880bd8447ec5061c02ea5" class="project-link">
+                                        • Advancing Financial Chatbots via Voice Banking | Taran UXD (2 months)
+                                    </a>
+                            </p>' data-ko='<h3>서울대학교 UXLab, 서울, 대한민국</h3>
+                            <h5>2021년 9월 - 2024년 8월 (3년)</h5>
+                            <p>여러 프로젝트에 다양한 역할로 동시에 참여했습니다.
+                                <span class="role-block">
+                                    <strong>프로젝트 매니저</strong>
+                                    <i><br>: 팀원들(4-5명)에게 업무를 배분하고 기업과 소통
+                                    <br>: 연구 방향과 방법을 설정하고 애자일하게 조정
+                                    <br>: 사용자 연구, 데이터 분석, 프로토타입 개발 등의 과정을 주도</i>
+                                </span>
+                                <span class="role-block">
+                                    <strong>UX 연구원</strong>
+                                    <i><br>: 프로토타입 테스트, 사용자 인터뷰 등의 실험을 설계하고 진행
+                                    <br>: 사용자 행동을 분석하고 데이터 기반 인사이트를 도출</i>
+                                </span>
+                                <span class="role-block">
+                                    <strong>백엔드 개발자</strong>
+                                    <i><br>: 대화 흐름을 설계하고 챗봇 및 보이스 에이전트를 개발
+                                    <br>: 데이터베이스를 구축하고 다양한 API를 연동</i>
+                                </span>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa58817dbf88f76dce8b33a7" class="project-link">
+                                        • 텍스트 기반 대화 경험의 UX 평가 프로젝트 | LG전자 (4개월)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881a1a9e5cfbc953eb03f" class="project-link">
+                                        • 마이데이터 활용한 금융 초개인화 방안 탐색 프로젝트 | HiUX (6개월)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881548e21eeced44877ba" class="project-link">
+                                        • 공유 주거 clothing care pilot 개발 프로젝트 | 삼성전자 (3개월)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881f0abb4ca9290c23e7c" class="project-link">
+                                        • AI와 결합한 전시/공연용 휴머노이드 로봇・마인드 로봇 개발 프로젝트 | KOCCA (4개월)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881bea7aaf56b25cc02a7" class="project-link">
+                                        • 가전 구독 서비스 전략 및 기회 발굴 조사 프로젝트 | 삼성전자 (4개월)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881e4b30bdb1f4e63f4b2" class="project-link">
+                                        • 사용자 로그 데이터 기반 네이버 쇼핑 UX 개선 프로젝트 | 네이버쇼핑 (4개월)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881299241c5b3fdfec5ed" class="project-link">
+                                        • 꿈기록 보이스 에이전트 개발 프로젝트 (4개월)
+                                    </a>
+                                <br>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/190b4c07aa5881149193f914215f97a6" class="project-link">
+                                        • 말로 하는 은행을 통한 금융 챗봇 발전 방향 탐구 프로젝트 | 타란UXD (2개월)
+                                    </a>
                                 </p>'>
+                        </div>
+                        <div class="block" data-en='<h3>Rihoz, Seoul, Korea</h3>
+                                <h5>Sep 2020 - Dec 2020 (4 months)</h5>
+                                <p>Interned at a startup company as part of an ICT internship project.
+                                    <span class="role-block">
+                                        <strong>Front-End Developer</strong>
+                                        <br><i>: Contributed to frontend development of the admin web page and app.</i>
+                                    </span>
+                                    • ‘Dangjib (Your Smart Butler)’, a big data driven smart life service platform
+                                    </p>' data-ko='<h3>리호즈, 서울, 대한민국</h3>
+                                <h5>2020년 9월 - 2020년 12월 (4개월)</h5>
+                                <p>ICT 인턴십 프로젝트를 통해 스타트업 기업에서 인턴으로 근무했습니다.
+                                    <span class="role-block">
+                                        <strong>프론트엔드 개발자</strong>
+                                        <br><i>: 관리자 웹 페이지 및 서비스 앱 프론트엔드 개선 및 기능 추가</i>
+                                    </span>
+                                    <a href="https://imaginary-chimpanzee-a72.notion.site/ebd/1a0b4c07aa5880e78b03c43a434cfdc7" class="project-link">
+                                        • 빅데이터 기반 스마트 라이프 서비스 플랫폼 ‘당신의 집사(Dangjib)’ 프로젝트
+                                    </a></p>'>
                         </div>
                     </div>
                 </div>
