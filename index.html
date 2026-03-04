@@ -818,6 +818,13 @@
           letter-spacing: 2px;
           font-size: 11px;
         }
+        .final-scroll-hint.end {
+          left: var(--pad);
+          right: var(--pad);
+          transform: none;
+          text-align: center;
+          animation: none;
+        }
         .tab {
           font-size: 11px;
           letter-spacing: 1px;
@@ -1641,7 +1648,10 @@
         if (!rect.width || !rect.height) return;
         finalLinkLayer.innerHTML = "";
         const created = [];
-        FINAL_LINKS.forEach((item, idx) => {
+        const finalItems = isCoarsePointer
+          ? FINAL_LINKS.filter((item) => item.type !== "image")
+          : FINAL_LINKS;
+        finalItems.forEach((item, idx) => {
           const cacheKey = `final-link-${idx}-${item.label || item.src || "item"}`;
           const isImage = item.type === "image";
           const cached = finalLinkPosCache.get(cacheKey);
@@ -1736,13 +1746,15 @@
             a.style.background = pickLinkColor(cacheKey);
             mediaEl = a;
           }
-          const handle = document.createElement("span");
-          handle.className = "hover-media-resize";
-          if (isImage) handle.style.cursor = "nwse-resize";
           box.appendChild(mediaEl);
-          box.appendChild(handle);
           finalLinkLayer.appendChild(box);
-          bindFinalLinkHandleDrag(box, handle, { isImage });
+          if (!isCoarsePointer) {
+            const handle = document.createElement("span");
+            handle.className = "hover-media-resize";
+            if (isImage) handle.style.cursor = "nwse-resize";
+            box.appendChild(handle);
+            bindFinalLinkHandleDrag(box, handle, { isImage });
+          }
           created.push(box);
         });
         created.forEach((box, i) => {
@@ -2258,14 +2270,20 @@
 
       /* ══ LINE SYSTEM ══════════════════════════════════════ */
       const layer = document.getElementById("line-layer");
-      const TAB = 50,
-        EASING = "cubic-bezier(0.22,1,0.36,1)";
+      const EASING = "cubic-bezier(0.22,1,0.36,1)";
       const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+      function getTopY() {
+        const el = document.getElementById("frame-top");
+        return el ? Math.round(el.getBoundingClientRect().bottom) : 50;
+      }
+      function getBotY() {
+        const el = document.getElementById("frame-bot");
+        return el ? Math.round(el.getBoundingClientRect().top) : window.innerHeight - 50;
+      }
 
       function getLineYs(pageEl) {
-        const vh = window.innerHeight,
-          vw = window.innerWidth,
-          BOT = 50;
+        const vw = window.innerWidth;
+        const topY = getTopY(), botY = getBotY();
         const padPx = document
           .getElementById("frame-top")
           .getBoundingClientRect().left;
@@ -2280,7 +2298,7 @@
           const sty = getComputedStyle(lead),
             r = lead.getBoundingClientRect();
           const bw = parseFloat(sty.borderBottomWidth) || ruleW;
-          if (r.bottom > TAB && r.bottom < vh - BOT)
+          if (r.bottom > topY && r.bottom < botY)
             lines.push({
               y: r.bottom - bw,
               x1: fullX1,
@@ -2294,7 +2312,7 @@
           if (sty.borderBottomStyle !== "none") {
             const r = el.getBoundingClientRect();
             const bw = parseFloat(sty.borderBottomWidth) || ruleW;
-            if (r.bottom > TAB + 2 && r.bottom < vh - BOT - 2)
+            if (r.bottom > topY + 2 && r.bottom < botY - 2)
               lines.push({
                 y: r.bottom - bw,
                 x1: r.left,
@@ -2306,7 +2324,7 @@
         });
         pageEl.querySelectorAll(".lrow").forEach((el) => {
           const r = el.getBoundingClientRect();
-          if (r.bottom > TAB + 2 && r.bottom < vh - BOT - 2)
+          if (r.bottom > topY + 2 && r.bottom < botY - 2)
             lines.push({
               y: r.bottom - ruleW,
               x1: fullX1,
@@ -2386,7 +2404,7 @@
         shell.classList.add("hide-borders");
         await sleep(30);
         const targetLines = getLineYs(document.getElementById("page-ov"));
-        const clines = spawnClines(targetLines, TAB);
+        const clines = spawnClines(targetLines, getTopY());
         introEl.style.transition = "opacity .3s ease";
         introEl.style.opacity = "0";
         await sleep(80);
@@ -2418,13 +2436,13 @@
         const shell = document.getElementById("shell"),
           introEl = document.getElementById("intro");
         const sourceLines = getLineYs(page);
-        const clines = spawnClines(sourceLines, TAB);
+        const clines = spawnClines(sourceLines, getTopY());
         clines.forEach((el, i) => {
           el.style.top = sourceLines[i].y + "px";
         });
         shell.classList.add("hide-borders");
         await sleep(20);
-        const flyUpPromise = flyUp(clines, TAB, 38);
+        const flyUpPromise = flyUp(clines, getTopY(), 38);
         await sleep(100);
         shell.style.transition = "opacity .28s ease";
         shell.style.opacity = "0";
@@ -2457,10 +2475,10 @@
         const pages = document.querySelectorAll(".tab-page"),
           page = pages[curTab];
         const sourceLines = getLineYs(page);
-        const BOT_Y = window.innerHeight - 50; // bottom frame position
+        const BOT_Y = getBotY();
 
         // Stand-in clines at current border positions
-        const clines = spawnClines(sourceLines, TAB);
+        const clines = spawnClines(sourceLines, getTopY());
         clines.forEach((el, i) => {
           if (sourceLines[i]) el.style.top = `${sourceLines[i].y}px`;
         });
@@ -2520,7 +2538,7 @@
         finalTransitioning = true;
 
         const pages = document.querySelectorAll(".tab-page");
-        const BOT_Y = window.innerHeight - 50;
+        const BOT_Y = getBotY();
 
         // Measure where lines should land (current tab's content lines)
         // Shell needs to be in normal state so layout is measurable
@@ -2620,14 +2638,14 @@
           fromPage = pages[curTab],
           toPage = pages[idx];
         const fromLines = getLineYs(fromPage),
-          fromClines = spawnClines(fromLines, TAB);
+          fromClines = spawnClines(fromLines, getTopY());
         fromClines.forEach((el, i) => {
           el.style.top = fromLines[i].y + "px";
         });
         fromPage.classList.add("hide-borders");
         toPage.classList.add("hide-borders");
         await sleep(16);
-        const liftPromise = flyUp(fromClines, TAB, 32);
+        const liftPromise = flyUp(fromClines, getTopY(), 32);
         slider.style.transform = `translateX(-${idx * 33.333333}%)`;
         document
           .querySelectorAll(".tab")
@@ -2637,7 +2655,7 @@
         fromPage.classList.remove("hide-borders");
         const toLines = getLineYs(toPage);
         if (toLines.length) {
-          const toClines = spawnClines(toLines, TAB);
+          const toClines = spawnClines(toLines, getTopY());
           await flyDown(toClines, toLines, 20);
           removeClines(toClines);
           toPage.classList.remove("hide-borders");
