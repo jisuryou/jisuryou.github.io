@@ -584,7 +584,9 @@
         transform: translateY(0);
       }
       .final-link-box.nudging {
-        transition: left 0.55s cubic-bezier(0.22, 1, 0.36, 1), top 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        transition:
+          left 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+          top 0.55s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .final-image-item {
         display: block;
@@ -789,6 +791,110 @@
       .lrow-panel::before {
         height: var(--rule-w);
       }
+      @media (max-width: 900px) {
+        :root {
+          --tab-h: 46px;
+          --bot-h: 42px;
+          --pad: clamp(14px, 4vw, 24px);
+        }
+        html,
+        body {
+          font-size: 11px;
+        }
+        #intro {
+          padding-right: var(--pad);
+          align-items: flex-end;
+        }
+        #intro > div,
+        .word-row {
+          text-align: right;
+        }
+        .iw {
+          font-size: clamp(34px, 10vw, 56px);
+        }
+        .intro-hint,
+        .shell-scroll-hint,
+        .final-scroll-hint {
+          letter-spacing: 2px;
+          font-size: 11px;
+        }
+        .tab {
+          font-size: 11px;
+          letter-spacing: 1px;
+          white-space: nowrap;
+        }
+        .fn,
+        .fy {
+          font-size: 10px;
+          letter-spacing: 1px;
+        }
+        .fy {
+          display: none;
+        }
+        #ov {
+          padding-bottom: 40px;
+        }
+        .ov-lead {
+          min-height: auto;
+          padding-top: 18px;
+          padding-bottom: 18px;
+          margin-bottom: 18px;
+          font-size: clamp(14px, 4.4vw, 18px);
+        }
+        .ov-cols {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .ov-col,
+        .ov-col:nth-child(2),
+        .ov-col:last-child {
+          padding: 0;
+        }
+        .lrt {
+          grid-template-columns: 28px 1fr auto;
+          grid-template-areas:
+            "rn rname ryr"
+            ". rcl rcl";
+          align-items: start;
+          gap: 4px 10px;
+          padding-top: 12px;
+          padding-bottom: 12px;
+        }
+        .rn {
+          grid-area: rn;
+        }
+        .rname {
+          grid-area: rname;
+          font-size: 13px;
+        }
+        .ryr {
+          grid-area: ryr;
+          font-size: 10px;
+        }
+        .rcl {
+          grid-area: rcl;
+          font-size: 11px;
+        }
+        .lrow.open .lrow-panel {
+          max-height: 1200px;
+        }
+        .panel-inner,
+        .panel-inner.talk-inner {
+          grid-template-columns: 1fr;
+          gap: 16px;
+          padding-top: 16px;
+        }
+        .panel-inner.talk-inner .pb:first-child,
+        .panel-inner.talk-inner .pb.abs {
+          grid-column: auto;
+        }
+        .final-seq {
+          width: min(92vw, 560px);
+        }
+        .final-line + .final-line {
+          margin-top: 8px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -829,8 +935,8 @@
                 >
                 <span class="ov-line"
                   >시스템을
-                  <span class="ov-mark ov-mark-delay">MECE하게 구조화</span>할 수
-                  있는 기획자</span
+                  <span class="ov-mark ov-mark-delay">MECE하게 구조화</span>할
+                  수 있는 기획자</span
                 >
               </p>
               <div class="ov-cols">
@@ -1271,6 +1377,9 @@
         isDraggingMedia = false,
         hoverMediaRenderToken = 0;
       const finalLinkPosCache = new Map();
+      const isCoarsePointer =
+        window.matchMedia("(pointer: coarse)").matches ||
+        window.matchMedia("(hover: none)").matches;
       const FINAL_LINKS = [
         { label: "GitHub", url: "https://github.com/jisuryou" },
         {
@@ -1472,7 +1581,8 @@
         };
         box.addEventListener("pointerdown", (e) => {
           if (e.button !== 0) return;
-          if (e.target === handle || e.target.closest(".hover-link-card")) return;
+          if (e.target === handle || e.target.closest(".hover-link-card"))
+            return;
           e.preventDefault();
           box.classList.remove("nudging");
           mode = "drag";
@@ -1510,7 +1620,8 @@
       function getFinalLinkPosition(cacheKey, layerRect, w, h) {
         if (finalLinkPosCache.has(cacheKey)) {
           const c = finalLinkPosCache.get(cacheKey);
-          const cw = c.w || w, ch = c.h || h;
+          const cw = c.w || w,
+            ch = c.h || h;
           return {
             x: clamp(c.x, 8, layerRect.width - cw - 8),
             y: clamp(c.y, 8, layerRect.height - ch - 8),
@@ -1534,12 +1645,16 @@
           const cacheKey = `final-link-${idx}-${item.label || item.src || "item"}`;
           const isImage = item.type === "image";
           const cached = finalLinkPosCache.get(cacheKey);
-          const w = cached?.w ?? (isImage
-            ? Math.max(220, Math.min(440, rect.width * 0.28))
-            : Math.max(160, Math.min(250, rect.width * 0.2)));
-          const h = cached?.h ?? (isImage
-            ? Math.max(160, Math.min(300, rect.height * 0.28))
-            : Math.max(52, Math.min(72, rect.height * 0.1)));
+          const w =
+            cached?.w ??
+            (isImage
+              ? Math.max(220, Math.min(440, rect.width * 0.28))
+              : Math.max(160, Math.min(250, rect.width * 0.2)));
+          const h =
+            cached?.h ??
+            (isImage
+              ? Math.max(160, Math.min(300, rect.height * 0.28))
+              : Math.max(52, Math.min(72, rect.height * 0.1)));
           const pos = getFinalLinkPosition(cacheKey, rect, w, h);
           const box = document.createElement("div");
           box.className = "final-link-box";
@@ -1566,17 +1681,37 @@
                 let newH = Math.round(newW / imgRatio);
                 const maxW = lr.width - EDGE * 2;
                 const maxH = lr.height - EDGE * 2;
-                if (newH > maxH) { newH = maxH; newW = Math.round(newH * imgRatio); }
-                if (newW > maxW) { newW = maxW; newH = Math.round(newW / imgRatio); }
-                const cached = finalLinkPosCache.get(cacheKey) || { x: pos.x, y: pos.y };
-                const cx = Math.max(EDGE, Math.min(cached.x, lr.width - newW - EDGE));
-                const cy = Math.max(EDGE, Math.min(cached.y, lr.height - newH - EDGE));
+                if (newH > maxH) {
+                  newH = maxH;
+                  newW = Math.round(newH * imgRatio);
+                }
+                if (newW > maxW) {
+                  newW = maxW;
+                  newH = Math.round(newW / imgRatio);
+                }
+                const cached = finalLinkPosCache.get(cacheKey) || {
+                  x: pos.x,
+                  y: pos.y,
+                };
+                const cx = Math.max(
+                  EDGE,
+                  Math.min(cached.x, lr.width - newW - EDGE),
+                );
+                const cy = Math.max(
+                  EDGE,
+                  Math.min(cached.y, lr.height - newH - EDGE),
+                );
                 box.style.width = `${newW}px`;
                 box.style.height = `${newH}px`;
                 box.style.left = `${cx}px`;
                 box.style.top = `${cy}px`;
                 box.dataset.ratio = String(imgRatio);
-                finalLinkPosCache.set(cacheKey, { x: cx, y: cy, w: newW, h: newH });
+                finalLinkPosCache.set(cacheKey, {
+                  x: cx,
+                  y: cy,
+                  w: newW,
+                  h: newH,
+                });
               }
             };
             mediaEl = img;
@@ -1594,10 +1729,10 @@
               a.target = "_blank";
               a.rel = "noopener noreferrer";
             }
-          a.innerHTML = linkInnerHTML(
-            item.label,
-            item.icon || (item.download ? "download" : "link"),
-          );
+            a.innerHTML = linkInnerHTML(
+              item.label,
+              item.icon || (item.download ? "download" : "link"),
+            );
             a.style.background = pickLinkColor(cacheKey);
             mediaEl = a;
           }
@@ -1759,16 +1894,33 @@
                   let newH = Math.round(newW / imgRatio);
                   const maxW = lr.width - EDGE * 2;
                   const maxH = lr.height - EDGE * 2;
-                  if (newH > maxH) { newH = maxH; newW = Math.round(newH * imgRatio); }
-                  if (newW > maxW) { newW = maxW; newH = Math.round(newW / imgRatio); }
-                  const cx = Math.max(EDGE, Math.min(pos.x, lr.width - newW - EDGE));
-                  const cy = Math.max(EDGE, Math.min(pos.y, lr.height - newH - EDGE));
+                  if (newH > maxH) {
+                    newH = maxH;
+                    newW = Math.round(newH * imgRatio);
+                  }
+                  if (newW > maxW) {
+                    newW = maxW;
+                    newH = Math.round(newW / imgRatio);
+                  }
+                  const cx = Math.max(
+                    EDGE,
+                    Math.min(pos.x, lr.width - newW - EDGE),
+                  );
+                  const cy = Math.max(
+                    EDGE,
+                    Math.min(pos.y, lr.height - newH - EDGE),
+                  );
                   box.style.width = `${newW}px`;
                   box.style.height = `${newH}px`;
                   box.style.left = `${cx}px`;
                   box.style.top = `${cy}px`;
                   box.dataset.ratio = String(imgRatio);
-                  hoverMediaPosCache.set(cacheSeed, { x: cx, y: cy, w: newW, h: newH });
+                  hoverMediaPosCache.set(cacheSeed, {
+                    x: cx,
+                    y: cy,
+                    w: newW,
+                    h: newH,
+                  });
                 }
               };
               mediaEl = img;
@@ -1868,7 +2020,8 @@
             row.tabIndex = 0;
             const toggleOpen = () => {
               const willOpen = !row.classList.contains("open");
-              const prevRow = willOpen && activeRow && activeRow !== row ? activeRow : null;
+              const prevRow =
+                willOpen && activeRow && activeRow !== row ? activeRow : null;
               const doOpen = () => {
                 if (willOpen) {
                   const scrollContainer = row.closest(".tab-page");
@@ -1877,7 +2030,8 @@
                     activeRow = row;
                     const topPad = 12;
                     const maxScroll =
-                      scrollContainer.scrollHeight - scrollContainer.clientHeight;
+                      scrollContainer.scrollHeight -
+                      scrollContainer.clientHeight;
                     const baseTop = Math.max(
                       0,
                       Math.min(maxScroll, row.offsetTop - topPad),
@@ -1888,18 +2042,23 @@
                     });
                     const settle = () => {
                       const panel = row.querySelector(".lrow-panel");
-                      const lrtH = (row.querySelector(".lrt") || row).offsetHeight;
+                      const lrtH = (row.querySelector(".lrt") || row)
+                        .offsetHeight;
                       const panelH = Math.min(460, panel?.scrollHeight || 0);
                       const needBottom = row.offsetTop + lrtH + panelH + 16;
                       const target = Math.max(
                         baseTop,
                         Math.min(
-                          scrollContainer.scrollHeight - scrollContainer.clientHeight,
+                          scrollContainer.scrollHeight -
+                            scrollContainer.clientHeight,
                           needBottom - scrollContainer.clientHeight,
                         ),
                       );
                       if (Math.abs(target - scrollContainer.scrollTop) > 1) {
-                        scrollContainer.scrollTo({ top: target, behavior: "auto" });
+                        scrollContainer.scrollTo({
+                          top: target,
+                          behavior: "auto",
+                        });
                       }
                     };
                     setTimeout(settle, 240);
@@ -1908,13 +2067,16 @@
                     activeRow = row;
                   }
                   showHoverMedia(
-                    {
-                      imgs: d.imgs || [],
-                      vids: d.vids || [],
-                      links: d.links || [],
-                    },
+                    !isCoarsePointer
+                      ? {
+                          imgs: d.imgs || [],
+                          vids: d.vids || [],
+                          links: d.links || [],
+                        }
+                      : {},
                     mediaKey,
                   );
+                  if (isCoarsePointer) clearHoverMedia(true);
                 } else {
                   row.classList.remove("open");
                   activeRow = null;
@@ -2020,26 +2182,44 @@
         if (!finalLinkLayer.children.length) return;
         const lr = finalLinkLayer.getBoundingClientRect();
         const lineR = lineEl.getBoundingClientRect();
-        const ly1 = lineR.top - lr.top, ly2 = lineR.bottom - lr.top;
-        const seqR = finalPage.querySelector(".final-seq").getBoundingClientRect();
+        const ly1 = lineR.top - lr.top,
+          ly2 = lineR.bottom - lr.top;
+        const seqR = finalPage
+          .querySelector(".final-seq")
+          .getBoundingClientRect();
         const lcx = seqR.left + seqR.width / 2 - lr.left;
         const lcy = seqR.top + seqR.height / 2 - lr.top;
-        const MARGIN = 40, PUSH = 160, EDGE = 8;
-        [...finalLinkLayer.querySelectorAll(".final-link-box:not(.dragging)")].forEach((box) => {
+        const MARGIN = 40,
+          PUSH = 160,
+          EDGE = 8;
+        [
+          ...finalLinkLayer.querySelectorAll(".final-link-box:not(.dragging)"),
+        ].forEach((box) => {
           const bx = parseFloat(box.style.left) || 0;
           const by = parseFloat(box.style.top) || 0;
           const bw = parseFloat(box.style.width) || box.offsetWidth;
           const bh = parseFloat(box.style.height) || box.offsetHeight;
-          const bcx = bx + bw / 2, bcy = by + bh / 2;
+          const bcx = bx + bw / 2,
+            bcy = by + bh / 2;
           if (bcy < ly1 - MARGIN || bcy > ly2 + MARGIN) return;
-          const dx = bcx - lcx, dy = bcy - lcy;
+          const dx = bcx - lcx,
+            dy = bcy - lcy;
           const dist = Math.sqrt(dx * dx + dy * dy) || 1;
           const nx = clamp(bx + (dx / dist) * PUSH, EDGE, lr.width - bw - EDGE);
-          const ny = clamp(by + (dy / dist) * PUSH, EDGE, lr.height - bh - EDGE);
+          const ny = clamp(
+            by + (dy / dist) * PUSH,
+            EDGE,
+            lr.height - bh - EDGE,
+          );
           box.classList.add("nudging");
           box.style.left = `${nx}px`;
           box.style.top = `${ny}px`;
-          finalLinkPosCache.set(box.dataset.cacheKey, { x: nx, y: ny, w: bw, h: bh });
+          finalLinkPosCache.set(box.dataset.cacheKey, {
+            x: nx,
+            y: ny,
+            w: bw,
+            h: bh,
+          });
           setTimeout(() => box.classList.remove("nudging"), 600);
         });
       }
@@ -2055,13 +2235,16 @@
         });
         if (finalScrollHint) {
           const isEnd = shown >= FINAL_STEPS;
-          finalScrollHint.textContent = isEnd ? "For more information, please contact me." : "scroll";
+          finalScrollHint.textContent = isEnd
+            ? "For more information, please contact me."
+            : "scroll";
           finalScrollHint.classList.toggle("end", isEnd);
         }
       }
       function getFinalLineTargets() {
-        const padPx =
-            document.getElementById("frame-top").getBoundingClientRect().left,
+        const padPx = document
+            .getElementById("frame-top")
+            .getBoundingClientRect().left,
           vw = window.innerWidth;
         return finalLines.map((line) => {
           const r = line.getBoundingClientRect();
@@ -2083,8 +2266,9 @@
         const vh = window.innerHeight,
           vw = window.innerWidth,
           BOT = 50;
-        const padPx =
-          document.getElementById("frame-top").getBoundingClientRect().left;
+        const padPx = document
+          .getElementById("frame-top")
+          .getBoundingClientRect().left;
         const rootSty = getComputedStyle(document.documentElement);
         const ruleW = parseFloat(rootSty.getPropertyValue("--rule-w")) || 1;
         const g4 = rootSty.getPropertyValue("--g4").trim() || "#0a0a0a";
@@ -2495,8 +2679,34 @@
         },
         { passive: true },
       );
+      let introTouchY = 0;
+      introEl.addEventListener(
+        "touchstart",
+        (e) => {
+          if (state !== "intro" || busy) return;
+          introTouchY = e.touches[0].clientY;
+        },
+        { passive: true },
+      );
+      introEl.addEventListener(
+        "touchmove",
+        (e) => {
+          if (state !== "intro" || busy) return;
+          const y = e.touches[0].clientY;
+          const delta = introTouchY - y;
+          introTouchY = y;
+          introProgress = Math.max(
+            0,
+            Math.min(INTRO_STEPS, introProgress + delta / 420),
+          );
+          applyIntroProgress();
+          if (delta > 14 && introReady) goToShell();
+        },
+        { passive: true },
+      );
 
       document.querySelectorAll(".tab-page").forEach((page) => {
+        let pageTouchY = 0;
         page.addEventListener(
           "wheel",
           (e) => {
@@ -2516,31 +2726,36 @@
           },
           { passive: true },
         );
+        page.addEventListener(
+          "touchstart",
+          (e) => {
+            pageTouchY = e.touches[0].clientY;
+          },
+          { passive: true },
+        );
+        page.addEventListener(
+          "touchend",
+          (e) => {
+            if (finalActive || finalTransitioning) return;
+            const pages = document.querySelectorAll(".tab-page");
+            if (page !== pages[curTab]) return;
+            const endY = e.changedTouches[0].clientY;
+            const dy = endY - pageTouchY;
+            const atBottom =
+              page.scrollTop + page.clientHeight >= page.scrollHeight - 4;
+            if (dy < -50 && atBottom) {
+              finalEnterAccum += Math.abs(dy);
+              if (finalEnterAccum >= 140) enterFinalPage();
+            } else if (dy > 50 && page.scrollTop === 0) {
+              goToIntro();
+            } else {
+              finalEnterAccum = 0;
+            }
+          },
+          { passive: true },
+        );
       });
 
-      let tx = 0,
-        ty = 0;
-      const vp = document.getElementById("viewport");
-      vp.addEventListener(
-        "touchstart",
-        (e) => {
-          tx = e.touches[0].clientX;
-          ty = e.touches[0].clientY;
-        },
-        { passive: true },
-      );
-      vp.addEventListener(
-        "touchend",
-        (e) => {
-          const dx = e.changedTouches[0].clientX - tx,
-            dy = e.changedTouches[0].clientY - ty;
-          if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
-            if (dx < 0 && curTab < 2) switchTab(curTab + 1);
-            if (dx > 0 && curTab > 0) switchTab(curTab - 1);
-          }
-        },
-        { passive: true },
-      );
       document
         .querySelectorAll(".tab")
         .forEach((tab, i) => tab.addEventListener("click", () => switchTab(i)));
@@ -2559,6 +2774,33 @@
             exitFinalPage();
         },
         { passive: false },
+      );
+      let finalTouchY = 0;
+      finalPage.addEventListener(
+        "touchstart",
+        (e) => {
+          if (!finalActive || finalTransitioning) return;
+          finalTouchY = e.touches[0].clientY;
+        },
+        { passive: true },
+      );
+      finalPage.addEventListener(
+        "touchmove",
+        (e) => {
+          if (!finalActive || finalTransitioning) return;
+          const y = e.touches[0].clientY;
+          const dy = finalTouchY - y;
+          finalTouchY = y;
+          const prev = finalProgress;
+          finalProgress = Math.max(
+            0,
+            Math.min(FINAL_STEPS, finalProgress + dy / 380),
+          );
+          applyFinalProgress();
+          if (dy < -12 && prev <= 0.05 && finalProgress <= 0.05)
+            exitFinalPage();
+        },
+        { passive: true },
       );
       document.addEventListener("keydown", (e) => {
         if (state !== "shell") return;
