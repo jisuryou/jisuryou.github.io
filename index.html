@@ -143,12 +143,12 @@
         letter-spacing: 5px;
         color: var(--g3);
         text-transform: uppercase;
-        opacity: 0;
+        opacity: 1;
         transition: opacity 0.7s;
+        animation: hint-float 2.2s ease-in-out infinite;
       }
       .intro-hint.vis {
         opacity: 1;
-        animation: hint-float 2.2s ease-in-out infinite;
       }
       @keyframes hint-float {
         0% {
@@ -278,10 +278,43 @@
         line-height: 1.55;
         min-height: var(--ov-head-target);
         display: flex;
+        flex-direction: column;
         align-items: flex-start;
         padding-top: 24px;
         border-bottom: 1px solid var(--g4);
         margin-bottom: 24px;
+      }
+      .ov-mark {
+        display: inline;
+        padding: 0;
+        margin: 0;
+        background-image: linear-gradient(var(--black), var(--black));
+        background-repeat: no-repeat;
+        background-position: 0 100%;
+        background-size: 0% 100%;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+        color: var(--black);
+        animation: none;
+      }
+      .ov-lead.ov-anim .ov-mark {
+        animation: ovMarkSweep 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+      .ov-lead.ov-anim .ov-mark.ov-mark-delay {
+        animation-delay: 0.24s;
+      }
+      .ov-line {
+        display: block;
+      }
+      @keyframes ovMarkSweep {
+        0% {
+          background-size: 0% 100%;
+          color: var(--black);
+        }
+        100% {
+          background-size: 100% 100%;
+          color: #fff;
+        }
       }
       .ov-cols {
         display: grid;
@@ -394,7 +427,14 @@
         cursor: pointer;
       }
       .lrow:hover .lrt {
-        background: var(--bg);
+        background: var(--black);
+        color: #fff;
+      }
+      .lrow:hover .rname,
+      .lrow:hover .rn,
+      .lrow:hover .rcl,
+      .lrow:hover .ryr {
+        color: #fff;
       }
       .lrow.open .lrt {
         background: var(--black);
@@ -428,12 +468,12 @@
       .lrow-panel {
         overflow: hidden;
         max-height: 0;
-        transition: max-height 0.55s cubic-bezier(0.76, 0, 0.24, 1);
+        transition: max-height 0.6s cubic-bezier(0.76, 0, 0.24, 1);
         background: var(--bg);
       }
       .lrow.open .lrow-panel {
         max-height: 460px;
-        transition: max-height 1.1s cubic-bezier(0.76, 0, 0.24, 1);
+        transition: max-height 1.2s cubic-bezier(0.76, 0, 0.24, 1);
       }
       .lrow-panel::before {
         content: "";
@@ -574,8 +614,27 @@
         pointer-events: none;
         transition: opacity 0.2s ease;
       }
-      .final-scroll-hint.hidden {
+      .final-scroll-hint.end {
+        color: var(--black);
+        letter-spacing: 2px;
+      }
+      .shell-scroll-hint {
+        position: fixed;
+        left: 50%;
+        bottom: 60px;
+        transform: translateX(-50%);
+        font-size: 12px;
+        letter-spacing: 5px;
+        color: var(--g3);
+        text-transform: uppercase;
         opacity: 0;
+        animation: hint-float 2.2s ease-in-out infinite;
+        z-index: 690;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+      }
+      .shell-scroll-hint.vis {
+        opacity: 1;
       }
       .final-line {
         opacity: 0;
@@ -751,6 +810,7 @@
       </div>
       <div class="intro-hint" id="hint">scroll</div>
     </div>
+    <div class="shell-scroll-hint" id="shell-hint">scroll</div>
     <div id="shell">
       <nav id="topbar">
         <div class="tabs">
@@ -763,9 +823,15 @@
         <div id="tab-slider">
           <div class="tab-page" id="page-ov">
             <div id="ov">
-              <p class="ov-lead">
-                데이터와 UX를 기반으로,<br />시스템을 MECE하게 구조화할 수 있는
-                기획자
+              <p class="ov-lead ov-anim">
+                <span class="ov-line"
+                  ><span class="ov-mark">데이터와 UX</span>를 기반으로,</span
+                >
+                <span class="ov-line"
+                  >시스템을
+                  <span class="ov-mark ov-mark-delay">MECE하게 구조화</span>할 수
+                  있는 기획자</span
+                >
               </p>
               <div class="ov-cols">
                 <div class="ov-col">
@@ -1804,22 +1870,42 @@
               const willOpen = !row.classList.contains("open");
               const prevRow = willOpen && activeRow && activeRow !== row ? activeRow : null;
               const doOpen = () => {
-                row.classList.toggle("open", willOpen);
-                activeRow = willOpen ? row : null;
                 if (willOpen) {
                   const scrollContainer = row.closest(".tab-page");
                   if (scrollContainer) {
-                    const panelInner = row.querySelector(".panel-inner");
-                    const panelH = (panelInner && panelInner.offsetHeight > 0) ? panelInner.offsetHeight : 460;
-                    const lrtH = (row.querySelector(".lrt") || row).offsetHeight;
-                    requestAnimationFrame(() => {
-                      const cr = scrollContainer.getBoundingClientRect();
-                      const rr = row.getBoundingClientRect();
-                      const rowTopInScroll = rr.top - cr.top + scrollContainer.scrollTop;
-                      const targetScroll = rowTopInScroll + lrtH + panelH - scrollContainer.clientHeight + 16;
-                      if (targetScroll > scrollContainer.scrollTop)
-                        scrollContainer.scrollTo({ top: targetScroll, behavior: "smooth" });
+                    row.classList.add("open");
+                    activeRow = row;
+                    const topPad = 12;
+                    const maxScroll =
+                      scrollContainer.scrollHeight - scrollContainer.clientHeight;
+                    const baseTop = Math.max(
+                      0,
+                      Math.min(maxScroll, row.offsetTop - topPad),
+                    );
+                    scrollContainer.scrollTo({
+                      top: baseTop,
+                      behavior: prevRow ? "auto" : "smooth",
                     });
+                    const settle = () => {
+                      const panel = row.querySelector(".lrow-panel");
+                      const lrtH = (row.querySelector(".lrt") || row).offsetHeight;
+                      const panelH = Math.min(460, panel?.scrollHeight || 0);
+                      const needBottom = row.offsetTop + lrtH + panelH + 16;
+                      const target = Math.max(
+                        baseTop,
+                        Math.min(
+                          scrollContainer.scrollHeight - scrollContainer.clientHeight,
+                          needBottom - scrollContainer.clientHeight,
+                        ),
+                      );
+                      if (Math.abs(target - scrollContainer.scrollTop) > 1) {
+                        scrollContainer.scrollTo({ top: target, behavior: "auto" });
+                      }
+                    };
+                    setTimeout(settle, 240);
+                  } else {
+                    row.classList.add("open");
+                    activeRow = row;
                   }
                   showHoverMedia(
                     {
@@ -1829,23 +1915,25 @@
                     },
                     mediaKey,
                   );
-                } else scheduleHideHoverMedia();
+                } else {
+                  row.classList.remove("open");
+                  activeRow = null;
+                  scheduleHideHoverMedia();
+                }
               };
               if (prevRow) {
-                prevRow.classList.remove("open");
                 const prevPanel = prevRow.querySelector(".lrow-panel");
-                let done = false;
-                const finish = () => {
-                  if (done) return;
-                  done = true;
-                  if (prevPanel) prevPanel.removeEventListener("transitionend", finish);
-                  doOpen();
-                };
-                if (prevPanel) prevPanel.addEventListener("transitionend", finish);
-                setTimeout(finish, 650);
-              } else {
-                doOpen();
+                if (prevPanel) {
+                  const prevTransition = prevPanel.style.transition;
+                  prevPanel.style.transition = "none";
+                  prevRow.classList.remove("open");
+                  prevPanel.getBoundingClientRect();
+                  prevPanel.style.transition = prevTransition;
+                } else {
+                  prevRow.classList.remove("open");
+                }
               }
+              doOpen();
             };
             row.addEventListener("click", (e) => {
               if (e.target.closest("a,button,input,textarea,select")) return;
@@ -1883,14 +1971,14 @@
         busy = false,
         introReady = false,
         introProgress = 0,
-        introExitAccum = 0,
-        introExitPrimed = false,
-        introExitUnlockAt = 0;
+        introJustReady = false;
+      let keepShellHintVisible = false;
       const INTRO_WORD_STEPS = 4,
         INTRO_STEPS = 5,
         INTRO_SCROLL_UNIT = 1200;
       const words = [0, 1, 2, 3].map((i) => document.getElementById("w" + i));
       const hint = document.getElementById("hint");
+      const shellHint = document.getElementById("shell-hint");
       const finalPage = document.getElementById("final-page");
       const finalLines = [...finalPage.querySelectorAll(".final-line")];
       const finalScrollHint = finalPage.querySelector(".final-scroll-hint");
@@ -1911,18 +1999,23 @@
         const wasReady = introReady;
         introReady = shown === INTRO_STEPS;
         if (introReady && !wasReady) {
-          introExitAccum = 0;
-          introExitPrimed = false;
-          introExitUnlockAt = performance.now() + 700;
+          introJustReady = true;
         }
         if (!introReady) {
-          introExitAccum = 0;
-          introExitPrimed = false;
-          introExitUnlockAt = 0;
+          introJustReady = false;
         }
         hint.classList.toggle("vis", shown >= INTRO_STEPS);
       }
+      function updateShellHint(tabIdx = curTab) {
+        if (!shellHint) return;
+        const show =
+          (state === "shell" || keepShellHintVisible) &&
+          tabIdx === 0 &&
+          !finalActive;
+        shellHint.classList.toggle("vis", show);
+      }
       applyIntroProgress();
+      updateShellHint();
       function nudgeFinalLinks(lineEl) {
         if (!finalLinkLayer.children.length) return;
         const lr = finalLinkLayer.getBoundingClientRect();
@@ -1961,7 +2054,9 @@
           if (nowVis && !wasVis) nudgeFinalLinks(el);
         });
         if (finalScrollHint) {
-          finalScrollHint.classList.toggle("hidden", shown >= FINAL_STEPS);
+          const isEnd = shown >= FINAL_STEPS;
+          finalScrollHint.textContent = isEnd ? "For more information, please contact me." : "scroll";
+          finalScrollHint.classList.toggle("end", isEnd);
         }
       }
       function getFinalLineTargets() {
@@ -2097,6 +2192,8 @@
       async function goToShell() {
         if (!introReady || busy || state !== "intro") return;
         busy = true;
+        keepShellHintVisible = true;
+        updateShellHint(0);
         resetShellToOverview(true);
         const shell = document.getElementById("shell"),
           introEl = document.getElementById("intro");
@@ -2116,13 +2213,17 @@
         removeClines(clines);
         shell.classList.remove("hide-borders");
         shell.style.transition = "";
+        keepShellHintVisible = false;
         busy = false;
         state = "shell";
+        updateShellHint();
       }
 
       /* ── SHELL → INTRO ────────────────────────────────── */
       async function goToIntro() {
         if (busy || state !== "shell") return;
+        keepShellHintVisible = false;
+        if (shellHint) shellHint.classList.remove("vis");
         if (finalActive) exitFinalPageNow();
         finalEnterAccum = 0;
         clearHoverMedia(true);
@@ -2158,6 +2259,7 @@
         applyIntroProgress();
         busy = false;
         state = "intro";
+        updateShellHint();
       }
 
       /* ── ENTER FINAL PAGE ─────────────────────────────────────────────────────────
@@ -2200,6 +2302,7 @@
         finalPage.classList.add("active");
         renderFinalLinks();
         document.getElementById("shell").classList.add("final-active");
+        updateShellHint();
         pages[curTab].style.overflowY = "hidden";
         finalPage.style.opacity = "0";
         finalPage.style.transition = "opacity .85s ease";
@@ -2225,6 +2328,7 @@
         finalPage.style.transition = "";
         document.getElementById("shell").classList.remove("final-active");
         document.querySelectorAll(".tab-page")[curTab].style.overflowY = "auto";
+        updateShellHint();
       }
 
       async function exitFinalPage() {
@@ -2279,11 +2383,19 @@
         finalActive = false;
         finalTransitioning = false;
         finalEnterAccum = 0;
+        updateShellHint();
       }
 
       /* ── TAB SWITCH ───────────────────────────────────── */
       const slider = document.getElementById("tab-slider");
       let tabBusy = false;
+      function replayOverviewLead() {
+        const lead = document.querySelector("#page-ov .ov-lead");
+        if (!lead) return;
+        lead.classList.remove("ov-anim");
+        void lead.offsetWidth;
+        lead.classList.add("ov-anim");
+      }
       function resetShellToOverview(silent = false) {
         const shell = document.getElementById("shell");
         if (silent) shell.classList.add("tab-resetting");
@@ -2303,6 +2415,8 @@
         curTab = 0;
         finalEnterAccum = 0;
         clearHoverMedia(true);
+        replayOverviewLead();
+        updateShellHint();
         if (silent) {
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
@@ -2316,6 +2430,7 @@
         tabBusy = true;
         if (finalActive) exitFinalPageNow();
         finalEnterAccum = 0;
+        updateShellHint(idx);
         clearHoverMedia(true);
         const pages = document.querySelectorAll(".tab-page"),
           fromPage = pages[curTab],
@@ -2350,7 +2465,9 @@
           .querySelectorAll(".lrow.open")
           .forEach((row) => row.classList.remove("open"));
         curTab = idx;
+        if (idx === 0) replayOverviewLead();
         tabBusy = false;
+        updateShellHint();
       }
 
       /* ── TRIGGERS ─────────────────────────────────────── */
@@ -2365,22 +2482,15 @@
           );
           applyIntroProgress();
           if (e.deltaY > 0 && introReady) {
-            if (performance.now() < introExitUnlockAt) return;
-            if (!introExitPrimed) {
-              introExitPrimed = true;
-              introExitAccum = 0;
-              introExitUnlockAt = performance.now() + 420;
+            if (introJustReady) {
+              introJustReady = false;
               return;
             }
-            if (performance.now() < introExitUnlockAt) return;
-            introExitAccum += Math.min(e.deltaY, 220);
-            if (introExitAccum >= 1200) goToShell();
+            goToShell();
             return;
           }
           if (e.deltaY < 0) {
-            introExitAccum = 0;
-            introExitPrimed = false;
-            introExitUnlockAt = 0;
+            introJustReady = false;
           }
         },
         { passive: true },
