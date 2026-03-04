@@ -27,7 +27,7 @@
         --white: #fff;
         --tab-h: 50px;
         --bot-h: 50px;
-        --rule-w: 1.8px;
+        --rule-w: 2.5px;
         --pad: clamp(22px, 4.5vw, 56px);
         --ov-head-target: 132px;
         --serif:
@@ -160,6 +160,10 @@
         100% {
           transform: translateX(-50%) translateY(0);
         }
+      }
+      @keyframes hint-float-y {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
       }
       #shell {
         position: fixed;
@@ -823,7 +827,7 @@
           right: var(--pad);
           transform: none;
           text-align: center;
-          animation: none;
+          animation: hint-float-y 2.2s ease-in-out infinite;
         }
         .tab {
           font-size: 11px;
@@ -2274,11 +2278,11 @@
       const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
       function getTopY() {
         const el = document.getElementById("frame-top");
-        return el ? Math.round(el.getBoundingClientRect().bottom) : 50;
+        return el ? el.getBoundingClientRect().top : 50;
       }
       function getBotY() {
         const el = document.getElementById("frame-bot");
-        return el ? Math.round(el.getBoundingClientRect().top) : window.innerHeight - 50;
+        return el ? el.getBoundingClientRect().top : window.innerHeight - 50;
       }
 
       function getLineYs(pageEl) {
@@ -2289,8 +2293,7 @@
         const rootSty = getComputedStyle(document.documentElement);
         const ruleW = parseFloat(rootSty.getPropertyValue("--rule-w")) || 1;
         const g4 = rootSty.getPropertyValue("--g4").trim() || "#0a0a0a";
-        const fullX1 = frameTopRect.left,
-          fullX2 = frameTopRect.right;
+        const padPx = frameTopRect.left;
         const lines = [];
         const lead = pageEl.querySelector(".ov-lead");
         if (lead) {
@@ -2300,8 +2303,8 @@
           if (r.bottom > topY && r.bottom < botY)
             lines.push({
               y: r.bottom - bw,
-              x1: fullX1,
-              x2: fullX2,
+              x1: r.left,
+              x2: r.right,
               w: bw,
               c: sty.borderBottomColor || g4,
             });
@@ -2326,8 +2329,8 @@
           if (r.bottom > topY + 2 && r.bottom < botY - 2)
             lines.push({
               y: r.bottom - ruleW,
-              x1: fullX1,
-              x2: fullX2,
+              x1: r.left + padPx,
+              x2: r.right - padPx,
               w: ruleW,
               c: g4,
             });
@@ -2344,8 +2347,8 @@
       }
       function spawnClines(lines, startY) {
         return lines.map((l) => {
-          const left = Math.round(l.x1);
-          const width = Math.max(0, Math.round(l.x2 - l.x1));
+          const left = l.x1;
+          const width = Math.max(0, l.x2 - l.x1);
           const el = document.createElement("div");
           el.className = "cline";
           el.style.transition = "none";
