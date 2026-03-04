@@ -822,12 +822,16 @@
           letter-spacing: 2px;
           font-size: 11px;
         }
+        .final-scroll-hint {
+          left: 0;
+          right: 0;
+          transform: translateY(0);
+          text-align: center;
+          animation: hint-float-y 2.2s ease-in-out infinite;
+        }
         .final-scroll-hint.end {
           left: var(--pad);
           right: var(--pad);
-          transform: none;
-          text-align: center;
-          animation: hint-float-y 2.2s ease-in-out infinite;
         }
         .tab {
           font-size: 11px;
