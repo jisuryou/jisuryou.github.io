@@ -2282,16 +2282,15 @@
       }
 
       function getLineYs(pageEl) {
-        const vw = window.innerWidth;
         const topY = getTopY(), botY = getBotY();
-        const padPx = document
+        const frameTopRect = document
           .getElementById("frame-top")
-          .getBoundingClientRect().left;
+          .getBoundingClientRect();
         const rootSty = getComputedStyle(document.documentElement);
         const ruleW = parseFloat(rootSty.getPropertyValue("--rule-w")) || 1;
         const g4 = rootSty.getPropertyValue("--g4").trim() || "#0a0a0a";
-        const fullX1 = padPx,
-          fullX2 = vw - padPx;
+        const fullX1 = frameTopRect.left,
+          fullX2 = frameTopRect.right;
         const lines = [];
         const lead = pageEl.querySelector(".ov-lead");
         if (lead) {
@@ -2345,9 +2344,8 @@
       }
       function spawnClines(lines, startY) {
         return lines.map((l) => {
-          const inset = 2;
-          const left = Math.round(l.x1) + inset;
-          const width = Math.max(0, Math.round(l.x2 - l.x1) - inset * 2);
+          const left = Math.round(l.x1);
+          const width = Math.max(0, Math.round(l.x2 - l.x1));
           const el = document.createElement("div");
           el.className = "cline";
           el.style.transition = "none";
@@ -2715,7 +2713,7 @@
           introTouchY = y;
           introProgress = Math.max(
             0,
-            Math.min(INTRO_STEPS, introProgress + delta / 420),
+            Math.min(INTRO_STEPS, introProgress + delta / (isCoarsePointer ? 350 : 420)),
           );
           applyIntroProgress();
           if (delta > 14 && introReady) goToShell();
@@ -2812,7 +2810,7 @@
           const prev = finalProgress;
           finalProgress = Math.max(
             0,
-            Math.min(FINAL_STEPS, finalProgress + dy / 380),
+            Math.min(FINAL_STEPS, finalProgress + dy / (isCoarsePointer ? 350 : 420)),
           );
           applyFinalProgress();
           if (dy < -12 && prev <= 0.05 && finalProgress <= 0.05)
