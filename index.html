@@ -50,32 +50,13 @@
       }
       #frame-top,
       #frame-bot {
-        position: fixed;
-        left: var(--pad);
-        right: var(--pad);
-        height: 1px;
-        background: var(--g4);
-        z-index: 900;
-        pointer-events: none;
-      }
-      #frame-top {
-        top: var(--tab-h);
-      }
-      #frame-bot {
-        bottom: var(--bot-h);
+        display: none;
       }
       #line-layer {
-        position: fixed;
-        inset: 0;
-        z-index: 800;
-        pointer-events: none;
-        overflow: hidden;
+        display: none;
       }
       .cline {
-        position: absolute;
-        height: 1px;
-        background: var(--g4);
-        transition: top 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        display: none;
       }
       .hide-borders .ov-lead {
         border-bottom-color: transparent !important;
@@ -249,6 +230,7 @@
         left: 0;
         right: 0;
         overflow: hidden;
+        z-index: 1;
       }
       #tab-slider {
         display: flex;
@@ -276,48 +258,45 @@
       }
       .ov-lead {
         font-family: var(--serif);
-        font-size: clamp(15px, 2.1vw, 20px);
-        font-weight: 400;
-        color: var(--black);
-        line-height: 1.55;
+        font-size: clamp(22px, 3vw, 42px);
+        font-weight: 300;
+        color: var(--g3);
+        line-height: 1.15;
         min-height: var(--ov-head-target);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         padding-top: 24px;
-        border-bottom: 1px solid var(--g4);
         margin-bottom: 24px;
+        perspective: 800px;
       }
       .ov-mark {
-        display: inline;
+        display: inline-block;
         padding: 0;
         margin: 0;
-        background-image: linear-gradient(var(--black), var(--black));
-        background-repeat: no-repeat;
-        background-position: 0 100%;
-        background-size: 0% 100%;
-        box-decoration-break: clone;
-        -webkit-box-decoration-break: clone;
+        font-weight: 600;
         color: var(--black);
-        animation: none;
+        opacity: 0;
+        transform: rotateX(-90deg);
+        transform-origin: top center;
       }
       .ov-lead.ov-anim .ov-mark {
-        animation: ovMarkSweep 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation: ovMarkFlip 2.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       }
       .ov-lead.ov-anim .ov-mark.ov-mark-delay {
-        animation-delay: 0.24s;
+        animation-delay: 0.28s;
       }
       .ov-line {
         display: block;
       }
-      @keyframes ovMarkSweep {
+      @keyframes ovMarkFlip {
         0% {
-          background-size: 0% 100%;
-          color: var(--black);
+          opacity: 0;
+          transform: rotateX(-90deg);
         }
         100% {
-          background-size: 100% 100%;
-          color: #fff;
+          opacity: 1;
+          transform: rotateX(0deg);
         }
       }
       .ov-cols {
@@ -345,10 +324,8 @@
       .ov-item {
         padding-bottom: 15px;
         margin-bottom: 15px;
-        border-bottom: 1px solid var(--g5);
       }
       .ov-item:last-child {
-        border-bottom: none;
         margin-bottom: 0;
       }
       .ov-ih {
@@ -413,83 +390,88 @@
         position: relative;
       }
       .lrow::after {
-        content: "";
-        position: absolute;
-        left: var(--pad);
-        right: var(--pad);
-        bottom: 0;
-        height: 1px;
-        background: var(--g4);
+        display: none;
       }
       .lrt {
         display: grid;
-        grid-template-columns: 40px 1fr max-content max-content;
+        grid-template-columns: clamp(16px, 2vw, 28px) 1fr max-content max-content;
         align-items: baseline;
-        gap: 0 clamp(16px, 2.5vw, 32px);
-        padding: 15px var(--pad);
-        transition: background 0.15s;
+        gap: 0 clamp(10px, 1.5vw, 20px);
+        padding: clamp(4px, 0.8vw, 10px) var(--pad);
         cursor: pointer;
       }
-      .lrow:hover .lrt {
-        background: var(--black);
-        color: #fff;
+      #hover-media-layer.ghost {
+        z-index: 0;
       }
-      .lrow:hover .rname,
-      .lrow:hover .rn,
+      #hover-media-layer.ghost .hover-media-box {
+        opacity: 0.13;
+        pointer-events: none;
+      }
+      #hover-media-layer.ghost .hover-media-resize {
+        display: none;
+      }
+      .lrow:hover .lrt {
+        background: none;
+      }
+      .lrow:hover .rname {
+        color: var(--black);
+        font-weight: 600;
+      }
       .lrow:hover .rcl,
       .lrow:hover .ryr {
-        color: #fff;
+        opacity: 1;
       }
       .lrow.open .lrt {
         background: var(--black);
-        color: #fff;
       }
       .lrow.open .rname,
       .lrow.open .rn,
       .lrow.open .rcl,
       .lrow.open .ryr {
         color: #fff;
+        opacity: 1;
       }
       .rn {
-        font-size: 12px;
+        font-size: clamp(9px, 0.8vw, 11px);
         color: var(--g3);
-        letter-spacing: 1px;
+        opacity: 0.5;
+        align-self: center;
       }
       .rname {
         font-family: var(--serif);
-        font-size: clamp(13.5px, 1.7vw, 17px);
-        color: var(--black);
+        font-size: clamp(22px, 3vw, 42px);
+        font-weight: 300;
+        color: var(--g3);
+        line-height: 1.15;
+        transition: color 0.15s, font-weight 0.15s;
       }
       .rcl {
-        font-size: 12px;
+        font-size: clamp(10px, 0.85vw, 12px);
         color: var(--g3);
         letter-spacing: 0.5px;
+        opacity: 0;
+        transition: opacity 0.15s;
+        align-self: center;
       }
       .ryr {
-        font-size: 12px;
+        font-size: clamp(10px, 0.85vw, 12px);
         color: var(--g3);
+        opacity: 0;
+        transition: opacity 0.15s;
+        align-self: center;
       }
       .lrow-panel {
         overflow: hidden;
         max-height: 0;
         transition: max-height 0.6s cubic-bezier(0.76, 0, 0.24, 1);
-        background: var(--bg);
+        background: var(--black);
       }
       .lrow.open .lrow-panel {
         max-height: 460px;
         transition: max-height 1.2s cubic-bezier(0.76, 0, 0.24, 1);
       }
       .lrow-panel::before {
-        content: "";
-        display: block;
-        height: 1px;
-        margin: 0 var(--pad);
-        background: var(--g4);
-        opacity: 0;
-        transition: opacity 0.2s ease;
-      }
-      .lrow.open .lrow-panel::before {
-        opacity: 1;
+        display: none;
       }
       .panel-inner {
         display: grid;
@@ -507,34 +489,34 @@
         display: block;
         font-size: 12px;
         letter-spacing: 3px;
-        color: var(--g3);
+        color: rgba(255,255,255,0.4);
         margin-bottom: 8px;
       }
       .pco {
         font-size: 12px;
-        color: var(--black);
+        color: rgba(255,255,255,0.9);
         margin-bottom: 6px;
         line-height: 1.45;
       }
       .pds {
         font-family: var(--serif);
         font-size: 12px;
-        color: var(--g2);
+        color: rgba(255,255,255,0.55);
         line-height: 1.65;
       }
       .pbody {
         font-size: 12px;
-        color: var(--g2);
+        color: rgba(255,255,255,0.55);
         line-height: 1.72;
       }
       .sd-title {
-        color: var(--black);
+        color: rgba(255,255,255,0.9);
       }
       .pl2 {
         display: block;
         font-size: 12px;
         letter-spacing: 3px;
-        color: var(--g3);
+        color: rgba(255,255,255,0.4);
         margin-top: 14px;
         margin-bottom: 8px;
       }
@@ -695,11 +677,7 @@
         border: 0;
         background: transparent;
         box-shadow: none;
-        opacity: 0;
-        transform: translateY(8px);
-        transition:
-          opacity 0.2s ease,
-          transform 0.2s ease;
+        opacity: 1;
         pointer-events: auto;
         cursor: grab;
         user-select: none;
@@ -707,7 +685,6 @@
       }
       .hover-media-box.show {
         opacity: 1;
-        transform: translateY(0);
       }
       .hover-media-box.dragging {
         cursor: grabbing;
@@ -789,7 +766,7 @@
       }
       .ov-lead,
       .ov-item {
-        border-bottom-width: var(--rule-w);
+        border-bottom: none;
       }
       .lrow::after,
       .lrow-panel::before {
@@ -854,7 +831,7 @@
           padding-top: 18px;
           padding-bottom: 18px;
           margin-bottom: 18px;
-          font-size: clamp(14px, 4.4vw, 18px);
+          font-size: clamp(22px, 5vw, 36px);
         }
         .ov-cols {
           grid-template-columns: 1fr;
@@ -885,10 +862,12 @@
         .ryr {
           grid-area: ryr;
           font-size: 10px;
+          opacity: 1;
         }
         .rcl {
           grid-area: rcl;
           font-size: 11px;
+          opacity: 1;
         }
         .lrow.open .lrow-panel {
           max-height: 1200px;
@@ -1079,7 +1058,7 @@
     <script>
       const PROJ = [
         {
-          name: "Voice Interaction as Compatibility Signal",
+          name: "now connecting people through voice...",
           cl: "About Nine",
           yr: "2025.01– (진행중)",
           co: "서비스 기획 및 시스템 설계 (80%)",
@@ -1102,7 +1081,7 @@
           ],
         },
         {
-          name: "Standardizing Conversational Quality",
+          name: "then defined what makes a conversation good,",
           cl: "LG Electronics",
           yr: "2024.05–08 (4개월)",
           co: "PM / 프로젝트 전 과정 리드 (100%)",
@@ -1124,7 +1103,7 @@
           imgs: ["/images/cxq_img1.png", "/images/cxq_img2.png"],
         },
         {
-          name: "From MyData to Behavior-Led Alerts",
+          name: "until data began reacting before behavior did,",
           cl: "HiUX Consulting",
           yr: "2024.03–08 (6개월)",
           co: "PM  /  프로젝트 전 과정 리드 (100%)",
@@ -1145,7 +1124,7 @@
           vids: ["/images/mydata_vid1_web.mp4"],
         },
         {
-          name: "Shared Appliances, Real-time Data System",
+          name: "and wired shared spaces into live data,",
           cl: "Samsung Electronics",
           yr: "2023.01–03 (3개월)",
           co: "백엔드 개발 / DB 설계 및 API 연동 (50%)",
@@ -1163,7 +1142,7 @@
           imgs: ["/images/shared_appliance_img1.png"],
         },
         {
-          name: "From Accessibility Checklist to Information Infrastructure",
+          name: "and reached the places where information didn't arrive,",
           cl: "SNU Institute for Arts & Culture",
           yr: "2024.11–12 (2개월)",
           co: "시스템 설계 및 개발 (70%)",
@@ -1188,7 +1167,7 @@
           ],
         },
         {
-          name: "Human-Like Machines, Conversational Art Experience",
+          name: "so I built machines that could speak like people,",
           cl: "KOCCA",
           yr: "2022.09–12 (4개월)",
           co: "서비스 기획 / 대화 경험 설계 / 에이전트 개발 (80%)",
@@ -1212,7 +1191,7 @@
           ],
         },
         {
-          name: "From Product Ownership to Appliance Subscription",
+          name: "which led me to ask what value means beyond owning,",
           cl: "Samsung Electronics",
           yr: "2022.07–10 (4개월)",
           co: "PM / 프로젝트 전 과정 리드 (100%)",
@@ -1229,7 +1208,7 @@
           ],
         },
         {
-          name: "Modeling Shopping Behavior from Log Data",
+          name: "then read the patterns in the data they left behind,",
           cl: "Naver Shopping",
           yr: "2022.03–06 (4개월)",
           co: "UX 리서치 / 데이터 분석 (50%)",
@@ -1248,7 +1227,7 @@
           ],
         },
         {
-          name: "Understanding Voice Banking through User Utterances",
+          name: "Started by listening to what people said to machines,",
           cl: "Taran UXD",
           yr: "2021.09–10 (2개월)",
           co: "UX 리서치 (30%)",
@@ -1987,7 +1966,7 @@
             box.appendChild(handle);
             hoverMediaLayer.appendChild(box);
             bindMediaInteractions(box, handle);
-            setTimeout(() => box.classList.add("show"), 140 + idx * 120);
+            box.classList.add("show");
           });
         };
         if (hoverMediaLayer.children.length) {
@@ -2019,7 +1998,7 @@
       function buildList(data, pageId) {
         const c = document.getElementById(pageId),
           sorted = [...data].sort(
-            (a, b) => getChronoScore(b) - getChronoScore(a),
+            (a, b) => getChronoScore(a) - getChronoScore(b),
           );
         let activeRow = null;
         sorted.forEach((d, idx) => {
@@ -2086,6 +2065,7 @@
                     row.classList.add("open");
                     activeRow = row;
                   }
+                  hoverMediaLayer.classList.remove("ghost");
                   showHoverMedia(
                     !isCoarsePointer
                       ? {
@@ -2125,6 +2105,27 @@
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
                 toggleOpen();
+              }
+            });
+            row.addEventListener("mouseenter", () => {
+              if (
+                !row.classList.contains("open") &&
+                !isCoarsePointer &&
+                !isDraggingMedia &&
+                !document.querySelector(".lrow.open")
+              ) {
+                clearHoverMedia(true);
+                hoverMediaLayer.classList.add("ghost");
+                showHoverMedia({ imgs: d.imgs || [], vids: d.vids || [] }, mediaKey);
+              }
+            });
+            row.addEventListener("mouseleave", () => {
+              if (
+                !row.classList.contains("open") &&
+                !document.querySelector(".lrow.open")
+              ) {
+                hoverMediaLayer.classList.remove("ghost");
+                scheduleHideHoverMedia();
               }
             });
           }
