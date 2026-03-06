@@ -442,11 +442,9 @@
       }
       .lrt {
         display: grid;
-        grid-template-columns: clamp(
-            16px,
-            2vw,
-            28px
-          ) 1fr max-content max-content;
+        grid-template-columns:
+          clamp(16px, 2vw, 28px)
+          1fr max-content max-content;
         align-items: baseline;
         gap: 0 clamp(10px, 1.5vw, 20px);
         padding: clamp(4px, 0.8vw, 10px) var(--pad);
@@ -458,6 +456,9 @@
       #hover-media-layer.ghost .hover-media-box {
         opacity: 0.13;
         pointer-events: none;
+      }
+      #hover-media-layer.ghost .hover-media-box[data-media-type="link"] {
+        opacity: 0;
       }
       #hover-media-layer.ghost .hover-media-resize {
         display: none;
@@ -768,6 +769,12 @@
         user-select: none;
         touch-action: none;
       }
+      .hover-media-box[data-media-type="img"] {
+        background: #fff;
+        padding: 6px;
+        border: 1.5px solid var(--black);
+        box-sizing: border-box;
+      }
       .hover-media-box:has(.hover-link-card) {
         width: fit-content;
       }
@@ -791,6 +798,19 @@
         object-fit: contain;
         pointer-events: none;
         user-select: none;
+      }
+      .hover-media-caption {
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        padding: 6px 8px;
+        font-size: 11px;
+        line-height: 1.35;
+        color: var(--black);
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        pointer-events: none;
       }
       .hover-media-resize {
         position: absolute;
@@ -1236,7 +1256,7 @@
             "평가 결과 기반 실서비스 개선",
             "2차 산학 연구 과제로 확장",
           ],
-          imgs: ["/images/cxq_img1.png", "/images/cxq_img2.png"],
+          imgs: ["/images/cxq_img3.png", "/images/cxq_img2.png"],
         },
         {
           name: "until data began reacting before behavior did,",
@@ -1277,7 +1297,10 @@
             "실시간 가전 상태가 연동되는 공유주거 파일럿 앱 개발",
             "공용 가전 운영 관리 구조 작동 검증",
           ],
-          imgs: ["/images/shared_appliance_img1.png"],
+          imgs: [
+            "/images/shared_appliance_img1.png",
+            "/images/shared_appliance_img2.png",
+          ],
         },
         {
           name: "and reached the places where information didn't arrive,",
@@ -1347,6 +1370,7 @@
             "공유주거 환경 기반 가전 구독 서비스 제안",
             "2차 산학 연구 과제로 확장",
           ],
+          imgs: ["/images/haas_img1.png", "/images/haas_img2.png"],
         },
         {
           name: "then read the patterns in the data they left behind,",
@@ -1367,6 +1391,10 @@
             "행동 유형 기반 UX 개선 전략 제안",
             "한국 HCI 학회 2023 논문 발표 (2저자)",
           ],
+          imgs: [
+            "/images/naver_shopping_img1.png",
+            "/images/naver_shopping_img2.png",
+          ],
         },
         {
           name: "Started by listening to what people said to machines,",
@@ -1386,7 +1414,7 @@
             "금융 보이스 서비스 UX 설계 방향 도출",
             "한국 HCI 학회 2022 논문 발표 (3저자)",
           ],
-          imgs: ["/images/banky_img1.png"],
+          imgs: ["/images/banky_img1.png", "/images/banky_img2.png"],
         },
       ];
       const TALKS = [
@@ -1402,6 +1430,10 @@
               url: "https://dl.acm.org/doi/10.1145/3544549.3585901",
             },
           ],
+          imgs: [
+            { src: "/images/dada_thesis_img1.png", fr: 1.5 },
+            { src: "/images/dada_thesis_img2.png", fr: 1.5 },
+          ],
         },
         {
           name: "직접 만드는 구분감: 마이데이터를 통해 확인한 돈 관리 전략",
@@ -1414,6 +1446,9 @@
               label: "dbpia.co.kr",
               url: "https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12131521",
             },
+          ],
+          imgs: [
+            "/images/mydata_thesis_img1.png", "/images/mydata_thesis_img2.png",
           ],
         },
         {
@@ -1428,6 +1463,10 @@
               url: "https://s-space.snu.ac.kr/handle/10371/210859",
             },
           ],
+          imgs: [
+            { src: "/images/va_journaling_thesis_img1.png", fr: 1.5 },
+            "/images/va_journaling_thesis_img2.png",
+          ],
         },
         {
           name: "컨스트럭션빌딩 방식의 마인드업로드 연구",
@@ -1441,6 +1480,7 @@
               url: "https://kiss.kstudy.com/Detail/Ar?key=4037302",
             },
           ],
+          imgs: ["/images/mind_upload_img1.png", "/images/robot_art_img3.png"],
         },
         {
           name: "UXer가 페이지 로그 데이터로 행동 유형을 분석하는 방법",
@@ -1453,6 +1493,10 @@
               label: "dbpia.co.kr",
               url: "https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11229699",
             },
+          ],
+          imgs: [
+            "/images/naver_shopping_thesis_img1.png",
+            "/images/naver_shopping_thesis_img2.png",
           ],
         },
         {
@@ -1480,6 +1524,22 @@
               label: "dbpia.co.kr",
               url: "https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11043832",
             },
+          ],
+          imgs: [
+            "/images/banky_thesis_img1.png",
+            "/images/banky_thesis_img2.png",
+          ],
+        },
+        {
+          name: "사용할수록 지식베이스가 성장하는 대화형 서비스 만들기",
+          cl: "HCI Korea 2022",
+          yr: "2022.02.11",
+          co: ["Tutorial", "Co-Speaker"],
+          ds: "사용자 데이터가 축적되며 지식베이스가 성장하는 대화형 서비스 설계 방법론을 소개했다.\n지속적으로 데이터가 생성되는 도메인 선택, 지식베이스 구조 설계, 데이터 수집·제공을 위한 대화 디자인의 세 단계 프레임워크를 사례와 함께 설명했다.",
+          imgs: [
+            "/images/hcik22_tutorial_img1.png",
+            "/images/hcik22_tutorial_img2.png",
+            "/images/hcik22_tutorial_img3.png"
           ],
         },
       ];
@@ -1679,11 +1739,19 @@
           let w = parseFloat(box.style.width) || box.offsetWidth || 0;
           let h = parseFloat(box.style.height) || box.offsetHeight || 0;
           if (type === "img" || type === "video") {
+            const alignFrRaw = parseFloat(box.dataset.alignFr || "1");
+            const alignFr =
+              Number.isFinite(alignFrRaw) && alignFrRaw > 0 ? alignFrRaw : 1;
             const ratio = Math.max(
               0.2,
               parseFloat(box.dataset.ratio) || (w > 0 && h > 0 ? w / h : 1.5),
             );
-            const targetW = Math.max(120, columnW - MEDIA_ALIGN_EDGE_X * 2);
+            const targetColumnW = type === "img" ? columnW * alignFr : columnW;
+            const maxTargetW = Math.max(120, columnRight - MEDIA_ALIGN_EDGE_X);
+            const targetW = Math.max(
+              120,
+              Math.min(maxTargetW, targetColumnW - MEDIA_ALIGN_EDGE_X * 2),
+            );
             const maxH = Math.max(90, lr.height);
             let targetH = Math.round(targetW / ratio);
             if (targetH > maxH) targetH = maxH;
@@ -2111,8 +2179,17 @@
         }
         const picked = [
           ...(payload.imgs || [])
-            .filter(Boolean)
-            .map((src) => ({ type: "img", src })),
+            .map((img) =>
+              typeof img === "string"
+                ? { type: "img", src: img, caption: "", fr: 1 }
+                : {
+                    type: "img",
+                    src: img?.src || "",
+                    caption: img?.caption || "",
+                    fr: Math.max(1, Number(img?.fr) || 1),
+                  },
+            )
+            .filter((img) => !!img.src),
           ...(payload.vids || [])
             .filter(Boolean)
             .map((src) => ({ type: "video", src })),
@@ -2146,12 +2223,14 @@
             const box = document.createElement("div");
             box.className = "hover-media-box";
             box.dataset.mediaType = item.type;
+            box.dataset.alignFr = String(item.fr || 1);
             box.style.cssText = isLink
               ? `left:${pos.x}px;top:${pos.y}px`
               : `left:${pos.x}px;top:${pos.y}px;width:${pos.w}px;height:${pos.h}px`;
             box.dataset.ratio = String(pos.w / Math.max(1, pos.h));
             box.dataset.cacheKey = cacheSeed;
             let mediaEl;
+            let captionEl = null;
             if (item.type === "img") {
               const img = document.createElement("img");
               img.className = "hover-media-item";
@@ -2203,6 +2282,12 @@
                 }
               };
               mediaEl = img;
+              if (item.caption) {
+                const cap = document.createElement("div");
+                cap.className = "hover-media-caption";
+                cap.textContent = item.caption;
+                captionEl = cap;
+              }
             } else if (item.type === "video") {
               const video = document.createElement("video");
               video.className = "hover-media-item";
@@ -2251,6 +2336,7 @@
             const handle = document.createElement("span");
             handle.className = "hover-media-resize";
             box.appendChild(mediaEl);
+            if (captionEl) box.appendChild(captionEl);
             box.appendChild(handle);
             hoverMediaLayer.appendChild(box);
             bindMediaInteractions(box, handle);
@@ -2435,6 +2521,7 @@
                   {
                     imgs: d.imgs || [],
                     vids: d.vids || [],
+                    links: d.links || [],
                   },
                   mediaKey,
                 );
