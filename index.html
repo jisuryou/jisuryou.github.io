@@ -81,9 +81,6 @@
         align-items: flex-start;
         padding: 0 var(--pad);
       }
-      #intro.hidden {
-        display: none;
-      }
       #intro > div {
         text-align: left;
       }
@@ -450,19 +447,6 @@
         padding: clamp(4px, 0.8vw, 10px) var(--pad);
         cursor: pointer;
       }
-      #hover-media-layer.ghost {
-        z-index: 0;
-      }
-      #hover-media-layer.ghost .hover-media-box {
-        opacity: 0.13;
-        pointer-events: none;
-      }
-      #hover-media-layer.ghost .hover-media-box[data-media-type="link"] {
-        opacity: 0;
-      }
-      #hover-media-layer.ghost .hover-media-resize {
-        display: none;
-      }
       .lrt:hover {
         background: none;
       }
@@ -476,6 +460,7 @@
       }
       .lrow.open .lrt {
         background: var(--black);
+        cursor: default;
       }
       .lrow.open .rname,
       .lrow.open .rn,
@@ -483,6 +468,9 @@
       .lrow.open .ryr {
         color: #fff;
         opacity: 1;
+      }
+      .lrow.open .rname {
+        font-weight: 600;
       }
       .rn {
         font-size: 12px;
@@ -499,19 +487,43 @@
         transition:
           color 0.15s,
           font-weight 0.15s;
+        display: inline-grid;
+        perspective: 800px;
       }
       .rname-story,
       .rname-project {
-        display: inline;
+        grid-area: 1 / 1;
+        transform-origin: center top;
+        backface-visibility: hidden;
+        transition:
+          transform 2.3s cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 2.3s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .rname-project {
-        display: none;
+        opacity: 0;
+        transform: rotateX(-90deg);
+      }
+      .lrow:not(.open) .lrt:hover .rname-story {
+        opacity: 0;
+        transform: rotateX(90deg);
+        transition: none;
+      }
+      .lrow:not(.open) .lrt:hover .rname-project {
+        opacity: 1;
+        transform: rotateX(0deg);
+      }
+      .lrow:not(.open) .lrt:not(:hover) .rname-project {
+        transition: none;
       }
       .lrow.open .rname-story {
-        display: none;
+        opacity: 0;
+        transform: rotateX(90deg);
+        transition: none;
       }
       .lrow.open .rname-project {
-        display: inline;
+        opacity: 1;
+        transform: rotateX(0deg);
+        transition: none;
       }
       .rcl {
         font-size: 12px;
@@ -531,11 +543,11 @@
       .lrow-panel {
         overflow: hidden;
         max-height: 0;
-        transition: max-height 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+        transition: max-height 1.2s cubic-bezier(0, 0, 0.2, 1);
         background: var(--black);
       }
       .lrow.open .lrow-panel {
-        max-height: 1200px;
+        max-height: 2000px;
         transition: max-height 1.2s cubic-bezier(0.76, 0, 0.24, 1);
       }
       .lrow-panel::before {
@@ -556,6 +568,84 @@
       }
       .panel-inner.talk-inner .pb.abs {
         grid-column: 2/3;
+      }
+      .panel-media {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(18px, 3vw, 28px);
+        padding: clamp(18px, 3vw, 28px) var(--pad) 22px var(--pad);
+        background: var(--black);
+      }
+      .panel-media-grid {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(22px, 4vw, 40px);
+      }
+      .panel-media-item {
+        width: 100%;
+        margin-top: calc(0px - var(--media-overlap, 0px));
+      }
+      .panel-media-frame {
+        width: calc((var(--media-span, 3) / 4) * 100%);
+        margin-left: calc(((var(--media-start, 1) - 1) / 4) * 100%);
+        background: var(--media-bg, transparent);
+        border: none;
+        padding: var(--media-pad, 0px);
+        box-sizing: border-box;
+      }
+      .panel-media-frame img,
+      .panel-media-frame video {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+      .panel-media-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: clamp(6px, 2vw, 16px);
+      }
+      .panel-close {
+        --close-size: calc(clamp(22px, 3vw, 42px) + 24px);
+        --close-stroke: 1;
+        width: var(--close-size);
+        height: var(--close-size);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0;
+        border: none;
+        background: transparent;
+        color: #fff;
+        padding: 0;
+        cursor: pointer;
+      }
+      .panel-close-icon {
+        width: 100%;
+        height: 100%;
+        stroke: currentColor;
+        stroke-width: var(--close-stroke);
+        fill: none;
+        vector-effect: non-scaling-stroke;
+      }
+      .panel-media-links {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+      }
+      .panel-media-links .hover-link-card {
+        background: var(--black);
+        color: #fff;
+        border-color: #fff;
+      }
+      .panel-media-links .hover-link-card:hover:not(.is-disabled) {
+        background: #fff;
+        color: var(--black);
+        border-color: var(--black);
       }
       .prob-out-col {
         display: flex;
@@ -666,43 +756,6 @@
       .ct-trigger.blink {
         animation: anagram-blink 0.7s ease-in-out 3;
       }
-      .final-scroll-hint {
-        position: fixed;
-        left: 50%;
-        bottom: 60px;
-        transform: translateX(-50%);
-        font-size: 12px;
-        letter-spacing: 5px;
-        color: var(--g3);
-        text-transform: uppercase;
-        opacity: 1;
-        animation: hint-float 2.2s ease-in-out infinite;
-        z-index: 700;
-        pointer-events: none;
-        transition: opacity 0.2s ease;
-      }
-      .final-scroll-hint.end {
-        color: var(--black);
-        letter-spacing: 2px;
-      }
-      .shell-scroll-hint {
-        position: fixed;
-        left: 50%;
-        bottom: 60px;
-        transform: translateX(-50%);
-        font-size: 12px;
-        letter-spacing: 5px;
-        color: var(--g3);
-        text-transform: uppercase;
-        opacity: 0;
-        animation: hint-float 2.2s ease-in-out infinite;
-        z-index: 690;
-        pointer-events: none;
-        transition: opacity 0.2s ease;
-      }
-      .shell-scroll-hint.vis {
-        opacity: 1;
-      }
       .final-line {
         opacity: 0;
         transform: rotateX(90deg) translateY(-6px);
@@ -744,73 +797,6 @@
       }
       #shell.tab-resetting #tab-slider {
         transition: none !important;
-      }
-      #hover-media-layer {
-        position: absolute;
-        inset: 0;
-        z-index: 40;
-        pointer-events: none;
-        overflow: hidden;
-      }
-      .hover-media-box {
-        position: absolute;
-        width: clamp(180px, 21vw, 320px);
-        height: auto;
-        border: 0;
-        background: transparent;
-        box-shadow: none;
-        opacity: 0;
-        transform: translateY(8px);
-        transition:
-          opacity 0.35s ease,
-          transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-        pointer-events: auto;
-        cursor: grab;
-        user-select: none;
-        touch-action: none;
-      }
-      .hover-media-box[data-media-type="img"] {
-        background: #fff;
-        padding: 6px;
-        border: 1.5px solid var(--black);
-        box-sizing: border-box;
-      }
-      .hover-media-box:has(.hover-link-card) {
-        width: fit-content;
-      }
-      .hover-media-box:has(.hover-link-card) .hover-media-resize {
-        right: 6px;
-        bottom: 6px;
-        cursor: grab;
-      }
-      .hover-media-box.show {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .hover-media-box.dragging {
-        cursor: grabbing;
-        transition: none;
-      }
-      .hover-media-item {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        pointer-events: none;
-        user-select: none;
-      }
-      .hover-media-caption {
-        position: absolute;
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
-        padding: 6px 8px;
-        font-size: 11px;
-        line-height: 1.35;
-        color: var(--black);
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        pointer-events: none;
       }
       .hover-media-resize {
         position: absolute;
@@ -926,22 +912,9 @@
           font-size: clamp(18px, 7vw, 28px);
           font-weight: 300;
         }
-        .intro-hint,
-        .shell-scroll-hint,
-        .final-scroll-hint {
+        .intro-hint {
           letter-spacing: 2px;
           font-size: 11px;
-        }
-        .final-scroll-hint {
-          left: 0;
-          right: 0;
-          transform: translateY(0);
-          text-align: center;
-          animation: hint-float-y 2.2s ease-in-out infinite;
-        }
-        .final-scroll-hint.end {
-          left: var(--pad);
-          right: var(--pad);
         }
         .tab {
           font-size: 11px;
@@ -1000,7 +973,7 @@
           opacity: 1;
         }
         .lrow.open .lrow-panel {
-          max-height: 1200px;
+          max-height: 1800px;
         }
         .panel-inner,
         .panel-inner.talk-inner {
@@ -1014,6 +987,17 @@
         }
         .prob-out-col {
           gap: 16px;
+        }
+        .panel-media {
+          padding: 14px var(--pad) 16px var(--pad);
+          gap: 16px;
+        }
+        .panel-media-grid {
+          gap: 18px;
+        }
+        .panel-close {
+          --close-size: calc(clamp(18px, 5.5vw, 28px) + 30px);
+          --close-stroke: 2;
         }
         .final-line.head {
           font-size: clamp(22px, 7vw, 34px);
@@ -1205,7 +1189,6 @@
             </div>
           </div>
         </div>
-        <div id="hover-media-layer" aria-hidden="true"></div>
       </div>
     </div>
     <script>
@@ -1229,7 +1212,8 @@
             "상호작용 데이터 기반 추천 모델의 작동 가능성 검증",
             "Y Combinator 출품 준비 진행 중",
           ],
-          imgs: ["/images/about_nine_img1.png"],
+          imgs: [
+            { src: "/images/about_nine_img1.png", start: 1.5, span: 1.4 },],
           links: [
             { label: "about-nine.com", url: "https://about-nine.onrender.com" },
           ],
@@ -1256,7 +1240,11 @@
             "평가 결과 기반 실서비스 개선",
             "2차 산학 연구 과제로 확장",
           ],
-          imgs: ["/images/cxq_img3.png", "/images/cxq_img2.png"],
+          imgs: [
+            { src: "/images/cxq_img3.png", start: 1, span: 2.3 },
+            { src: "/images/cxq_img1.png", start: 1.28, span: 1.67 },
+            { src: "/images/cxq_img2.png", start: 3, span: 1.5, overlap: 1 },
+          ],
         },
         {
           name: "until data began reacting before behavior did,",
@@ -1277,8 +1265,12 @@
             "서비스 시나리오 및 프로토타입 제작",
             "한국 HCI 학회 2025 논문 발표 (2저자)",
           ],
-          imgs: ["/images/mydata_img1.png"],
-          vids: ["/images/mydata_vid1_web.mp4"],
+          imgs: [
+            { src: "/images/mydata_img1.png", start: 1.3, span: 1.4, bg: "#FFFFFF", pad: 20 },
+          ],
+          vids: [
+            { src: "/images/mydata_vid1_web.mp4", start: 2.9, span: 2, overlap: 0.7 }
+          ],
         },
         {
           name: "and wired shared spaces into live data,",
@@ -1298,8 +1290,8 @@
             "공용 가전 운영 관리 구조 작동 검증",
           ],
           imgs: [
-            "/images/shared_appliance_img1.png",
-            "/images/shared_appliance_img2.png",
+            { src: "/images/shared_appliance_img1.png", start: 1.2, span: 1.4 },
+            { src: "/images/shared_appliance_img2.png", start: 2.9, span: 1.4, overlap: 1 },
           ],
         },
         {
@@ -1319,7 +1311,10 @@
             "문화행사 접근성 정보를 수집·공유하는 정보 허브 구축",
             "서울대학교 문화행사 접근성 포털 운영",
           ],
-          imgs: ["/images/access_img1.png", "/images/access_img2.jpg"],
+          imgs: [
+            { src: "/images/access_img1.png", start: 1.1, span: 1.3 },
+            { src: "/images/access_img2.jpg", start: 2.5, span: 1.3, overlap: 1 },
+          ],
           links: [
             {
               label: "access.snu.ac.kr",
@@ -1345,12 +1340,12 @@
             "아트센터 나비 전시 작품 시연",
             "디자인융복합연구 2023 논문 게재 (2저자)",
           ],
-          imgs: ["/images/robot_art_img1.png", "/images/robot_art_img2.png"],
-          links: [
-            {
-              label: "youtube.com",
-              url: "https://www.youtube.com/watch?v=tXvo3JLIdPg",
-            },
+          imgs: [
+            { src: "/images/robot_art_img1.png", start: 1.3, span: 1.6 },
+            { src: "/images/robot_art_img2.png", start: 3, span: 1.6, overlap: 1 },
+          ],
+          vids: [
+            { src: "/images/robot_art_vid1.mp4", start: 2.7, span: 1.9 }
           ],
         },
         {
@@ -1370,7 +1365,10 @@
             "공유주거 환경 기반 가전 구독 서비스 제안",
             "2차 산학 연구 과제로 확장",
           ],
-          imgs: ["/images/haas_img1.png", "/images/haas_img2.png"],
+          imgs: [
+            { src: "/images/haas_img2.png", start: 1.4, span: 2.1, bg: "#FFFFFF", pad: 30 },
+            { src: "/images/haas_img1.png", start: 3, span: 1.8, bg: "#FFFFFF", pad: 30, overlap: 0 },
+          ],
         },
         {
           name: "then read the patterns in the data they left behind,",
@@ -1392,8 +1390,8 @@
             "한국 HCI 학회 2023 논문 발표 (2저자)",
           ],
           imgs: [
-            "/images/naver_shopping_img1.png",
-            "/images/naver_shopping_img2.png",
+            { src: "/images/naver_shopping_img1.png", start: 1, span: 1.7, bg: "#F2F2F0", pad: 20 },
+            { src: "/images/naver_shopping_img2.png", start: 2.8, span: 1.9, bg: "#F2F2F0", pad: 30, overlap: 0.9 },
           ],
         },
         {
@@ -1414,7 +1412,10 @@
             "금융 보이스 서비스 UX 설계 방향 도출",
             "한국 HCI 학회 2022 논문 발표 (3저자)",
           ],
-          imgs: ["/images/banky_img1.png", "/images/banky_img2.png"],
+          imgs: [
+            { src: "/images/banky_img1.png", start: 1.2, span: 1.4 },
+            { src: "/images/banky_img2.png", start: 2.7, span: 2.2, overlap: 0.6 },
+          ],
         },
       ];
       const TALKS = [
@@ -1431,8 +1432,8 @@
             },
           ],
           imgs: [
-            { src: "/images/dada_thesis_img1.png", fr: 1.5 },
-            { src: "/images/dada_thesis_img2.png", fr: 1.5 },
+            { src: "/images/dada_thesis_img1.png", start: 1.8, span: 2.3, bg: "#FFFFFF", pad: 20 },
+            { src: "/images/dada_thesis_img2.png", start: 2.4, span: 2.5, bg: "#FFFFFF", pad: 20 },
           ],
         },
         {
@@ -1448,7 +1449,8 @@
             },
           ],
           imgs: [
-            "/images/mydata_thesis_img1.png", "/images/mydata_thesis_img2.png",
+            { src: "/images/mydata_thesis_img1.png", start: 1.1, span: 1.7 },
+            { src: "/images/mydata_thesis_img2.png", start: 3, span: 1.76, bg: "#FFFFFF", pad: 30, overlap: 1 },
           ],
         },
         {
@@ -1464,8 +1466,8 @@
             },
           ],
           imgs: [
-            { src: "/images/va_journaling_thesis_img1.png", fr: 1.5 },
-            "/images/va_journaling_thesis_img2.png",
+            { src: "/images/va_journaling_thesis_img1.png", start: 1.3, span: 2.3, bg: "#FFFFFF", pad: 30 },
+            { src: "/images/va_journaling_thesis_img2.png", start: 3.6, span: 1.2, bg: "#FFFFFF", pad: 30, overlap: 0.5 },
           ],
         },
         {
@@ -1480,7 +1482,10 @@
               url: "https://kiss.kstudy.com/Detail/Ar?key=4037302",
             },
           ],
-          imgs: ["/images/mind_upload_img1.png", "/images/robot_art_img3.png"],
+          imgs: [
+            { src: "/images/robot_art_img3.png", start: 1.3, span: 1.6 },
+            { src: "/images/mind_upload_img1.png", start: 3, span: 1.8, overlap: 0.6 },
+          ],
         },
         {
           name: "UXer가 페이지 로그 데이터로 행동 유형을 분석하는 방법",
@@ -1495,8 +1500,8 @@
             },
           ],
           imgs: [
-            "/images/naver_shopping_thesis_img1.png",
-            "/images/naver_shopping_thesis_img2.png",
+            { src: "/images/naver_shopping_thesis_img1.png", start: 3, span: 1.8, bg: "#FFFFFF", pad: 20 },
+            { src: "/images/naver_shopping_thesis_img2.png", start: 1.8, span: 1, bg: "#FFFFFF", pad: 40, overlap: 0.6 },
           ],
         },
         {
@@ -1505,7 +1510,9 @@
           yr: "2023.01.30",
           co: ["Book", "Co-Author"],
           ds: "1인 가구가 급증하고 있지만 사회는 여전히 개인의 삶을 ‘고립’의 관점에서만 해석하며 새로운 관계 구조를 충분히 고려하지 못하고 있다. \n본 글은 코리빙 환경에서 기술이 사람 간 연결을 어떻게 만들어낼 수 있는지를 탐구하며, 1인 가구 시대의 새로운 사회적 관계 모델을 제안한다.",
-          imgs: ["/images/threechairs_book_img1.png"],
+          imgs: [
+            { src: "/images/threechairs_book_img1.png", start: 3.8, span: 1.2 }
+          ],
           links: [
             {
               label: "bookjournalism.com",
@@ -1526,8 +1533,8 @@
             },
           ],
           imgs: [
-            "/images/banky_thesis_img1.png",
-            "/images/banky_thesis_img2.png",
+            { src: "/images/banky_thesis_img1.png", start: 1.3, span: 1.6 },
+            { src: "/images/banky_thesis_img2.png", start: 3, span: 1.2, overlap: 1 },
           ],
         },
         {
@@ -1537,9 +1544,9 @@
           co: ["Tutorial", "Co-Speaker"],
           ds: "사용자 데이터가 축적되며 지식베이스가 성장하는 대화형 서비스 설계 방법론을 소개했다.\n지속적으로 데이터가 생성되는 도메인 선택, 지식베이스 구조 설계, 데이터 수집·제공을 위한 대화 디자인의 세 단계 프레임워크를 사례와 함께 설명했다.",
           imgs: [
-            "/images/hcik22_tutorial_img1.png",
-            "/images/hcik22_tutorial_img2.png",
-            "/images/hcik22_tutorial_img3.png"
+            { src: "/images/hcik22_tutorial_img1.png", start: 1.2, span: 1.3 },
+            { src: "/images/hcik22_tutorial_img2.png", start: 2.6, span: 1.3, overlap: 1 },
+            { src: "/images/hcik22_tutorial_img3.png", start: 3.8, span: 1.2, overlap: 0.2 },
           ],
         },
       ];
@@ -1567,21 +1574,182 @@
           })
           .join("<br/>");
       }
-      const hoverMediaLayer = document.getElementById("hover-media-layer");
+      function normalizePanelMediaItems(d = {}) {
+        const imgs = (d.imgs || [])
+          .map((img) =>
+            typeof img === "string"
+              ? { type: "img", src: img, fr: 1 }
+              : {
+                  type: "img",
+                  src: img?.src || "",
+                  fr: Math.max(1, Number(img?.fr) || 1),
+                  start: Number(img?.start),
+                  span: Number(img?.span),
+                  bg: img?.bg,
+                  pad: img?.pad,
+                  overlap: img?.overlap ?? null,
+                },
+          )
+          .filter((img) => !!img.src);
+        const vids = (d.vids || [])
+          .filter(Boolean)
+          .map((vid) =>
+            typeof vid === "string"
+              ? { type: "video", src: vid }
+              : {
+                  type: "video",
+                  src: vid?.src || "",
+                  fr: Math.max(1, Number(vid?.fr) || 1),
+                  start: Number(vid?.start),
+                  span: Number(vid?.span),
+                  bg: vid?.bg,
+                  pad: vid?.pad,
+                  overlap: vid?.overlap ?? null,
+                },
+          )
+          .filter((vid) => !!vid.src);
+        return [...imgs, ...vids];
+      }
+      function normalizePanelLinks(d = {}) {
+        return (d.links || [])
+          .filter((l) => l && l.url)
+          .map((l) => ({
+            label: l.label || "Open Link",
+            url: l.url,
+            download: !!l.download,
+            filename: l.filename || "",
+            disabled: !!l.disabled,
+          }));
+      }
+      function buildPanelMediaHtml(d = {}) {
+        const items = normalizePanelMediaItems(d);
+        const links = normalizePanelLinks(d);
+        if (!items.length && !links.length) return "";
+        const mediaHtml = items
+          .map((item, idx) => {
+            const baseFr = Number(item.fr) || 1;
+            const isLeft = idx % 2 === 0;
+            const spanRaw = Number(item.span);
+            let span = Number.isFinite(spanRaw)
+              ? Math.max(1, Math.min(4, spanRaw))
+              : Math.max(
+              2,
+              Math.min(4, Math.round(baseFr * 2 + 0.5)),
+            );
+            if (!Number.isFinite(spanRaw) && !isLeft && span === 4) span = 3;
+            const startRaw = Number(item.start);
+            let start = Number.isFinite(startRaw)
+              ? Math.max(1, Math.min(4, startRaw))
+              : isLeft
+                ? 1
+                : Math.max(1, 5 - span);
+            if (start + span - 1 > 4) start = Math.max(1, 5 - span);
+            const bgRaw = typeof item.bg === "string" ? item.bg.trim() : "";
+            const bg =
+              bgRaw && /^[#\w\s(),.%+-]+$/.test(bgRaw) ? bgRaw : "";
+            const padRaw = Number(item.pad);
+            const pad = Number.isFinite(padRaw) ? Math.max(0, padRaw) : null;
+            const overlapRaw = Number(item.overlap);
+            const overlap =
+              Number.isFinite(overlapRaw) && overlapRaw > 0 ? overlapRaw : null;
+            const styleParts = [
+              `--media-start:${start}`,
+              `--media-span:${span}`,
+            ];
+            if (bg) styleParts.push(`--media-bg:${bg}`);
+            if (pad !== null) styleParts.push(`--media-pad:${pad}px`);
+            const media =
+              item.type === "video"
+                ? `<video src="${escHtml(
+                    item.src,
+                  )}" muted loop autoplay playsinline preload="metadata"></video>`
+                : `<img src="${escHtml(item.src)}" alt="" loading="lazy" />`;
+            return `<div class="panel-media-item"${
+              overlap !== null ? ` data-overlap="${overlap}"` : ""
+            } style="${styleParts.join(";")};"><div class="panel-media-frame">${media}</div></div>`;
+          })
+          .join("");
+        const linkHtml = links
+          .map((l) => {
+            const attrs = l.disabled
+              ? `aria-disabled="true"`
+              : l.download
+                ? `download="${escHtml(l.filename)}"`
+                : `target="_blank" rel="noopener noreferrer"`;
+            return `<a class="hover-link-card${
+              l.disabled ? " is-disabled" : ""
+            }" href="${escHtml(l.url)}" ${attrs}>${linkInnerHTML(
+              escHtml(l.label),
+            )}</a>`;
+          })
+          .join("");
+        return `<div class="panel-media"><div class="panel-media-grid">${mediaHtml}</div><div class="panel-media-actions"><button class="panel-close" type="button" aria-label="Close panel"><svg class="panel-close-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4L20 20M20 4L4 20"/></svg></button><div class="panel-media-links">${linkHtml}</div></div></div>`;
+      }
+      const activeRows = {};
+      let lastOpenedRow = null;
+      function scrollPanelIntoView(row, scrollContainer, smooth = false) {
+        const panel = row.querySelector(".lrow-panel");
+        const header = row.querySelector(".lrt") || row;
+        if (!panel || !scrollContainer || !row.classList.contains("open"))
+          return;
+        const padTop = 12;
+        const rowTop = row.offsetTop;
+        const targetTop = rowTop - padTop;
+        const maxScroll =
+          scrollContainer.scrollHeight - scrollContainer.clientHeight;
+        const target = Math.max(0, Math.min(maxScroll, targetTop));
+        if (Math.abs(target - scrollContainer.scrollTop) > 1) {
+          scrollContainer.scrollTo({
+            top: target,
+            behavior: smooth ? "smooth" : "auto",
+          });
+        }
+      }
+      function syncMediaOverlaps() {
+        document.querySelectorAll(".panel-media-grid").forEach((grid) => {
+          const gapRaw =
+            getComputedStyle(grid).rowGap || getComputedStyle(grid).gap || "0";
+          const gap = parseFloat(gapRaw) || 0;
+          const items = [...grid.querySelectorAll(".panel-media-item")];
+          items.forEach((item, idx) => {
+            const ratio = parseFloat(item.dataset.overlap || "");
+            if (!Number.isFinite(ratio) || ratio <= 0 || idx === 0) {
+              item.style.removeProperty("--media-overlap");
+              return;
+            }
+            const prevFrame = items[idx - 1]?.querySelector(
+              ".panel-media-frame",
+            );
+            const prevH = prevFrame?.getBoundingClientRect().height || 0;
+            const px = prevH * ratio + gap;
+            item.style.setProperty("--media-overlap", `${px}px`);
+          });
+        });
+        if (lastOpenedRow && lastOpenedRow.classList.contains("open")) {
+          const container = lastOpenedRow.closest(".tab-page");
+          if (container) scrollPanelIntoView(lastOpenedRow, container, false);
+        }
+      }
+      function bindMediaOverlapObservers() {
+        document
+          .querySelectorAll(".panel-media-grid img, .panel-media-grid video")
+          .forEach((el) => {
+            if (
+              (el.tagName === "IMG" && el.complete) ||
+              (el.tagName === "VIDEO" && el.readyState >= 1)
+            )
+              return;
+            const evt = el.tagName === "VIDEO" ? "loadedmetadata" : "load";
+            el.addEventListener(evt, syncMediaOverlaps, { once: true });
+          });
+      }
       const finalLinkLayer = document.getElementById("final-link-layer");
-      let hoverMediaHideTimer = null,
-        hoverMediaPosCache = new Map(),
-        isDraggingMedia = false,
-        hoverMediaRenderToken = 0,
-        hoverMediaRenderDelayTimer = null,
-        hoverMediaShowTimers = [];
       const finalLinkPosCache = new Map();
       const isCoarsePointer =
         window.matchMedia("(pointer: coarse)").matches ||
         window.matchMedia("(hover: none)").matches;
       const isMobileViewport = () =>
         window.matchMedia("(max-width: 900px)").matches;
-      const canShowDesktopMedia = () => !isMobileViewport() && !isCoarsePointer;
       const FINAL_LINKS = [
         { label: "GitHub", url: "https://github.com/jisuryou" },
         {
@@ -1617,277 +1785,10 @@
         MEDIA_ALIGN_START_Y = 0,
         MEDIA_ALIGN_GAP = 10,
         FINAL_LINK_NUDGE_MS = 1200;
-      function clearHoverMediaShowTimers() {
-        if (!hoverMediaShowTimers.length) return;
-        hoverMediaShowTimers.forEach((t) => clearTimeout(t));
-        hoverMediaShowTimers = [];
-      }
       function clamp(v, min, max) {
         return Math.max(min, Math.min(max, v));
       }
-      function shouldAutoAlignHoverMedia() {
-        return ctRow2Resolved && (curTab === 1 || curTab === 2);
-      }
-      function getHoverMediaType(box) {
-        if (box.dataset.mediaType) return box.dataset.mediaType;
-        if (box.querySelector(".hover-link-card")) return "link";
-        if (box.querySelector("video")) return "video";
-        return "img";
-      }
-      function getHoverMediaSortRank(type) {
-        if (type === "link") return 0;
-        if (type === "img") return 1;
-        if (type === "video") return 2;
-        return 3;
-      }
-      function constrainHoverBoxToLayer(box, resizeMedia = true) {
-        const lr = hoverMediaLayer.getBoundingClientRect();
-        if (!lr.width || !lr.height) return;
-        const type = getHoverMediaType(box);
-        let w = parseFloat(box.style.width) || box.offsetWidth || 0;
-        let h = parseFloat(box.style.height) || box.offsetHeight || 0;
-        const maxW = Math.max(120, lr.width - MEDIA_ALIGN_EDGE_X * 2);
-        const maxH = Math.max(90, lr.height - MEDIA_ALIGN_START_Y * 2);
-        if (type === "link") {
-          if (w > maxW) {
-            box.style.width = `${maxW}px`;
-            const card = box.querySelector(".hover-link-card");
-            if (card) card.style.width = "100%";
-            w = maxW;
-            h = box.offsetHeight || h;
-          }
-        } else if (resizeMedia && w > 0 && h > 0) {
-          const ratio = Math.max(
-            0.2,
-            parseFloat(box.dataset.ratio) || w / h || 1.5,
-          );
-          if (w > maxW || h > maxH) {
-            let nw = Math.min(w, maxW);
-            let nh = Math.round(nw / ratio);
-            if (nh > maxH) {
-              nh = maxH;
-              nw = Math.round(nh * ratio);
-            }
-            w = nw;
-            h = nh;
-            box.style.width = `${w}px`;
-            box.style.height = `${h}px`;
-          }
-        }
-        w = parseFloat(box.style.width) || box.offsetWidth || w;
-        h = parseFloat(box.style.height) || box.offsetHeight || h;
-        const maxX = Math.max(
-          MEDIA_ALIGN_EDGE_X,
-          lr.width - w - MEDIA_ALIGN_EDGE_X,
-        );
-        const maxY = Math.max(
-          MEDIA_ALIGN_START_Y,
-          lr.height - h - MEDIA_ALIGN_START_Y,
-        );
-        const x = clamp(
-          parseFloat(box.style.left) || 0,
-          MEDIA_ALIGN_EDGE_X,
-          maxX,
-        );
-        const y = clamp(
-          parseFloat(box.style.top) || 0,
-          MEDIA_ALIGN_START_Y,
-          maxY,
-        );
-        box.style.left = `${x}px`;
-        box.style.top = `${y}px`;
-        persistMediaBox(box);
-      }
-      function getSingleTabWidth() {
-        const pageEl = document.querySelector(".tab-page");
-        if (pageEl) {
-          const w = pageEl.getBoundingClientRect().width || 0;
-          if (w > 0) return w;
-        }
-        return hoverMediaLayer.getBoundingClientRect().width;
-      }
-      function getMediaColumnWidth(layerRect, pad) {
-        const activePage =
-          curTab === 1
-            ? document.getElementById("page-pr")
-            : curTab === 2
-              ? document.getElementById("page-tb")
-              : null;
-        const pageW =
-          activePage?.getBoundingClientRect?.().width || layerRect.width;
-        const contentW = Math.max(0, pageW - pad * 2);
-        const oneFr = contentW > 0 ? contentW / 4 : getSingleTabWidth() / 4;
-        return Math.max(120, Math.min(layerRect.width, oneFr));
-      }
-      function autoArrangeHoverMedia(force = false) {
-        if (!force && !shouldAutoAlignHoverMedia()) return;
-        const boxes = [...hoverMediaLayer.querySelectorAll(".hover-media-box")];
-        if (!boxes.length) return;
-        const lr = hoverMediaLayer.getBoundingClientRect();
-        if (!lr.width || !lr.height) return;
-        const pad = parseFloat(getComputedStyle(ctWrapper).paddingLeft) || 24;
-        const columnW = getMediaColumnWidth(lr, pad);
-        const columnRight = lr.width - pad - MEDIA_ALIGN_EDGE_X;
-        const sorted = boxes.sort((a, b) => {
-          const ta = getHoverMediaType(a),
-            tb = getHoverMediaType(b);
-          return getHoverMediaSortRank(ta) - getHoverMediaSortRank(tb);
-        });
-        let nextY = MEDIA_ALIGN_START_Y;
-        sorted.forEach((box) => {
-          const type = getHoverMediaType(box);
-          let w = parseFloat(box.style.width) || box.offsetWidth || 0;
-          let h = parseFloat(box.style.height) || box.offsetHeight || 0;
-          if (type === "img" || type === "video") {
-            const alignFrRaw = parseFloat(box.dataset.alignFr || "1");
-            const alignFr =
-              Number.isFinite(alignFrRaw) && alignFrRaw > 0 ? alignFrRaw : 1;
-            const ratio = Math.max(
-              0.2,
-              parseFloat(box.dataset.ratio) || (w > 0 && h > 0 ? w / h : 1.5),
-            );
-            const targetColumnW = type === "img" ? columnW * alignFr : columnW;
-            const maxTargetW = Math.max(120, columnRight - MEDIA_ALIGN_EDGE_X);
-            const targetW = Math.max(
-              120,
-              Math.min(maxTargetW, targetColumnW - MEDIA_ALIGN_EDGE_X * 2),
-            );
-            const maxH = Math.max(90, lr.height);
-            let targetH = Math.round(targetW / ratio);
-            if (targetH > maxH) targetH = maxH;
-            w = targetW;
-            h = targetH;
-            box.style.width = `${w}px`;
-            box.style.height = `${h}px`;
-          } else {
-            w = box.offsetWidth || w;
-            h = box.offsetHeight || h;
-          }
-          const x = clamp(
-            columnRight - w,
-            MEDIA_ALIGN_EDGE_X,
-            lr.width - w - MEDIA_ALIGN_EDGE_X,
-          );
-          const y = clamp(nextY, MEDIA_ALIGN_START_Y, lr.height - h);
-          box.style.left = `${x}px`;
-          box.style.top = `${y}px`;
-          persistMediaBox(box);
-          nextY = y + h + MEDIA_ALIGN_GAP;
-        });
-      }
-      function persistMediaBox(box) {
-        const key = box.dataset.cacheKey;
-        if (!key) return;
-        hoverMediaPosCache.set(key, {
-          x: parseFloat(box.style.left) || 0,
-          y: parseFloat(box.style.top) || 0,
-          w: parseFloat(box.style.width) || box.offsetWidth,
-          h: parseFloat(box.style.height) || box.offsetHeight,
-        });
-      }
-      function bindMediaInteractions(box, handle) {
-        const MIN_W = 120,
-          MIN_H = 90,
-          EDGE_X = 18,
-          EDGE_Y = 0;
-        let mode = null,
-          sx = 0,
-          sy = 0,
-          bx = 0,
-          by = 0,
-          bw = 0,
-          bh = 0,
-          pointerId = null;
-        const isLinkCard = !!box.querySelector(".hover-link-card");
-        if (isLinkCard) {
-          handle.style.cursor = "grab";
-          handle.style.right = "10px";
-          handle.style.bottom = "10px";
-        }
-        const onMove = (e) => {
-          if (!mode || e.pointerId !== pointerId) return;
-          const layerRect = hoverMediaLayer.getBoundingClientRect();
-          const dx = e.clientX - sx,
-            dy = e.clientY - sy;
-          if (mode === "drag") {
-            const x = clamp(bx + dx, EDGE_X, layerRect.width - bw - EDGE_X),
-              y = clamp(by + dy, EDGE_Y, layerRect.height - bh - EDGE_Y);
-            box.style.left = `${x}px`;
-            box.style.top = `${y}px`;
-          } else {
-            const ratio = Math.max(0.2, parseFloat(box.dataset.ratio) || 1.5);
-            let w = clamp(bw + dx, MIN_W, layerRect.width - EDGE_X * 2),
-              h = clamp(w / ratio, MIN_H, layerRect.height - EDGE_Y * 2);
-            w = Math.max(MIN_W, h * ratio);
-            w = Math.min(w, layerRect.width - EDGE_X * 2);
-            h = Math.max(MIN_H, w / ratio);
-            h = Math.min(h, layerRect.height - EDGE_Y * 2);
-            const x = clamp(bx, EDGE_X, layerRect.width - w - EDGE_X),
-              y = clamp(by, EDGE_Y, layerRect.height - h - EDGE_Y);
-            box.style.left = `${x}px`;
-            box.style.top = `${y}px`;
-            box.style.width = `${w}px`;
-            box.style.height = `${h}px`;
-          }
-          persistMediaBox(box);
-        };
-        const onUp = (e) => {
-          if (!mode || e.pointerId !== pointerId) return;
-          window.removeEventListener("pointermove", onMove);
-          window.removeEventListener("pointerup", onUp);
-          window.removeEventListener("pointercancel", onUp);
-          box.classList.remove("dragging");
-          isDraggingMedia = false;
-          mode = null;
-          pointerId = null;
-          persistMediaBox(box);
-        };
-        box.addEventListener("pointerdown", (e) => {
-          if (e.button !== 0) return;
-          if (e.target === handle || e.target.closest(".hover-link-card"))
-            return;
-          mode = "drag";
-          pointerId = e.pointerId;
-          sx = e.clientX;
-          sy = e.clientY;
-          bx = parseFloat(box.style.left) || 0;
-          by = parseFloat(box.style.top) || 0;
-          bw = parseFloat(box.style.width) || box.offsetWidth;
-          bh = parseFloat(box.style.height) || box.offsetHeight;
-          box.classList.add("dragging");
-          isDraggingMedia = true;
-          if (hoverMediaHideTimer) {
-            clearTimeout(hoverMediaHideTimer);
-            hoverMediaHideTimer = null;
-          }
-          window.addEventListener("pointermove", onMove);
-          window.addEventListener("pointerup", onUp);
-          window.addEventListener("pointercancel", onUp);
-          e.preventDefault();
-        });
-        handle.addEventListener("pointerdown", (e) => {
-          if (e.button !== 0) return;
-          e.stopPropagation();
-          mode = isLinkCard ? "drag" : "resize";
-          pointerId = e.pointerId;
-          sx = e.clientX;
-          sy = e.clientY;
-          bx = parseFloat(box.style.left) || 0;
-          by = parseFloat(box.style.top) || 0;
-          bw = parseFloat(box.style.width) || box.offsetWidth;
-          bh = parseFloat(box.style.height) || box.offsetHeight;
-          box.classList.add("dragging");
-          isDraggingMedia = true;
-          if (hoverMediaHideTimer) {
-            clearTimeout(hoverMediaHideTimer);
-            hoverMediaHideTimer = null;
-          }
-          window.addEventListener("pointermove", onMove);
-          window.addEventListener("pointerup", onUp);
-          window.addEventListener("pointercancel", onUp);
-          e.preventDefault();
-        });
-      }
+      function clearHoverMedia() {}
       function bindFinalLinkHandleDrag(box, handle) {
         const EDGE_X = 18,
           EDGE_Y = 0;
@@ -2062,44 +1963,6 @@
         }
         finalLinksBuilt = true;
       }
-      function clearHoverMedia(instant = false, keepToken = false) {
-        if (!keepToken) hoverMediaRenderToken++;
-        clearHoverMediaShowTimers();
-        if (hoverMediaRenderDelayTimer) {
-          clearTimeout(hoverMediaRenderDelayTimer);
-          hoverMediaRenderDelayTimer = null;
-        }
-        if (hoverMediaHideTimer) {
-          clearTimeout(hoverMediaHideTimer);
-          hoverMediaHideTimer = null;
-        }
-        isDraggingMedia = false;
-        if (instant) {
-          hoverMediaLayer.innerHTML = "";
-          hoverMediaLayer.classList.remove("ghost");
-          return;
-        }
-        const boxes = [...hoverMediaLayer.querySelectorAll(".hover-media-box")];
-        if (!boxes.length) {
-          hoverMediaLayer.classList.remove("ghost");
-          return;
-        }
-        boxes.forEach((box) => box.classList.remove("show"));
-        setTimeout(() => {
-          boxes.forEach((box) => box.remove());
-          if (!hoverMediaLayer.querySelector(".hover-media-box")) {
-            hoverMediaLayer.classList.remove("ghost");
-          }
-        }, 160);
-      }
-      function scheduleHideHoverMedia() {
-        if (isDraggingMedia) return;
-        if (hoverMediaHideTimer) clearTimeout(hoverMediaHideTimer);
-        hoverMediaHideTimer = setTimeout(() => {
-          if (isDraggingMedia) return;
-          clearHoverMedia();
-        }, 90);
-      }
       function hashString(str) {
         let h = 0;
         for (let i = 0; i < str.length; i++) {
@@ -2112,261 +1975,8 @@
         const x = Math.sin(seed) * 10000;
         return x - Math.floor(x);
       }
-      function pickLinkColor(key) {
-        const p = [
-          "#2155a3",
-          "#8f2d56",
-          "#2c6e49",
-          "#8a5a00",
-          "#6c3aa6",
-          "#0f766e",
-        ];
-        return p[hashString(key) % p.length];
-      }
-      function getLinkIconPath(icon = "link") {
-        if (icon === "phone") {
-          return "M7.24 3.5a1 1 0 0 1 1 .86l.56 3.94a1 1 0 0 1-.57 1.05l-1.72.86a15.1 15.1 0 0 0 7.28 7.28l.86-1.72a1 1 0 0 1 1.05-.57l3.94.56a1 1 0 0 1 .86 1v2.78a1 1 0 0 1-.9 1 18 18 0 0 1-15.6-15.6 1 1 0 0 1 1-.9H7.24Z";
-        }
-        if (icon === "mail") {
-          return "M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5v-11Zm2 .1v.31l7 4.78 7-4.78V6.6a.5.5 0 0 0-.5-.6h-13a.5.5 0 0 0-.5.6Zm14 2.73-6.44 4.4a1 1 0 0 1-1.12 0L5 9.33v8.17a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5V9.33Z";
-        }
-        if (icon === "download") {
-          return "M12 3a1 1 0 0 1 1 1v8.17l2.59-2.58a1 1 0 1 1 1.41 1.41l-4.3 4.3a1 1 0 0 1-1.4 0l-4.3-4.3a1 1 0 1 1 1.41-1.41L11 12.17V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z";
-        }
-        return "M14.12 9.88a3 3 0 0 1 4.24 0l1.76 1.76a3 3 0 0 1 0 4.24l-4 4a3 3 0 0 1-4.24 0l-1.76-1.76 1.41-1.41 1.76 1.76a1 1 0 0 0 1.41 0l4-4a1 1 0 0 0 0-1.41l-1.76-1.76a1 1 0 0 0-1.41 0l-1.29 1.29-1.41-1.41 1.29-1.29Zm-4.24 4.24a3 3 0 0 1-4.24 0l-1.76-1.76a3 3 0 0 1 0-4.24l4-4a3 3 0 0 1 4.24 0l1.76 1.76-1.41 1.41-1.76-1.76a1 1 0 0 0-1.41 0l-4 4a1 1 0 0 0 0 1.41l1.76 1.76a1 1 0 0 0 1.41 0l1.29-1.29 1.41 1.41-1.29 1.29Z";
-      }
       function linkInnerHTML(label) {
         return `<span class="link-label">${label}</span>`;
-      }
-      function getStablePosition(cacheKey, layerRect, imgW, imgH, usedRects) {
-        if (hoverMediaPosCache.has(cacheKey)) {
-          const c = hoverMediaPosCache.get(cacheKey);
-          const w = Math.max(120, c.w || imgW);
-          const h = Math.max(90, c.h || imgH);
-          return {
-            x: Math.max(18, Math.min(c.x, layerRect.width - w - 18)),
-            y: Math.max(0, Math.min(c.y, layerRect.height - h)),
-            w,
-            h,
-          };
-        }
-        const base = hashString(cacheKey),
-          minX = 18,
-          minY = 0,
-          maxX = Math.max(minX, layerRect.width - imgW - 18),
-          maxY = Math.max(minY, layerRect.height - imgH);
-        const x = minX + seededRandom(base + 11) * Math.max(1, maxX - minX),
-          y = minY + seededRandom(base + 29) * Math.max(1, maxY - minY);
-        hoverMediaPosCache.set(cacheKey, { x, y, w: imgW, h: imgH });
-        return { x, y, w: imgW, h: imgH };
-      }
-      function showHoverMedia(payload = {}, itemKey = "", opts = {}) {
-        if (!(curTab === 1 || curTab === 2)) {
-          clearHoverMedia(true);
-          return;
-        }
-        if (!canShowDesktopMedia()) {
-          clearHoverMedia(true);
-          return;
-        }
-        const token = ++hoverMediaRenderToken;
-        const revealMode =
-          opts.revealMode === "stagger" ? "stagger" : "instant";
-        clearHoverMediaShowTimers();
-        if (hoverMediaRenderDelayTimer) {
-          clearTimeout(hoverMediaRenderDelayTimer);
-          hoverMediaRenderDelayTimer = null;
-        }
-        const picked = [
-          ...(payload.imgs || [])
-            .map((img) =>
-              typeof img === "string"
-                ? { type: "img", src: img, caption: "", fr: 1 }
-                : {
-                    type: "img",
-                    src: img?.src || "",
-                    caption: img?.caption || "",
-                    fr: Math.max(1, Number(img?.fr) || 1),
-                  },
-            )
-            .filter((img) => !!img.src),
-          ...(payload.vids || [])
-            .filter(Boolean)
-            .map((src) => ({ type: "video", src })),
-          ...(payload.links || [])
-            .filter((l) => l && l.url)
-            .map((l) => ({
-              type: "link",
-              label: l.label || "Open Link",
-              url: l.url,
-              download: !!l.download,
-              filename: l.filename || "",
-              disabled: !!l.disabled,
-              icon: l.icon || (l.download ? "download" : "link"),
-            })),
-        ];
-        const render = () => {
-          if (token !== hoverMediaRenderToken || !picked.length) return;
-          const layerRect = hoverMediaLayer.getBoundingClientRect(),
-            used = [];
-          picked.forEach((item, idx) => {
-            const isLink = item.type === "link",
-              baseW = Math.max(
-                170,
-                Math.min(430, layerRect.width * (isLink ? 0.2 : 0.36)),
-              );
-            const itemW = baseW * (idx === 0 ? 1 : 0.92),
-              itemH = isLink ? Math.max(84, itemW * 0.44) : itemW * 0.66;
-            const cacheSeed = `${itemKey}::${item.type}::${idx}`,
-              pos = getStablePosition(cacheSeed, layerRect, itemW, itemH, used);
-            used.push(pos);
-            const box = document.createElement("div");
-            box.className = "hover-media-box";
-            box.dataset.mediaType = item.type;
-            box.dataset.alignFr = String(item.fr || 1);
-            box.style.cssText = isLink
-              ? `left:${pos.x}px;top:${pos.y}px`
-              : `left:${pos.x}px;top:${pos.y}px;width:${pos.w}px;height:${pos.h}px`;
-            box.dataset.ratio = String(pos.w / Math.max(1, pos.h));
-            box.dataset.cacheKey = cacheSeed;
-            let mediaEl;
-            let captionEl = null;
-            if (item.type === "img") {
-              const img = document.createElement("img");
-              img.className = "hover-media-item";
-              img.alt = "";
-              img.src = item.src;
-              img.onerror = () => box.remove();
-              img.onload = () => {
-                if (img.naturalWidth && img.naturalHeight) {
-                  const EDGE_X = MEDIA_ALIGN_EDGE_X,
-                    EDGE_Y = 0;
-                  const lr = hoverMediaLayer.getBoundingClientRect();
-                  const imgRatio = img.naturalWidth / img.naturalHeight;
-                  box.dataset.ratio = String(imgRatio);
-                  if (shouldAutoAlignHoverMedia()) {
-                    autoArrangeHoverMedia(true);
-                    return;
-                  }
-                  let newW = pos.w;
-                  let newH = Math.round(newW / imgRatio);
-                  const maxW = lr.width - EDGE_X * 2;
-                  const maxH = lr.height - EDGE_Y * 2;
-                  if (newH > maxH) {
-                    newH = maxH;
-                    newW = Math.round(newH * imgRatio);
-                  }
-                  if (newW > maxW) {
-                    newW = maxW;
-                    newH = Math.round(newW / imgRatio);
-                  }
-                  const cx = Math.max(
-                    EDGE_X,
-                    Math.min(pos.x, lr.width - newW - EDGE_X),
-                  );
-                  const cy = Math.max(
-                    EDGE_Y,
-                    Math.min(pos.y, lr.height - newH - EDGE_Y),
-                  );
-                  box.style.width = `${newW}px`;
-                  box.style.height = `${newH}px`;
-                  box.style.left = `${cx}px`;
-                  box.style.top = `${cy}px`;
-                  hoverMediaPosCache.set(cacheSeed, {
-                    x: cx,
-                    y: cy,
-                    w: newW,
-                    h: newH,
-                  });
-                  constrainHoverBoxToLayer(box, true);
-                }
-              };
-              mediaEl = img;
-              if (item.caption) {
-                const cap = document.createElement("div");
-                cap.className = "hover-media-caption";
-                cap.textContent = item.caption;
-                captionEl = cap;
-              }
-            } else if (item.type === "video") {
-              const video = document.createElement("video");
-              video.className = "hover-media-item";
-              video.src = item.src;
-              video.muted = true;
-              video.loop = true;
-              video.autoplay = true;
-              video.playsInline = true;
-              video.preload = "metadata";
-              video.controls = false;
-              video.onerror = () => box.remove();
-              video.onloadedmetadata = () => {
-                if (video.videoWidth && video.videoHeight) {
-                  box.dataset.ratio = String(
-                    video.videoWidth / video.videoHeight,
-                  );
-                  if (shouldAutoAlignHoverMedia()) autoArrangeHoverMedia(true);
-                  else constrainHoverBoxToLayer(box, true);
-                }
-              };
-              video.onloadeddata = () => {
-                const p = video.play();
-                if (p && typeof p.catch === "function") p.catch(() => {});
-              };
-              mediaEl = video;
-            } else {
-              const a = document.createElement("a");
-              a.className = "hover-link-card";
-              a.href = item.url;
-              if (item.disabled) {
-                a.classList.add("is-disabled");
-                a.setAttribute("aria-disabled", "true");
-                a.addEventListener("click", (e) => e.preventDefault());
-              } else if (item.download) {
-                a.download = item.filename || "";
-              } else {
-                a.target = "_blank";
-                a.rel = "noopener noreferrer";
-              }
-              a.innerHTML = linkInnerHTML(
-                item.label,
-                item.icon || (item.download ? "download" : "link"),
-              );
-              mediaEl = a;
-            }
-            const handle = document.createElement("span");
-            handle.className = "hover-media-resize";
-            box.appendChild(mediaEl);
-            if (captionEl) box.appendChild(captionEl);
-            box.appendChild(handle);
-            hoverMediaLayer.appendChild(box);
-            bindMediaInteractions(box, handle);
-            if (revealMode === "stagger") {
-              const t = setTimeout(
-                () => {
-                  if (token !== hoverMediaRenderToken) return;
-                  box.classList.add("show");
-                },
-                120 + idx * 90,
-              );
-              hoverMediaShowTimers.push(t);
-            } else {
-              box.classList.add("show");
-            }
-            if (!shouldAutoAlignHoverMedia()) {
-              requestAnimationFrame(() => constrainHoverBoxToLayer(box, true));
-            }
-          });
-          if (shouldAutoAlignHoverMedia()) autoArrangeHoverMedia(true);
-        };
-        if (hoverMediaLayer.children.length) {
-          clearHoverMedia(true, true);
-          hoverMediaRenderDelayTimer = setTimeout(() => {
-            hoverMediaRenderDelayTimer = null;
-            render();
-          }, 180);
-        } else {
-          render();
-        }
       }
       function getChronoScore(item) {
         if (item.empty) return -Infinity;
@@ -2392,110 +2002,104 @@
           sorted = [...data].sort(
             (a, b) => getChronoScore(a) - getChronoScore(b),
           );
-        let activeRow = null;
         sorted.forEach((d, idx) => {
           const row = document.createElement("div");
           row.className = "lrow" + (d.empty ? " empty" : "");
           const autoNo = String(idx + 1).padStart(2, "0"),
-            isProj = pageId === "page-pr";
+            isProj = pageId === "page-pr",
+            isTalk = pageId === "page-tb";
+          const mediaPanel = !d.empty ? buildPanelMediaHtml(d) : "";
           const panel =
             !d.empty && isProj
-              ? `<div class="lrow-panel"><div class="panel-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div><div class="pds">${d.ds}</div></div><div class="pb prob-out-col">${d.pb ? `<div><span class="pl">Problem</span><div class="pbody">${d.pb}</div></div>` : ``}${d.oc ? `<div><span class="pl">Outcome</span><div class="pbody">${toMultiline(d.oc)}</div></div>` : ``}</div><div class="pb">${d.sd ? `<span class="pl2">System Design</span><div class="pbody">${toSystemDesignHtml(d.sd)}</div>` : ``}</div></div></div>`
+              ? `<div class="lrow-panel"><div class="panel-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div><div class="pds">${d.ds}</div></div><div class="pb prob-out-col">${d.pb ? `<div><span class="pl">Problem</span><div class="pbody">${d.pb}</div></div>` : ``}${d.oc ? `<div><span class="pl">Outcome</span><div class="pbody">${toMultiline(d.oc)}</div></div>` : ``}</div><div class="pb">${d.sd ? `<span class="pl2">System Design</span><div class="pbody">${toSystemDesignHtml(d.sd)}</div>` : ``}</div></div>${mediaPanel}</div>`
               : !d.empty && !isProj
-                ? `<div class="lrow-panel"><div class="panel-inner talk-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div></div><div class="pb abs"><span class="pl">Abstract</span><div class="pbody">${toMultiline(d.ds)}</div></div></div></div>`
+                ? `<div class="lrow-panel"><div class="panel-inner talk-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div></div><div class="pb abs"><span class="pl">Abstract</span><div class="pbody">${toMultiline(d.ds)}</div></div></div>${mediaPanel}</div>`
                 : "";
           const storyTitle = escHtml(d.story || d.name || "");
           const projectTitle = escHtml(
             d.project || d.title || d.cl || d.name || "",
           );
           const rnameHtml =
-            isProj && !d.empty
-              ? `<span class="rname"><span class="rname-story">${storyTitle}</span><span class="rname-project">${projectTitle}</span></span>`
+            !d.empty && (isProj || isTalk)
+              ? `<span class="rname"><span class="rname-story">${
+                  storyTitle || projectTitle
+                }</span><span class="rname-project">${
+                  isProj ? projectTitle || storyTitle : storyTitle || projectTitle
+                }</span></span>`
               : `<span class="rname">${storyTitle}</span>`;
           row.innerHTML = `<div class="lrt"><span class="rn">${autoNo}</span>${rnameHtml}<span class="rcl">${d.cl}</span><span class="ryr">${d.yr || ""}</span></div>${panel}`;
           c.appendChild(row);
           if (!d.empty) {
-            const mediaKey = `${d.name || "item"}|${d.yr || ""}|${pageId}`;
+            const closeBtn = row.querySelector(".panel-close");
+            if (closeBtn) {
+              closeBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                row.classList.remove("open");
+                if (activeRows[pageId] === row) activeRows[pageId] = null;
+              });
+            }
+            row
+              .querySelectorAll(".panel-media-links .hover-link-card.is-disabled")
+              .forEach((el) =>
+                el.addEventListener("click", (e) => e.preventDefault()),
+              );
             row.tabIndex = 0;
             const toggleOpen = () => {
-              const willOpen = !row.classList.contains("open");
+              if (row.classList.contains("open")) return;
               const prevRow =
-                willOpen && activeRow && activeRow !== row ? activeRow : null;
+                activeRows[pageId] && activeRows[pageId] !== row
+                  ? activeRows[pageId]
+                  : null;
               const doOpen = () => {
-                if (willOpen) {
-                  const scrollContainer = row.closest(".tab-page");
-                  if (scrollContainer) {
-                    row.classList.add("open");
-                    activeRow = row;
-                    const topPad = 12;
-                    const maxScroll =
-                      scrollContainer.scrollHeight -
-                      scrollContainer.clientHeight;
-                    const baseTop = Math.max(
-                      0,
-                      Math.min(maxScroll, row.offsetTop - topPad),
-                    );
-                    scrollContainer.scrollTo({
-                      top: baseTop,
-                      behavior: prevRow ? "auto" : "smooth",
-                    });
-                    const settle = () => {
-                      const panel = row.querySelector(".lrow-panel");
-                      const lrtH = (row.querySelector(".lrt") || row)
-                        .offsetHeight;
-                      const panelH = Math.min(460, panel?.scrollHeight || 0);
-                      const needBottom = row.offsetTop + lrtH + panelH + 16;
-                      const target = Math.max(
-                        baseTop,
-                        Math.min(
-                          scrollContainer.scrollHeight -
-                            scrollContainer.clientHeight,
-                          needBottom - scrollContainer.clientHeight,
-                        ),
-                      );
-                      if (Math.abs(target - scrollContainer.scrollTop) > 1) {
-                        scrollContainer.scrollTo({
-                          top: target,
-                          behavior: "auto",
-                        });
+                const scrollContainer = row.closest(".tab-page");
+                if (scrollContainer) {
+                  row.classList.add("open");
+                  activeRows[pageId] = row;
+                  lastOpenedRow = row;
+                  const panelEl = row.querySelector(".lrow-panel");
+                  if (panelEl) {
+                    const onEnd = (e) => {
+                      if (e.propertyName !== "max-height") return;
+                      panelEl.removeEventListener("transitionend", onEnd);
+                      if (row.classList.contains("open")) {
+                        scrollPanelIntoView(row, scrollContainer, true);
                       }
                     };
-                    setTimeout(settle, 240);
-                  } else {
-                    row.classList.add("open");
-                    activeRow = row;
+                    panelEl.addEventListener("transitionend", onEnd);
                   }
-                  hoverMediaLayer.classList.remove("ghost");
-                  showHoverMedia(
-                    canShowDesktopMedia()
-                      ? {
-                          imgs: d.imgs || [],
-                          vids: d.vids || [],
-                          links: d.links || [],
-                        }
-                      : {},
-                    mediaKey,
-                    { revealMode: "stagger" },
+                  const topPad = 12;
+                  const maxScroll =
+                    scrollContainer.scrollHeight - scrollContainer.clientHeight;
+                  const baseTop = Math.max(
+                    0,
+                    Math.min(maxScroll, row.offsetTop - topPad),
                   );
-                  if (!canShowDesktopMedia()) clearHoverMedia(true);
+                  scrollContainer.scrollTo({
+                    top: baseTop,
+                    behavior: "smooth",
+                  });
+                  requestAnimationFrame(() =>
+                    scrollPanelIntoView(row, scrollContainer, true),
+                  );
                 } else {
-                  row.classList.remove("open");
-                  activeRow = null;
-                  clearHoverMedia();
+                  row.classList.add("open");
+                  activeRows[pageId] = row;
+                  lastOpenedRow = row;
+                }
+                clearHoverMedia(true);
+                syncMediaOverlaps();
+                if (scrollContainer) {
+                  setTimeout(
+                    () => scrollPanelIntoView(row, scrollContainer, true),
+                    260,
+                  );
+                  setTimeout(
+                    () => scrollPanelIntoView(row, scrollContainer, true),
+                    1300,
+                  );
                 }
               };
-              if (prevRow) {
-                const prevPanel = prevRow.querySelector(".lrow-panel");
-                if (prevPanel) {
-                  const prevTransition = prevPanel.style.transition;
-                  prevPanel.style.transition = "none";
-                  prevRow.classList.remove("open");
-                  prevPanel.getBoundingClientRect();
-                  prevPanel.style.transition = prevTransition;
-                } else {
-                  prevRow.classList.remove("open");
-                }
-              }
               doOpen();
             };
             row.addEventListener("click", (e) => {
@@ -2508,38 +2112,13 @@
                 toggleOpen();
               }
             });
-            row.addEventListener("mouseenter", () => {
-              if (
-                !row.classList.contains("open") &&
-                canShowDesktopMedia() &&
-                !isDraggingMedia &&
-                !document.querySelector(".lrow.open")
-              ) {
-                clearHoverMedia(true);
-                hoverMediaLayer.classList.add("ghost");
-                showHoverMedia(
-                  {
-                    imgs: d.imgs || [],
-                    vids: d.vids || [],
-                    links: d.links || [],
-                  },
-                  mediaKey,
-                );
-              }
-            });
-            row.addEventListener("mouseleave", () => {
-              if (
-                !row.classList.contains("open") &&
-                !document.querySelector(".lrow.open")
-              ) {
-                scheduleHideHoverMedia();
-              }
-            });
           }
         });
       }
       buildList(PROJ, "page-pr");
       buildList(TALKS, "page-tb");
+      syncMediaOverlaps();
+      bindMediaOverlapObservers();
       function syncLeadHeight() {
         const rows = document.querySelectorAll("#page-pr .lrow");
         if (rows.length < 2) return;
@@ -2558,7 +2137,7 @@
           renderFinalLinks();
           if (ctRow2Resolved) snapMediaToHome();
         }
-        if (shouldAutoAlignHoverMedia()) autoArrangeHoverMedia(true);
+        syncMediaOverlaps();
       });
 
       let state = "intro",
@@ -2574,13 +2153,7 @@
       const introWords = document.getElementById("intro-words");
       const finalPage = document.getElementById("final-page");
       const finalLines = [...finalPage.querySelectorAll(".final-line")];
-      const finalScrollHint = finalPage.querySelector(".final-scroll-hint");
-      let finalActive = false,
-        finalProgress = 0,
-        finalEnterAccum = 0,
-        finalTransitioning = false;
-      const FINAL_STEPS = finalLines.length,
-        FINAL_SCROLL_UNIT = 1200;
+      let finalActive = false;
 
       // ── CONTACT TAB ─────────────────────────────────────────────────────────
       const ctWrapper = document.getElementById("ct-wrapper");
@@ -2739,11 +2312,10 @@
         const mobileStartY = ctTextRect
           ? Math.max(EDGE_Y, Math.round(ctTextRect.bottom - lr.top + 12))
           : EDGE_Y;
-        // Clear inline widths so CSS fit-content can take effect, then measure
         boxes.forEach((box) => {
           box.style.width = "";
         });
-        finalLinkLayer.getBoundingClientRect(); // force reflow
+        finalLinkLayer.getBoundingClientRect();
         let yCursor = mobileMode ? mobileStartY : EDGE_Y;
         boxes.forEach((box, i) => {
           const bw = box.offsetWidth || 160;
@@ -2857,91 +2429,6 @@
         shellHint.classList.toggle("vis", show);
       }
       updateShellHint();
-      function nudgeFinalLinks(lineEl) {
-        if (!finalLinkLayer.children.length) return;
-        const lr = finalLinkLayer.getBoundingClientRect();
-        const lineR = lineEl.getBoundingClientRect();
-        const ly1 = lineR.top - lr.top,
-          ly2 = lineR.bottom - lr.top;
-        const seqR = (
-          finalPage.querySelector("#ct-text") || finalPage
-        ).getBoundingClientRect();
-        const lcx = seqR.left + seqR.width / 2 - lr.left;
-        const lcy = seqR.top + seqR.height / 2 - lr.top;
-        const MARGIN = 40,
-          PUSH = 160,
-          EDGE_X = 18,
-          EDGE_Y = 0;
-        [
-          ...finalLinkLayer.querySelectorAll(".final-link-box:not(.dragging)"),
-        ].forEach((box) => {
-          const bx = parseFloat(box.style.left) || 0;
-          const by = parseFloat(box.style.top) || 0;
-          const bw = parseFloat(box.style.width) || box.offsetWidth;
-          const bh = parseFloat(box.style.height) || box.offsetHeight;
-          const bcx = bx + bw / 2,
-            bcy = by + bh / 2;
-          if (bcy < ly1 - MARGIN || bcy > ly2 + MARGIN) return;
-          const dx = bcx - lcx,
-            dy = bcy - lcy;
-          const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-          const nx = clamp(
-            bx + (dx / dist) * PUSH,
-            EDGE_X,
-            lr.width - bw - EDGE_X,
-          );
-          const ny = clamp(
-            by + (dy / dist) * PUSH,
-            EDGE_Y,
-            lr.height - bh - EDGE_Y,
-          );
-          box.classList.add("nudging");
-          box.style.left = `${nx}px`;
-          box.style.top = `${ny}px`;
-          finalLinkPosCache.set(box.dataset.cacheKey, {
-            x: nx,
-            y: ny,
-            w: bw,
-            h: bh,
-          });
-          setTimeout(
-            () => box.classList.remove("nudging"),
-            FINAL_LINK_NUDGE_MS,
-          );
-        });
-      }
-      function applyFinalProgress() {
-        const shown = Math.floor(
-          Math.max(0, Math.min(FINAL_STEPS, finalProgress)),
-        );
-        finalLines.forEach((el, i) => {
-          const wasVis = el.classList.contains("vis");
-          const nowVis = i < shown;
-          el.classList.toggle("vis", nowVis);
-          if (nowVis && !wasVis) nudgeFinalLinks(el);
-        });
-        if (finalScrollHint) {
-          const isEnd = shown >= FINAL_STEPS;
-          finalScrollHint.textContent = isEnd
-            ? "For more information, please contact me."
-            : "scroll";
-          finalScrollHint.classList.toggle("end", isEnd);
-        }
-      }
-      function getFinalLineTargets() {
-        const padPx = document
-            .getElementById("frame-top")
-            .getBoundingClientRect().left,
-          vw = window.innerWidth;
-        return finalLines.map((line) => {
-          const r = line.getBoundingClientRect();
-          return {
-            y: Math.round(r.bottom + 2),
-            x1: Math.round(padPx),
-            x2: Math.round(vw - padPx),
-          };
-        });
-      }
 
       /* ══ LINE SYSTEM ══════════════════════════════════════ */
       const layer = document.getElementById("line-layer");
@@ -3080,7 +2567,7 @@
         await sleep(30);
 
         // Intro slides up off screen, shell slides up from below
-        const dur = 680;
+        const dur = 1100;
         const ease = "cubic-bezier(0.76, 0, 0.24, 1)";
         introEl.style.transition = `transform ${dur}ms ${ease}`;
         introEl.style.transform = "translateY(-100vh)";
@@ -3100,167 +2587,8 @@
         updateShellHint();
       }
 
-      /* ── SHELL → INTRO ────────────────────────────────── */
-      async function goToIntro() {
-        if (busy || state !== "shell") return;
-        keepShellHintVisible = false;
-        if (shellHint) shellHint.classList.remove("vis");
-        if (finalActive) exitFinalPageNow();
-        finalEnterAccum = 0;
-        clearHoverMedia(true);
-        const pages = document.querySelectorAll(".tab-page"),
-          page = pages[curTab];
-        if (page.scrollTop > 0) return;
-        busy = true;
-        const shell = document.getElementById("shell"),
-          introEl = document.getElementById("intro");
-
-        // Shell slides down off screen, intro slides down from above
-        introEl
-          .querySelectorAll(":scope > div[style*='position:absolute']")
-          .forEach((el) => el.remove());
-        introAnagram.style.opacity = "";
-        introAnagram.style.display = "none";
-        introWords.style.display = "block";
-        words.forEach((w) => w.classList.add("vis"));
-
-        introEl.style.transform = "translateY(-100vh)";
-        introEl.style.transition = "";
-        introEl.style.display = "";
-        await sleep(30);
-
-        const dur = 680;
-        const ease = "cubic-bezier(0.76, 0, 0.24, 1)";
-        shell.style.transition = `transform ${dur}ms ${ease}`;
-        shell.style.transform = "translateY(100vh)";
-        introEl.style.transition = `transform ${dur}ms ${ease}`;
-        introEl.style.transform = "translateY(0)";
-
-        await sleep(dur + 30);
-
-        shell.classList.remove("vis");
-        shell.style.transform = "";
-        shell.style.transition = "";
-        introEl.style.transform = "";
-        introEl.style.transition = "";
-        introReady = true;
-        busy = false;
-        state = "intro";
-        updateShellHint();
-      }
-
-      /* ── ENTER FINAL PAGE ─────────────────────────────────────────────────────────
-   Lines converge DOWN to the bottom frame in one motion (scroll direction).
-   Final page fades in as they arrive. No intermediate gather point.
-──────────────────────────────────────────────────────────────────────────── */
-      async function enterFinalPage() {
-        if (finalActive || finalTransitioning) return;
-        finalTransitioning = true;
-        clearHoverMedia(true);
-        const pages = document.querySelectorAll(".tab-page"),
-          page = pages[curTab];
-        const sourceLines = getLineYs(page);
-        const BOT_Y = getBotY();
-
-        // Stand-in clines at current border positions
-        const clines = spawnClines(sourceLines, getTopY());
-        clines.forEach((el, i) => {
-          if (sourceLines[i]) el.style.top = `${sourceLines[i].y}px`;
-        });
-        page.classList.add("hide-borders");
-        await sleep(16);
-
-        // All lines converge to bottom frame — stagger top→bottom so they sweep down together
-        const dur = 880;
-        clines[0] && clines[0].getBoundingClientRect();
-        clines.forEach((el, i) => {
-          setTimeout(() => {
-            el.style.transition = `top ${dur}ms cubic-bezier(0.4,0,0.8,1)`;
-            el.style.top = BOT_Y + "px";
-          }, i * 28);
-        });
-
-        // Final page fades in midway through convergence
-        await sleep(180);
-        finalActive = true;
-        finalEnterAccum = 0;
-        finalProgress = 0;
-        applyFinalProgress();
-        renderFinalLinks();
-        updateShellHint();
-        pages[curTab].style.overflowY = "hidden";
-        finalPage.style.opacity = "0";
-        finalPage.style.transition = "opacity .85s ease";
-        await sleep(20);
-        finalPage.style.opacity = "1";
-
-        // Wait for lines to finish, then clean up
-        const remaining = dur + clines.length * 28 - 200;
-        await sleep(Math.max(0, remaining));
-        removeClines(clines);
-        page.classList.remove("hide-borders");
-        finalTransitioning = false;
-      }
-
       function exitFinalPageNow() {
         finalActive = false;
-        finalTransitioning = false;
-        finalEnterAccum = 0;
-        updateShellHint();
-      }
-
-      async function exitFinalPage() {
-        if (!finalActive || finalTransitioning) return;
-        finalTransitioning = true;
-
-        const pages = document.querySelectorAll(".tab-page");
-        const BOT_Y = getBotY();
-
-        // Measure where lines should land (current tab's content lines)
-        // Shell needs to be in normal state so layout is measurable
-        document.getElementById("shell").classList.remove("final-active");
-        resetShellToOverview(true);
-        const page = pages[curTab];
-        await sleep(20); // let layout reflow
-
-        const targetLines = getLineYs(page);
-
-        // Spawn clines at the bottom frame
-        const clines = spawnClines(
-          targetLines.length
-            ? targetLines
-            : [{ y: BOT_Y, x1: 0, x2: window.innerWidth }],
-          BOT_Y,
-        );
-        page.classList.add("hide-borders");
-
-        // Fade out final page
-        finalPage.style.transition = "opacity .65s ease";
-        finalPage.style.opacity = "0";
-        await sleep(80);
-        finalPage.classList.remove("active");
-        finalPage.style.opacity = "";
-        finalPage.style.transition = "";
-
-        // Lines rise from bottom frame to their positions (reverse of enter)
-        clines[0] && clines[0].getBoundingClientRect();
-        const dur = 430;
-        [...clines].reverse().forEach((el, i) => {
-          setTimeout(() => {
-            const target = targetLines[clines.length - 1 - i];
-            if (!target) return;
-            el.style.transition = `top ${dur}ms cubic-bezier(0.22,1,0.36,1)`;
-            el.style.top = target.y + "px";
-          }, i * 20);
-        });
-
-        await sleep(dur + clines.length * 28);
-        page.classList.remove("hide-borders");
-        removeClines(clines);
-
-        finalActive = false;
-        finalTransitioning = false;
-        finalEnterAccum = 0;
         updateShellHint();
       }
 
@@ -3291,7 +2619,6 @@
           });
         });
         curTab = 0;
-        finalEnterAccum = 0;
         clearHoverMedia(true);
         replayOverviewLead();
         updateShellHint();
@@ -3307,7 +2634,6 @@
         if (idx === curTab || tabBusy) return;
         tabBusy = true;
         if (finalActive) exitFinalPageNow();
-        finalEnterAccum = 0;
         updateShellHint(idx);
         clearHoverMedia(true);
         const pages = document.querySelectorAll(".tab-page"),
@@ -3557,7 +2883,6 @@
           await sleep(800);
         }
         snapMediaToHome();
-        autoArrangeHoverMedia(true);
       });
 
       document.addEventListener("keydown", (e) => {
