@@ -78,28 +78,28 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: flex-end;
-        padding-right: clamp(36px, 2vw, 130px);
+        align-items: flex-start;
+        padding: 0 var(--pad);
       }
       #intro.hidden {
         display: none;
       }
       #intro > div {
-        text-align: right;
+        text-align: left;
       }
       .word-row {
         overflow: visible;
         line-height: 1.1;
         margin-bottom: 12px;
-        text-align: right;
+        text-align: left;
       }
       .iw {
         display: inline-block;
         font-family: var(--serif);
-        font-size: clamp(48px, 4vw, 100px);
-        font-weight: 400;
+        font-size: clamp(22px, 3vw, 42px);
+        font-weight: 300;
         color: var(--black);
-        line-height: 1.08;
+        line-height: 1.15;
         padding: 0.03em 0;
         opacity: 0;
         transform: rotateX(90deg) translateY(-8px);
@@ -114,6 +114,43 @@
       .iw.vis {
         opacity: 1;
         transform: none;
+      }
+      #intro-anagram {
+        text-align: left;
+      }
+      #anagram-gray {
+        font-family: var(--serif);
+        font-size: clamp(22px, 3vw, 42px);
+        font-weight: 300;
+        color: var(--g3);
+        line-height: 1.15;
+      }
+      #anagram-structure {
+        font-family: var(--serif);
+        font-size: clamp(22px, 3vw, 42px);
+        font-weight: 300;
+        color: var(--black);
+        cursor: pointer;
+        line-height: 1.15;
+      }
+      @keyframes anagram-blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.15;
+        }
+      }
+      #anagram-structure.blink {
+        animation: anagram-blink 0.7s ease-in-out 3;
+      }
+      #intro-words {
+        display: none;
+      }
+      .anagram-char {
+        display: inline-block;
+        white-space: pre;
       }
       .intro-hint {
         position: absolute;
@@ -143,8 +180,13 @@
         }
       }
       @keyframes hint-float-y {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-8px); }
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
       }
       #shell {
         position: fixed;
@@ -234,13 +276,13 @@
       }
       #tab-slider {
         display: flex;
-        width: 300%;
+        width: 400%;
         height: 100%;
         transition: transform 1.1s cubic-bezier(0.76, 0, 0.24, 1);
         will-change: transform;
       }
       .tab-page {
-        width: 33.333333%;
+        width: 25%;
         height: 100%;
         overflow-y: auto;
         overflow-x: hidden;
@@ -254,7 +296,7 @@
         background: var(--g4);
       }
       #ov {
-        padding: 0 var(--pad) 64px;
+        padding: 0 var(--pad);
       }
       .ov-lead {
         font-family: var(--serif);
@@ -265,7 +307,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding-top: 24px;
+        padding: clamp(4px, 0.8vw, 10px) 0;
         margin-bottom: 24px;
         perspective: 800px;
       }
@@ -300,7 +342,7 @@
       }
       .ov-cols {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: 3fr 3fr 2fr;
       }
       .ov-col {
         padding-right: clamp(14px, 2.2vw, 28px);
@@ -337,21 +379,18 @@
       .ov-t {
         font-size: 16px;
         color: var(--black);
-        transition: font-weight 0.15s, color 0.15s;
+        transition:
+          font-weight 0.15s,
+          color 0.15s;
       }
       .ov-yr {
         font-size: 12px;
         color: var(--g3);
         white-space: nowrap;
-        opacity: 0;
-        transition: opacity 0.15s;
       }
       .ov-ih:hover .ov-t {
         font-weight: 600;
         color: var(--black);
-      }
-      .ov-ih:hover .ov-yr {
-        opacity: 1;
       }
       .ov-sub {
         font-size: 16px;
@@ -362,11 +401,6 @@
         background: var(--black);
         padding: 12px 14px;
         margin-top: 12px;
-        opacity: 0;
-        transition: opacity 0.15s;
-      }
-      .ov-ih:hover ~ .thesis {
-        opacity: 1;
       }
       .thesis-l {
         display: block;
@@ -400,25 +434,6 @@
         color: var(--g2);
         line-height: 1.75;
       }
-      [data-sk] {
-        transition: font-weight 0.15s, color 0.15s;
-      }
-      #ov:has([data-emp="ackertn"] .ov-ih:hover) [data-sk="consulting-doc"],
-      #ov:has([data-emp="ackertn"] .ov-ih:hover) [data-sk="ms-office"],
-      #ov:has([data-emp="pwc"] .ov-ih:hover) [data-sk="consulting-doc"],
-      #ov:has([data-emp="pwc"] .ov-ih:hover) [data-sk="ms-office"] {
-        font-weight: 600;
-        color: var(--black);
-      }
-      #ov:has([data-emp="snu-lab"] .ov-ih:hover) [data-sk="ux-research"],
-      #ov:has([data-emp="snu-lab"] .ov-ih:hover) [data-sk="service-design"] {
-        font-weight: 600;
-        color: var(--black);
-      }
-      #ov:has([data-emp="rihoz"] .ov-ih:hover) [data-sk="python-js"] {
-        font-weight: 600;
-        color: var(--black);
-      }
       .lrow {
         position: relative;
       }
@@ -427,7 +442,11 @@
       }
       .lrt {
         display: grid;
-        grid-template-columns: clamp(16px, 2vw, 28px) 1fr max-content max-content;
+        grid-template-columns: clamp(
+            16px,
+            2vw,
+            28px
+          ) 1fr max-content max-content;
         align-items: baseline;
         gap: 0 clamp(10px, 1.5vw, 20px);
         padding: clamp(4px, 0.8vw, 10px) var(--pad);
@@ -443,15 +462,15 @@
       #hover-media-layer.ghost .hover-media-resize {
         display: none;
       }
-      .lrow:hover .lrt {
+      .lrt:hover {
         background: none;
       }
-      .lrow:hover .rname {
+      .lrt:hover .rname {
         color: var(--black);
         font-weight: 600;
       }
-      .lrow:hover .rcl,
-      .lrow:hover .ryr {
+      .lrt:hover .rcl,
+      .lrt:hover .ryr {
         opacity: 1;
       }
       .lrow.open .lrt {
@@ -476,7 +495,22 @@
         font-weight: 300;
         color: var(--g3);
         line-height: 1.15;
-        transition: color 0.15s, font-weight 0.15s;
+        transition:
+          color 0.15s,
+          font-weight 0.15s;
+      }
+      .rname-story,
+      .rname-project {
+        display: inline;
+      }
+      .rname-project {
+        display: none;
+      }
+      .lrow.open .rname-story {
+        display: none;
+      }
+      .lrow.open .rname-project {
+        display: inline;
       }
       .rcl {
         font-size: 12px;
@@ -508,49 +542,57 @@
       }
       .panel-inner {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: 1fr 1fr 2fr;
         gap: 0 clamp(20px, 3vw, 40px);
         padding: 20px var(--pad) 26px var(--pad);
+        align-items: start;
+      }
+      .panel-inner.talk-inner {
+        grid-template-columns: 1fr 3fr;
       }
       .panel-inner.talk-inner .pb:first-child {
         grid-column: 1/2;
       }
       .panel-inner.talk-inner .pb.abs {
-        grid-column: 2/4;
+        grid-column: 2/3;
+      }
+      .prob-out-col {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(20px, 3vw, 40px);
       }
       .pl {
         display: block;
         font-size: 20px;
         letter-spacing: 3px;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255, 255, 255, 0.4);
         margin-bottom: 8px;
       }
       .pco {
         font-size: 16px;
-        color: rgba(255,255,255,0.9);
+        color: rgba(255, 255, 255, 0.9);
         margin-bottom: 6px;
         line-height: 1.45;
       }
       .pds {
         font-family: var(--serif);
         font-size: 16px;
-        color: rgba(255,255,255,0.55);
+        color: rgba(255, 255, 255, 0.55);
         line-height: 1.65;
       }
       .pbody {
         font-size: 16px;
-        color: rgba(255,255,255,0.55);
+        color: rgba(255, 255, 255, 0.55);
         line-height: 1.72;
       }
       .sd-title {
-        color: rgba(255,255,255,0.9);
+        color: rgba(255, 255, 255, 0.9);
       }
       .pl2 {
         display: block;
         font-size: 20px;
         letter-spacing: 3px;
-        color: rgba(255,255,255,0.4);
-        margin-top: 14px;
+        color: rgba(255, 255, 255, 0.4);
         margin-bottom: 8px;
       }
       .lrow.empty .lrt {
@@ -560,19 +602,17 @@
         background: none;
       }
       #final-page {
-        position: absolute;
-        inset: 0;
-        z-index: 120;
-        background: var(--white);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        pointer-events: none;
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: relative;
       }
-      #final-page.active {
-        display: flex;
-        pointer-events: auto;
+      #ct-wrapper {
+        display: grid;
+        grid-template-columns: 2fr 2fr;
+        align-content: start;
+        padding: 0 var(--pad) 64px;
+        min-height: 100%;
       }
       #final-link-layer {
         position: absolute;
@@ -592,9 +632,6 @@
           opacity 0.35s ease,
           transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
       }
-      .final-link-box.final-image {
-        cursor: grab;
-      }
       .final-link-box.dragging {
         cursor: grabbing;
       }
@@ -604,21 +641,29 @@
       }
       .final-link-box.nudging {
         transition:
-          left 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-          top 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+          left 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+          top 1.2s cubic-bezier(0.22, 1, 0.36, 1);
       }
-      .final-image-item {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        user-select: none;
-        pointer-events: none;
+      #ct-main {
+        grid-column: 1;
+        grid-row: 1;
       }
-      .final-seq {
-        position: relative;
-        z-index: 2;
-        width: min(880px, 84vw);
+      #ct-text .final-line {
+        opacity: 1;
+        transform: none;
+        transition: none;
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .ct-trigger {
+        color: var(--black);
+        cursor: pointer;
+      }
+      .ct-trigger.done {
+        cursor: default;
+      }
+      .ct-trigger.blink {
+        animation: anagram-blink 0.7s ease-in-out 3;
       }
       .final-scroll-hint {
         position: fixed;
@@ -666,19 +711,22 @@
           opacity 0.35s;
       }
       .final-line + .final-line {
-        margin-top: 12px;
+        margin-top: 0;
       }
       .final-line.vis {
         opacity: 1;
         transform: none;
       }
       .final-line.head {
+        font-family: var(--serif);
         font-size: clamp(22px, 3vw, 42px);
-        line-height: 1.18;
-        color: var(--black);
+        font-weight: 300;
+        line-height: 1.15;
+        color: var(--g3);
+        padding: clamp(4px, 0.8vw, 10px) var(--pad);
       }
       .final-line.head.fade {
-        color: var(--g3);
+        color: var(--g2);
       }
       .final-line.sub {
         font-size: clamp(14px, 1vw, 18px);
@@ -711,14 +759,26 @@
         background: transparent;
         box-shadow: none;
         opacity: 0;
-        transition: opacity 0.15s;
+        transform: translateY(8px);
+        transition:
+          opacity 0.35s ease,
+          transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
         pointer-events: auto;
         cursor: grab;
         user-select: none;
         touch-action: none;
       }
+      .hover-media-box:has(.hover-link-card) {
+        width: fit-content;
+      }
+      .hover-media-box:has(.hover-link-card) .hover-media-resize {
+        right: 6px;
+        bottom: 6px;
+        cursor: grab;
+      }
       .hover-media-box.show {
         opacity: 1;
+        transform: translateY(0);
       }
       .hover-media-box.dragging {
         cursor: grabbing;
@@ -744,38 +804,50 @@
         pointer-events: auto;
       }
       .hover-link-card {
-        width: 100%;
-        border-radius: 24px;
+        width: fit-content;
+        border-radius: 999px;
         display: flex;
         align-items: center;
-        justify-content: center;
         gap: 8px;
-        text-align: center;
-        padding: 12px 14px;
-        color: #fff;
+        padding: 5px 20px;
+        background: #fff;
+        border: 1.5px solid var(--black);
+        color: var(--black);
         text-decoration: none;
-        font-size: clamp(12px, 1.2vw, 16px);
-        line-height: 1.25;
-        font-weight: 600;
+        font-family: var(--serif);
+        font-size: clamp(22px, 3vw, 42px);
+        font-weight: 300;
+        line-height: 1.15;
         pointer-events: auto;
         user-select: none;
+        transition:
+          background 0.15s,
+          color 0.15s;
+      }
+      .hover-link-card:hover:not(.is-disabled) {
+        background: var(--black);
+        color: #fff;
+        border-color: #fff;
       }
       .hover-link-card.is-disabled {
         text-decoration: line-through;
         cursor: not-allowed;
       }
-      .hover-link-icon {
-        width: 14px;
-        height: 14px;
-        flex: 0 0 14px;
+      .link-label {
+        flex: 1;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-      .hover-link-icon path {
-        fill: #fff;
+
+      .final-link-box {
+        width: fit-content;
       }
       .final-link-box .hover-media-resize {
         cursor: grab;
-        right: 10px;
-        bottom: 10px;
+        right: 6px;
+        bottom: 6px;
       }
       .intro-hint,
       .tab,
@@ -817,15 +889,22 @@
           font-size: 11px;
         }
         #intro {
-          padding-right: var(--pad);
-          align-items: flex-end;
+          padding: 0 var(--pad);
+          align-items: flex-start;
         }
         #intro > div,
+        #intro-anagram,
         .word-row {
-          text-align: right;
+          text-align: left;
         }
         .iw {
-          font-size: clamp(22px, 7vw, 34px);
+          font-size: clamp(18px, 7vw, 28px);
+          font-weight: 300;
+        }
+        #anagram-gray,
+        #anagram-structure {
+          font-size: clamp(18px, 7vw, 28px);
+          font-weight: 300;
         }
         .intro-hint,
         .shell-scroll-hint,
@@ -856,9 +935,6 @@
         }
         .fy {
           display: none;
-        }
-        #ov {
-          padding-bottom: 40px;
         }
         .ov-lead {
           min-height: auto;
@@ -916,20 +992,18 @@
         .panel-inner.talk-inner .pb.abs {
           grid-column: auto;
         }
-        .final-seq {
-          width: min(92vw, 560px);
-        }
-        .final-line + .final-line {
-          margin-top: 8px;
+        .prob-out-col {
+          gap: 16px;
         }
         .final-line.head {
           font-size: clamp(22px, 7vw, 34px);
         }
-        .thesis {
-          opacity: 1;
+        #ct-wrapper {
+          grid-template-columns: 1fr;
+          padding: 0 var(--pad) 40px;
         }
-        .ov-yr {
-          opacity: 1;
+        #ct-main {
+          grid-column: 1;
         }
       }
     </style>
@@ -943,7 +1017,10 @@
       ><span class="fy">Last updated 2026.03.04</span>
     </div>
     <div id="intro">
-      <div>
+      <div id="intro-anagram">
+        <span id="anagram-gray"></span><span id="anagram-structure"></span>
+      </div>
+      <div id="intro-words">
         <div class="word-row">
           <span class="iw dim" id="w0">research.</span>
         </div>
@@ -951,15 +1028,14 @@
         <div class="word-row"><span class="iw dim" id="w2">build.</span></div>
         <div class="word-row"><span class="iw" id="w3">structure.</span></div>
       </div>
-      <div class="intro-hint" id="hint">scroll</div>
     </div>
-    <div class="shell-scroll-hint" id="shell-hint">scroll</div>
     <div id="shell">
       <nav id="topbar">
         <div class="tabs">
           <span class="tab on" data-i="0">Overview</span>
           <span class="tab" data-i="1">Projects</span>
           <span class="tab" data-i="2">Talks &amp; Books</span>
+          <span class="tab" data-i="3">Contact</span>
         </div>
       </nav>
       <div id="viewport">
@@ -1057,19 +1133,19 @@
                   <div class="sk">
                     <div class="sk-h">Strategy</div>
                     <div class="sk-v">
-                      <span data-sk="ux-research">UX Research</span><br /><span data-sk="service-design">Service Design</span><br /><span data-sk="consulting-doc">Consulting Documentation</span>
+                      UX Research<br />Service Design<br />Problem Structuring
                     </div>
                   </div>
                   <div class="sk">
                     <div class="sk-h">Build</div>
                     <div class="sk-v">
-                      <span data-sk="python-js">Python / HTML · CSS · JS</span><br />Vibe Coding
+                      Python / HTML · CSS · JS<br />Vibe Coding
                     </div>
                   </div>
                   <div class="sk">
                     <div class="sk-h">Tools</div>
                     <div class="sk-v">
-                      Figma / Notion<br />Git / Firebase<br /><span data-sk="ms-office">MS Office</span>
+                      Figma / Notion<br />Git / Firebase<br />MS Office
                     </div>
                   </div>
                   <div class="sk">
@@ -1084,23 +1160,39 @@
           </div>
           <div class="tab-page" id="page-pr"></div>
           <div class="tab-page" id="page-tb"></div>
+          <div class="tab-page" id="page-ct">
+            <div id="final-page">
+              <div id="final-link-layer" aria-hidden="true"></div>
+              <div id="ct-wrapper">
+                <div id="ct-main">
+                  <div id="ct-text">
+                    <p class="final-line head fade">
+                      I design digital experiences
+                    </p>
+                    <p class="final-line head" id="ct-row-1">
+                      <span id="ct-anagram-1"></span
+                      ><span id="ct-trigger-1" class="ct-trigger"> data</span>
+                    </p>
+                    <p class="final-line head" id="ct-row-2">
+                      <span id="ct-anagram-2"></span
+                      ><span id="ct-trigger-2" class="ct-trigger">
+                        structure</span
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div id="hover-media-layer" aria-hidden="true"></div>
-        <div id="final-page" aria-hidden="true">
-          <div id="final-link-layer" aria-hidden="true"></div>
-          <div class="final-seq">
-            <p class="final-line head fade">I design digital experiences</p>
-            <p class="final-line head">Interaction as Data</p>
-            <p class="final-line head">System as Structure</p>
-          </div>
-          <div class="final-scroll-hint">scroll</div>
-        </div>
       </div>
     </div>
     <script>
       const PROJ = [
         {
           name: "now connecting people through voice...",
+          project: "Voice Interaction as Compatibility Signal",
           cl: "About Nine",
           yr: "2025.01– (진행중)",
           co: "서비스 기획 및 시스템 설계 (80%)",
@@ -1124,6 +1216,8 @@
         },
         {
           name: "then defined what makes a conversation good,",
+          project: "Standardizing Conversational Quality",
+          cl: "About Nine",
           cl: "LG Electronics",
           yr: "2024.05–08 (4개월)",
           co: "PM / 프로젝트 전 과정 리드 (100%)",
@@ -1146,6 +1240,7 @@
         },
         {
           name: "until data began reacting before behavior did,",
+          project: "MyData-Driven Financial Notifications",
           cl: "HiUX Consulting",
           yr: "2024.03–08 (6개월)",
           co: "PM  /  프로젝트 전 과정 리드 (100%)",
@@ -1167,6 +1262,7 @@
         },
         {
           name: "and wired shared spaces into live data,",
+          project: "Shared Appliances, Real-time Data System",
           cl: "Samsung Electronics",
           yr: "2023.01–03 (3개월)",
           co: "백엔드 개발 / DB 설계 및 API 연동 (50%)",
@@ -1185,6 +1281,7 @@
         },
         {
           name: "and reached the places where information didn't arrive,",
+          project: "From Accessibility Checklist to Information Infrastructure",
           cl: "SNU Institute for Arts & Culture",
           yr: "2024.11–12 (2개월)",
           co: "시스템 설계 및 개발 (70%)",
@@ -1199,7 +1296,7 @@
             "문화행사 접근성 정보를 수집·공유하는 정보 허브 구축",
             "서울대학교 문화행사 접근성 포털 운영",
           ],
-          imgs: ["/images/access_img1.png"],
+          imgs: ["/images/access_img1.png", "/images/access_img2.jpg"],
           links: [
             {
               label: "access.snu.ac.kr",
@@ -1210,6 +1307,7 @@
         },
         {
           name: "so I built machines that could speak like people,",
+          project: "Human-Like Machines, Conversational Art Experience",
           cl: "KOCCA",
           yr: "2022.09–12 (4개월)",
           co: "서비스 기획 / 대화 경험 설계 / 에이전트 개발 (80%)",
@@ -1234,6 +1332,7 @@
         },
         {
           name: "which led me to ask what value means beyond owning,",
+          project: "Rethinking Appliance Ownership as a Subscription Service",
           cl: "Samsung Electronics",
           yr: "2022.07–10 (4개월)",
           co: "PM / 프로젝트 전 과정 리드 (100%)",
@@ -1251,6 +1350,7 @@
         },
         {
           name: "then read the patterns in the data they left behind,",
+          project: "Modeling Shopping Behavior from Log Data",
           cl: "Naver Shopping",
           yr: "2022.03–06 (4개월)",
           co: "UX 리서치 / 데이터 분석 (50%)",
@@ -1270,6 +1370,7 @@
         },
         {
           name: "Started by listening to what people said to machines,",
+          project: "Understanding Voice Banking through User Utterances",
           cl: "Taran UXD",
           yr: "2021.09–10 (2개월)",
           co: "UX 리서치 (30%)",
@@ -1411,11 +1512,16 @@
       let hoverMediaHideTimer = null,
         hoverMediaPosCache = new Map(),
         isDraggingMedia = false,
-        hoverMediaRenderToken = 0;
+        hoverMediaRenderToken = 0,
+        hoverMediaRenderDelayTimer = null,
+        hoverMediaShowTimers = [];
       const finalLinkPosCache = new Map();
       const isCoarsePointer =
         window.matchMedia("(pointer: coarse)").matches ||
         window.matchMedia("(hover: none)").matches;
+      const isMobileViewport = () =>
+        window.matchMedia("(max-width: 900px)").matches;
+      const canShowDesktopMedia = () => !isMobileViewport() && !isCoarsePointer;
       const FINAL_LINKS = [
         { label: "GitHub", url: "https://github.com/jisuryou" },
         {
@@ -1444,14 +1550,162 @@
           url: "mailto:jisuryou7@gmail.com",
           icon: "mail",
         },
-        {
-          type: "image",
-          src: "/images/jisu_img1.jpeg",
-        },
       ];
-      let finalLinksBuilt = false;
+      let finalLinksBuilt = false,
+        finalLinksAnimatedOnce = false;
+      const MEDIA_ALIGN_EDGE_X = 18,
+        MEDIA_ALIGN_START_Y = 0,
+        MEDIA_ALIGN_GAP = 10,
+        FINAL_LINK_NUDGE_MS = 1200;
+      function clearHoverMediaShowTimers() {
+        if (!hoverMediaShowTimers.length) return;
+        hoverMediaShowTimers.forEach((t) => clearTimeout(t));
+        hoverMediaShowTimers = [];
+      }
       function clamp(v, min, max) {
         return Math.max(min, Math.min(max, v));
+      }
+      function shouldAutoAlignHoverMedia() {
+        return ctRow2Resolved && (curTab === 1 || curTab === 2);
+      }
+      function getHoverMediaType(box) {
+        if (box.dataset.mediaType) return box.dataset.mediaType;
+        if (box.querySelector(".hover-link-card")) return "link";
+        if (box.querySelector("video")) return "video";
+        return "img";
+      }
+      function getHoverMediaSortRank(type) {
+        if (type === "link") return 0;
+        if (type === "img") return 1;
+        if (type === "video") return 2;
+        return 3;
+      }
+      function constrainHoverBoxToLayer(box, resizeMedia = true) {
+        const lr = hoverMediaLayer.getBoundingClientRect();
+        if (!lr.width || !lr.height) return;
+        const type = getHoverMediaType(box);
+        let w = parseFloat(box.style.width) || box.offsetWidth || 0;
+        let h = parseFloat(box.style.height) || box.offsetHeight || 0;
+        const maxW = Math.max(120, lr.width - MEDIA_ALIGN_EDGE_X * 2);
+        const maxH = Math.max(90, lr.height - MEDIA_ALIGN_START_Y * 2);
+        if (type === "link") {
+          if (w > maxW) {
+            box.style.width = `${maxW}px`;
+            const card = box.querySelector(".hover-link-card");
+            if (card) card.style.width = "100%";
+            w = maxW;
+            h = box.offsetHeight || h;
+          }
+        } else if (resizeMedia && w > 0 && h > 0) {
+          const ratio = Math.max(
+            0.2,
+            parseFloat(box.dataset.ratio) || w / h || 1.5,
+          );
+          if (w > maxW || h > maxH) {
+            let nw = Math.min(w, maxW);
+            let nh = Math.round(nw / ratio);
+            if (nh > maxH) {
+              nh = maxH;
+              nw = Math.round(nh * ratio);
+            }
+            w = nw;
+            h = nh;
+            box.style.width = `${w}px`;
+            box.style.height = `${h}px`;
+          }
+        }
+        w = parseFloat(box.style.width) || box.offsetWidth || w;
+        h = parseFloat(box.style.height) || box.offsetHeight || h;
+        const maxX = Math.max(
+          MEDIA_ALIGN_EDGE_X,
+          lr.width - w - MEDIA_ALIGN_EDGE_X,
+        );
+        const maxY = Math.max(
+          MEDIA_ALIGN_START_Y,
+          lr.height - h - MEDIA_ALIGN_START_Y,
+        );
+        const x = clamp(
+          parseFloat(box.style.left) || 0,
+          MEDIA_ALIGN_EDGE_X,
+          maxX,
+        );
+        const y = clamp(
+          parseFloat(box.style.top) || 0,
+          MEDIA_ALIGN_START_Y,
+          maxY,
+        );
+        box.style.left = `${x}px`;
+        box.style.top = `${y}px`;
+        persistMediaBox(box);
+      }
+      function getSingleTabWidth() {
+        const pageEl = document.querySelector(".tab-page");
+        if (pageEl) {
+          const w = pageEl.getBoundingClientRect().width || 0;
+          if (w > 0) return w;
+        }
+        return hoverMediaLayer.getBoundingClientRect().width;
+      }
+      function getMediaColumnWidth(layerRect, pad) {
+        const activePage =
+          curTab === 1
+            ? document.getElementById("page-pr")
+            : curTab === 2
+              ? document.getElementById("page-tb")
+              : null;
+        const pageW =
+          activePage?.getBoundingClientRect?.().width || layerRect.width;
+        const contentW = Math.max(0, pageW - pad * 2);
+        const oneFr = contentW > 0 ? contentW / 4 : getSingleTabWidth() / 4;
+        return Math.max(120, Math.min(layerRect.width, oneFr));
+      }
+      function autoArrangeHoverMedia(force = false) {
+        if (!force && !shouldAutoAlignHoverMedia()) return;
+        const boxes = [...hoverMediaLayer.querySelectorAll(".hover-media-box")];
+        if (!boxes.length) return;
+        const lr = hoverMediaLayer.getBoundingClientRect();
+        if (!lr.width || !lr.height) return;
+        const pad = parseFloat(getComputedStyle(ctWrapper).paddingLeft) || 24;
+        const columnW = getMediaColumnWidth(lr, pad);
+        const columnRight = lr.width - pad - MEDIA_ALIGN_EDGE_X;
+        const sorted = boxes.sort((a, b) => {
+          const ta = getHoverMediaType(a),
+            tb = getHoverMediaType(b);
+          return getHoverMediaSortRank(ta) - getHoverMediaSortRank(tb);
+        });
+        let nextY = MEDIA_ALIGN_START_Y;
+        sorted.forEach((box) => {
+          const type = getHoverMediaType(box);
+          let w = parseFloat(box.style.width) || box.offsetWidth || 0;
+          let h = parseFloat(box.style.height) || box.offsetHeight || 0;
+          if (type === "img" || type === "video") {
+            const ratio = Math.max(
+              0.2,
+              parseFloat(box.dataset.ratio) || (w > 0 && h > 0 ? w / h : 1.5),
+            );
+            const targetW = Math.max(120, columnW - MEDIA_ALIGN_EDGE_X * 2);
+            const maxH = Math.max(90, lr.height);
+            let targetH = Math.round(targetW / ratio);
+            if (targetH > maxH) targetH = maxH;
+            w = targetW;
+            h = targetH;
+            box.style.width = `${w}px`;
+            box.style.height = `${h}px`;
+          } else {
+            w = box.offsetWidth || w;
+            h = box.offsetHeight || h;
+          }
+          const x = clamp(
+            columnRight - w,
+            MEDIA_ALIGN_EDGE_X,
+            lr.width - w - MEDIA_ALIGN_EDGE_X,
+          );
+          const y = clamp(nextY, MEDIA_ALIGN_START_Y, lr.height - h);
+          box.style.left = `${x}px`;
+          box.style.top = `${y}px`;
+          persistMediaBox(box);
+          nextY = y + h + MEDIA_ALIGN_GAP;
+        });
       }
       function persistMediaBox(box) {
         const key = box.dataset.cacheKey;
@@ -1466,7 +1720,8 @@
       function bindMediaInteractions(box, handle) {
         const MIN_W = 120,
           MIN_H = 90,
-          EDGE = 18;
+          EDGE_X = 18,
+          EDGE_Y = 0;
         let mode = null,
           sx = 0,
           sy = 0,
@@ -1487,20 +1742,20 @@
           const dx = e.clientX - sx,
             dy = e.clientY - sy;
           if (mode === "drag") {
-            const x = clamp(bx + dx, EDGE, layerRect.width - bw - EDGE),
-              y = clamp(by + dy, EDGE, layerRect.height - bh - EDGE);
+            const x = clamp(bx + dx, EDGE_X, layerRect.width - bw - EDGE_X),
+              y = clamp(by + dy, EDGE_Y, layerRect.height - bh - EDGE_Y);
             box.style.left = `${x}px`;
             box.style.top = `${y}px`;
           } else {
             const ratio = Math.max(0.2, parseFloat(box.dataset.ratio) || 1.5);
-            let w = clamp(bw + dx, MIN_W, layerRect.width - EDGE * 2),
-              h = clamp(w / ratio, MIN_H, layerRect.height - EDGE * 2);
+            let w = clamp(bw + dx, MIN_W, layerRect.width - EDGE_X * 2),
+              h = clamp(w / ratio, MIN_H, layerRect.height - EDGE_Y * 2);
             w = Math.max(MIN_W, h * ratio);
-            w = Math.min(w, layerRect.width - EDGE * 2);
+            w = Math.min(w, layerRect.width - EDGE_X * 2);
             h = Math.max(MIN_H, w / ratio);
-            h = Math.min(h, layerRect.height - EDGE * 2);
-            const x = clamp(bx, EDGE, layerRect.width - w - EDGE),
-              y = clamp(by, EDGE, layerRect.height - h - EDGE);
+            h = Math.min(h, layerRect.height - EDGE_Y * 2);
+            const x = clamp(bx, EDGE_X, layerRect.width - w - EDGE_X),
+              y = clamp(by, EDGE_Y, layerRect.height - h - EDGE_Y);
             box.style.left = `${x}px`;
             box.style.top = `${y}px`;
             box.style.width = `${w}px`;
@@ -1565,11 +1820,9 @@
           e.preventDefault();
         });
       }
-      function bindFinalLinkHandleDrag(box, handle, opts = {}) {
-        const EDGE = 8,
-          MIN_W = 120,
-          MIN_H = 90,
-          isImage = !!opts.isImage;
+      function bindFinalLinkHandleDrag(box, handle) {
+        const EDGE_X = 18,
+          EDGE_Y = 0;
         let mode = null,
           sx = 0,
           sy = 0,
@@ -1583,28 +1836,11 @@
           const layerRect = finalLinkLayer.getBoundingClientRect();
           const dx = e.clientX - sx,
             dy = e.clientY - sy;
-          if (mode === "drag") {
-            const x = clamp(bx + dx, EDGE, layerRect.width - bw - EDGE),
-              y = clamp(by + dy, EDGE, layerRect.height - bh - EDGE);
-            box.style.left = `${x}px`;
-            box.style.top = `${y}px`;
-            finalLinkPosCache.set(box.dataset.cacheKey, { x, y, w: bw, h: bh });
-          } else {
-            const ratio = Math.max(0.3, parseFloat(box.dataset.ratio) || 1.4);
-            let w = clamp(bw + dx, MIN_W, layerRect.width - EDGE * 2),
-              h = clamp(w / ratio, MIN_H, layerRect.height - EDGE * 2);
-            w = Math.max(MIN_W, h * ratio);
-            w = Math.min(w, layerRect.width - EDGE * 2);
-            h = Math.max(MIN_H, w / ratio);
-            h = Math.min(h, layerRect.height - EDGE * 2);
-            const x = clamp(bx, EDGE, layerRect.width - w - EDGE),
-              y = clamp(by, EDGE, layerRect.height - h - EDGE);
-            box.style.left = `${x}px`;
-            box.style.top = `${y}px`;
-            box.style.width = `${w}px`;
-            box.style.height = `${h}px`;
-            finalLinkPosCache.set(box.dataset.cacheKey, { x, y, w, h });
-          }
+          const x = clamp(bx + dx, EDGE_X, layerRect.width - bw - EDGE_X),
+            y = clamp(by + dy, EDGE_Y, layerRect.height - bh - EDGE_Y);
+          box.style.left = `${x}px`;
+          box.style.top = `${y}px`;
+          finalLinkPosCache.set(box.dataset.cacheKey, { x, y, w: bw, h: bh });
         };
         const onUp = (e) => {
           if (!mode || e.pointerId !== pointerId) return;
@@ -1639,7 +1875,7 @@
           e.preventDefault();
           e.stopPropagation();
           box.classList.remove("nudging");
-          mode = isImage ? "resize" : "drag";
+          mode = "drag";
           pointerId = e.pointerId;
           sx = e.clientX;
           sy = e.clientY;
@@ -1654,144 +1890,117 @@
         });
       }
       function getFinalLinkPosition(cacheKey, layerRect, w, h) {
+        const EDGE_X = 18,
+          EDGE_Y = 0;
         if (finalLinkPosCache.has(cacheKey)) {
           const c = finalLinkPosCache.get(cacheKey);
           const cw = c.w || w,
             ch = c.h || h;
           return {
-            x: clamp(c.x, 8, layerRect.width - cw - 8),
-            y: clamp(c.y, 8, layerRect.height - ch - 8),
+            x: clamp(c.x, EDGE_X, layerRect.width - cw - EDGE_X),
+            y: clamp(c.y, EDGE_Y, layerRect.height - ch - EDGE_Y),
           };
         }
         const seed = hashString(cacheKey),
           x =
-            8 + seededRandom(seed + 7) * Math.max(1, layerRect.width - w - 16),
+            EDGE_X +
+            seededRandom(seed + 7) *
+              Math.max(1, layerRect.width - w - EDGE_X * 2),
           y =
-            8 +
-            seededRandom(seed + 17) * Math.max(1, layerRect.height - h - 16);
+            EDGE_Y +
+            seededRandom(seed + 17) *
+              Math.max(1, layerRect.height - h - EDGE_Y * 2);
         finalLinkPosCache.set(cacheKey, { x, y, w, h });
         return { x, y };
+      }
+      function constrainFinalLinkBoxToLayer(box) {
+        const key = box.dataset.cacheKey;
+        if (!key) return;
+        const lr = finalLinkLayer.getBoundingClientRect();
+        if (!lr.width || !lr.height) return;
+        const EDGE_X = MEDIA_ALIGN_EDGE_X,
+          EDGE_Y = MEDIA_ALIGN_START_Y;
+        const pad = parseFloat(getComputedStyle(ctWrapper).paddingLeft) || 24;
+        const maxW = Math.max(120, lr.width - pad * 2 - EDGE_X * 2);
+        const card = box.querySelector(".hover-link-card");
+        let w = parseFloat(box.style.width) || box.offsetWidth || 0;
+        if (w > maxW) {
+          box.style.width = `${maxW}px`;
+          if (card) card.style.width = "100%";
+          w = maxW;
+        } else if (card) {
+          card.style.width = "";
+        }
+        const h = parseFloat(box.style.height) || box.offsetHeight || 0;
+        const maxX = Math.max(EDGE_X, lr.width - w - EDGE_X);
+        const maxY = Math.max(EDGE_Y, lr.height - h - EDGE_Y);
+        const x = clamp(parseFloat(box.style.left) || 0, EDGE_X, maxX);
+        const y = clamp(parseFloat(box.style.top) || 0, EDGE_Y, maxY);
+        box.style.left = `${x}px`;
+        box.style.top = `${y}px`;
+        finalLinkPosCache.set(key, { x, y, w, h });
       }
       function renderFinalLinks() {
         const rect = finalLinkLayer.getBoundingClientRect();
         if (!rect.width || !rect.height) return;
         finalLinkLayer.innerHTML = "";
         const created = [];
-        const finalItems = isCoarsePointer
-          ? FINAL_LINKS.filter((item) => item.type !== "image")
-          : FINAL_LINKS;
-        finalItems.forEach((item, idx) => {
-          const cacheKey = `final-link-${idx}-${item.label || item.src || "item"}`;
-          const isImage = item.type === "image";
+        FINAL_LINKS.forEach((item, idx) => {
+          const cacheKey = `final-link-${idx}-${item.label || "item"}`;
           const cached = finalLinkPosCache.get(cacheKey);
-          const w =
-            cached?.w ??
-            (isImage
-              ? Math.max(220, Math.min(440, rect.width * 0.28))
-              : Math.max(160, Math.min(250, rect.width * 0.2)));
-          const h =
-            cached?.h ??
-            (isImage
-              ? Math.max(160, Math.min(300, rect.height * 0.28))
-              : Math.max(52, Math.min(72, rect.height * 0.1)));
+          const w = cached?.w ?? Math.max(160, Math.min(250, rect.width * 0.2));
+          const h = cached?.h ?? Math.max(52, Math.min(72, rect.height * 0.1));
           const pos = getFinalLinkPosition(cacheKey, rect, w, h);
           const box = document.createElement("div");
           box.className = "final-link-box";
-          if (isImage) box.classList.add("final-image");
           box.dataset.cacheKey = cacheKey;
           box.style.left = `${pos.x}px`;
           box.style.top = `${pos.y}px`;
-          box.style.width = `${w}px`;
-          if (isImage) box.style.height = `${h}px`;
-          box.dataset.ratio = String(w / Math.max(1, h));
-          let mediaEl;
-          if (isImage) {
-            const img = document.createElement("img");
-            img.className = "final-image-item";
-            img.alt = "";
-            img.src = item.src || "";
-            img.onerror = () => box.remove();
-            img.onload = () => {
-              if (img.naturalWidth && img.naturalHeight) {
-                const EDGE = 8;
-                const lr = finalLinkLayer.getBoundingClientRect();
-                const imgRatio = img.naturalWidth / img.naturalHeight;
-                let newW = w;
-                let newH = Math.round(newW / imgRatio);
-                const maxW = lr.width - EDGE * 2;
-                const maxH = lr.height - EDGE * 2;
-                if (newH > maxH) {
-                  newH = maxH;
-                  newW = Math.round(newH * imgRatio);
-                }
-                if (newW > maxW) {
-                  newW = maxW;
-                  newH = Math.round(newW / imgRatio);
-                }
-                const cached = finalLinkPosCache.get(cacheKey) || {
-                  x: pos.x,
-                  y: pos.y,
-                };
-                const cx = Math.max(
-                  EDGE,
-                  Math.min(cached.x, lr.width - newW - EDGE),
-                );
-                const cy = Math.max(
-                  EDGE,
-                  Math.min(cached.y, lr.height - newH - EDGE),
-                );
-                box.style.width = `${newW}px`;
-                box.style.height = `${newH}px`;
-                box.style.left = `${cx}px`;
-                box.style.top = `${cy}px`;
-                box.dataset.ratio = String(imgRatio);
-                finalLinkPosCache.set(cacheKey, {
-                  x: cx,
-                  y: cy,
-                  w: newW,
-                  h: newH,
-                });
-              }
-            };
-            mediaEl = img;
+          const a = document.createElement("a");
+          a.className = "hover-link-card";
+          a.href = item.url;
+          if (item.disabled) {
+            a.classList.add("is-disabled");
+            a.setAttribute("aria-disabled", "true");
+            a.addEventListener("click", (e) => e.preventDefault());
+          } else if (item.download) {
+            a.download = item.filename || "";
           } else {
-            const a = document.createElement("a");
-            a.className = "hover-link-card";
-            a.href = item.url;
-            if (item.disabled) {
-              a.classList.add("is-disabled");
-              a.setAttribute("aria-disabled", "true");
-              a.addEventListener("click", (e) => e.preventDefault());
-            } else if (item.download) {
-              a.download = item.filename || "";
-            } else {
-              a.target = "_blank";
-              a.rel = "noopener noreferrer";
-            }
-            a.innerHTML = linkInnerHTML(
-              item.label,
-              item.icon || (item.download ? "download" : "link"),
-            );
-            a.style.background = pickLinkColor(cacheKey);
-            mediaEl = a;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
           }
-          box.appendChild(mediaEl);
+          a.innerHTML = linkInnerHTML(
+            item.label,
+            item.icon || (item.download ? "download" : "link"),
+          );
+          box.appendChild(a);
           finalLinkLayer.appendChild(box);
           if (!isCoarsePointer) {
             const handle = document.createElement("span");
             handle.className = "hover-media-resize";
-            if (isImage) handle.style.cursor = "nwse-resize";
             box.appendChild(handle);
-            bindFinalLinkHandleDrag(box, handle, { isImage });
+            bindFinalLinkHandleDrag(box, handle);
           }
+          constrainFinalLinkBoxToLayer(box);
           created.push(box);
         });
-        created.forEach((box, i) => {
-          setTimeout(() => box.classList.add("show"), 140 + i * 120);
-        });
+        if (!finalLinksAnimatedOnce) {
+          created.forEach((box, i) => {
+            setTimeout(() => box.classList.add("show"), 140 + i * 120);
+          });
+          finalLinksAnimatedOnce = true;
+        } else {
+          created.forEach((box) => box.classList.add("show"));
+        }
         finalLinksBuilt = true;
       }
-      function clearHoverMedia(instant = false) {
+      function clearHoverMedia(instant = false, keepToken = false) {
+        if (!keepToken) hoverMediaRenderToken++;
+        clearHoverMediaShowTimers();
+        if (hoverMediaRenderDelayTimer) {
+          clearTimeout(hoverMediaRenderDelayTimer);
+          hoverMediaRenderDelayTimer = null;
+        }
         if (hoverMediaHideTimer) {
           clearTimeout(hoverMediaHideTimer);
           hoverMediaHideTimer = null;
@@ -1799,13 +2008,20 @@
         isDraggingMedia = false;
         if (instant) {
           hoverMediaLayer.innerHTML = "";
+          hoverMediaLayer.classList.remove("ghost");
           return;
         }
         const boxes = [...hoverMediaLayer.querySelectorAll(".hover-media-box")];
-        if (!boxes.length) return;
+        if (!boxes.length) {
+          hoverMediaLayer.classList.remove("ghost");
+          return;
+        }
         boxes.forEach((box) => box.classList.remove("show"));
         setTimeout(() => {
           boxes.forEach((box) => box.remove());
+          if (!hoverMediaLayer.querySelector(".hover-media-box")) {
+            hoverMediaLayer.classList.remove("ghost");
+          }
         }, 160);
       }
       function scheduleHideHoverMedia() {
@@ -1851,8 +2067,8 @@
         }
         return "M14.12 9.88a3 3 0 0 1 4.24 0l1.76 1.76a3 3 0 0 1 0 4.24l-4 4a3 3 0 0 1-4.24 0l-1.76-1.76 1.41-1.41 1.76 1.76a1 1 0 0 0 1.41 0l4-4a1 1 0 0 0 0-1.41l-1.76-1.76a1 1 0 0 0-1.41 0l-1.29 1.29-1.41-1.41 1.29-1.29Zm-4.24 4.24a3 3 0 0 1-4.24 0l-1.76-1.76a3 3 0 0 1 0-4.24l4-4a3 3 0 0 1 4.24 0l1.76 1.76-1.41 1.41-1.76-1.76a1 1 0 0 0-1.41 0l-4 4a1 1 0 0 0 0 1.41l1.76 1.76a1 1 0 0 0 1.41 0l1.29-1.29 1.41 1.41-1.29 1.29Z";
       }
-      function linkInnerHTML(label, icon = "link") {
-        return `<svg class="hover-link-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="${getLinkIconPath(icon)}"/></svg><span>${label}</span>`;
+      function linkInnerHTML(label) {
+        return `<span class="link-label">${label}</span>`;
       }
       function getStablePosition(cacheKey, layerRect, imgW, imgH, usedRects) {
         if (hoverMediaPosCache.has(cacheKey)) {
@@ -1861,23 +2077,38 @@
           const h = Math.max(90, c.h || imgH);
           return {
             x: Math.max(18, Math.min(c.x, layerRect.width - w - 18)),
-            y: Math.max(18, Math.min(c.y, layerRect.height - h - 18)),
+            y: Math.max(0, Math.min(c.y, layerRect.height - h)),
             w,
             h,
           };
         }
         const base = hashString(cacheKey),
           minX = 18,
-          minY = 18,
+          minY = 0,
           maxX = Math.max(minX, layerRect.width - imgW - 18),
-          maxY = Math.max(minY, layerRect.height - imgH - 18);
+          maxY = Math.max(minY, layerRect.height - imgH);
         const x = minX + seededRandom(base + 11) * Math.max(1, maxX - minX),
           y = minY + seededRandom(base + 29) * Math.max(1, maxY - minY);
         hoverMediaPosCache.set(cacheKey, { x, y, w: imgW, h: imgH });
         return { x, y, w: imgW, h: imgH };
       }
-      function showHoverMedia(payload = {}, itemKey = "") {
+      function showHoverMedia(payload = {}, itemKey = "", opts = {}) {
+        if (!(curTab === 1 || curTab === 2)) {
+          clearHoverMedia(true);
+          return;
+        }
+        if (!canShowDesktopMedia()) {
+          clearHoverMedia(true);
+          return;
+        }
         const token = ++hoverMediaRenderToken;
+        const revealMode =
+          opts.revealMode === "stagger" ? "stagger" : "instant";
+        clearHoverMediaShowTimers();
+        if (hoverMediaRenderDelayTimer) {
+          clearTimeout(hoverMediaRenderDelayTimer);
+          hoverMediaRenderDelayTimer = null;
+        }
         const picked = [
           ...(payload.imgs || [])
             .filter(Boolean)
@@ -1914,8 +2145,9 @@
             used.push(pos);
             const box = document.createElement("div");
             box.className = "hover-media-box";
+            box.dataset.mediaType = item.type;
             box.style.cssText = isLink
-              ? `left:${pos.x}px;top:${pos.y}px;width:${pos.w}px`
+              ? `left:${pos.x}px;top:${pos.y}px`
               : `left:${pos.x}px;top:${pos.y}px;width:${pos.w}px;height:${pos.h}px`;
             box.dataset.ratio = String(pos.w / Math.max(1, pos.h));
             box.dataset.cacheKey = cacheSeed;
@@ -1928,13 +2160,19 @@
               img.onerror = () => box.remove();
               img.onload = () => {
                 if (img.naturalWidth && img.naturalHeight) {
-                  const EDGE = 18;
+                  const EDGE_X = MEDIA_ALIGN_EDGE_X,
+                    EDGE_Y = 0;
                   const lr = hoverMediaLayer.getBoundingClientRect();
                   const imgRatio = img.naturalWidth / img.naturalHeight;
+                  box.dataset.ratio = String(imgRatio);
+                  if (shouldAutoAlignHoverMedia()) {
+                    autoArrangeHoverMedia(true);
+                    return;
+                  }
                   let newW = pos.w;
                   let newH = Math.round(newW / imgRatio);
-                  const maxW = lr.width - EDGE * 2;
-                  const maxH = lr.height - EDGE * 2;
+                  const maxW = lr.width - EDGE_X * 2;
+                  const maxH = lr.height - EDGE_Y * 2;
                   if (newH > maxH) {
                     newH = maxH;
                     newW = Math.round(newH * imgRatio);
@@ -1944,24 +2182,24 @@
                     newH = Math.round(newW / imgRatio);
                   }
                   const cx = Math.max(
-                    EDGE,
-                    Math.min(pos.x, lr.width - newW - EDGE),
+                    EDGE_X,
+                    Math.min(pos.x, lr.width - newW - EDGE_X),
                   );
                   const cy = Math.max(
-                    EDGE,
-                    Math.min(pos.y, lr.height - newH - EDGE),
+                    EDGE_Y,
+                    Math.min(pos.y, lr.height - newH - EDGE_Y),
                   );
                   box.style.width = `${newW}px`;
                   box.style.height = `${newH}px`;
                   box.style.left = `${cx}px`;
                   box.style.top = `${cy}px`;
-                  box.dataset.ratio = String(imgRatio);
                   hoverMediaPosCache.set(cacheSeed, {
                     x: cx,
                     y: cy,
                     w: newW,
                     h: newH,
                   });
+                  constrainHoverBoxToLayer(box, true);
                 }
               };
               mediaEl = img;
@@ -1976,6 +2214,15 @@
               video.preload = "metadata";
               video.controls = false;
               video.onerror = () => box.remove();
+              video.onloadedmetadata = () => {
+                if (video.videoWidth && video.videoHeight) {
+                  box.dataset.ratio = String(
+                    video.videoWidth / video.videoHeight,
+                  );
+                  if (shouldAutoAlignHoverMedia()) autoArrangeHoverMedia(true);
+                  else constrainHoverBoxToLayer(box, true);
+                }
+              };
               video.onloadeddata = () => {
                 const p = video.play();
                 if (p && typeof p.catch === "function") p.catch(() => {});
@@ -1999,7 +2246,6 @@
                 item.label,
                 item.icon || (item.download ? "download" : "link"),
               );
-              a.style.background = pickLinkColor(cacheSeed);
               mediaEl = a;
             }
             const handle = document.createElement("span");
@@ -2008,12 +2254,30 @@
             box.appendChild(handle);
             hoverMediaLayer.appendChild(box);
             bindMediaInteractions(box, handle);
-            box.classList.add("show");
+            if (revealMode === "stagger") {
+              const t = setTimeout(
+                () => {
+                  if (token !== hoverMediaRenderToken) return;
+                  box.classList.add("show");
+                },
+                120 + idx * 90,
+              );
+              hoverMediaShowTimers.push(t);
+            } else {
+              box.classList.add("show");
+            }
+            if (!shouldAutoAlignHoverMedia()) {
+              requestAnimationFrame(() => constrainHoverBoxToLayer(box, true));
+            }
           });
+          if (shouldAutoAlignHoverMedia()) autoArrangeHoverMedia(true);
         };
         if (hoverMediaLayer.children.length) {
-          clearHoverMedia(false);
-          setTimeout(render, 180);
+          clearHoverMedia(true, true);
+          hoverMediaRenderDelayTimer = setTimeout(() => {
+            hoverMediaRenderDelayTimer = null;
+            render();
+          }, 180);
         } else {
           render();
         }
@@ -2050,11 +2314,19 @@
             isProj = pageId === "page-pr";
           const panel =
             !d.empty && isProj
-              ? `<div class="lrow-panel"><div class="panel-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div><div class="pds">${d.ds}</div></div><div class="pb">${d.pb ? `<span class="pl">Problem</span><div class="pbody">${d.pb}</div>` : ``}${d.sd ? `<span class="pl2">System Design</span><div class="pbody">${toSystemDesignHtml(d.sd)}</div>` : ``}</div><div class="pb">${d.oc ? `<span class="pl">Outcome</span><div class="pbody">${toMultiline(d.oc)}</div>` : ``}</div></div></div>`
+              ? `<div class="lrow-panel"><div class="panel-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div><div class="pds">${d.ds}</div></div><div class="pb prob-out-col">${d.pb ? `<div><span class="pl">Problem</span><div class="pbody">${d.pb}</div></div>` : ``}${d.oc ? `<div><span class="pl">Outcome</span><div class="pbody">${toMultiline(d.oc)}</div></div>` : ``}</div><div class="pb">${d.sd ? `<span class="pl2">System Design</span><div class="pbody">${toSystemDesignHtml(d.sd)}</div>` : ``}</div></div></div>`
               : !d.empty && !isProj
                 ? `<div class="lrow-panel"><div class="panel-inner talk-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div></div><div class="pb abs"><span class="pl">Abstract</span><div class="pbody">${toMultiline(d.ds)}</div></div></div></div>`
                 : "";
-          row.innerHTML = `<div class="lrt"><span class="rn">${autoNo}</span><span class="rname">${d.name}</span><span class="rcl">${d.cl}</span><span class="ryr">${d.yr || ""}</span></div>${panel}`;
+          const storyTitle = escHtml(d.story || d.name || "");
+          const projectTitle = escHtml(
+            d.project || d.title || d.cl || d.name || "",
+          );
+          const rnameHtml =
+            isProj && !d.empty
+              ? `<span class="rname"><span class="rname-story">${storyTitle}</span><span class="rname-project">${projectTitle}</span></span>`
+              : `<span class="rname">${storyTitle}</span>`;
+          row.innerHTML = `<div class="lrt"><span class="rn">${autoNo}</span>${rnameHtml}<span class="rcl">${d.cl}</span><span class="ryr">${d.yr || ""}</span></div>${panel}`;
           c.appendChild(row);
           if (!d.empty) {
             const mediaKey = `${d.name || "item"}|${d.yr || ""}|${pageId}`;
@@ -2109,7 +2381,7 @@
                   }
                   hoverMediaLayer.classList.remove("ghost");
                   showHoverMedia(
-                    !isCoarsePointer
+                    canShowDesktopMedia()
                       ? {
                           imgs: d.imgs || [],
                           vids: d.vids || [],
@@ -2117,8 +2389,9 @@
                         }
                       : {},
                     mediaKey,
+                    { revealMode: "stagger" },
                   );
-                  if (isCoarsePointer) clearHoverMedia(true);
+                  if (!canShowDesktopMedia()) clearHoverMedia(true);
                 } else {
                   row.classList.remove("open");
                   activeRow = null;
@@ -2152,13 +2425,19 @@
             row.addEventListener("mouseenter", () => {
               if (
                 !row.classList.contains("open") &&
-                !isCoarsePointer &&
+                canShowDesktopMedia() &&
                 !isDraggingMedia &&
                 !document.querySelector(".lrow.open")
               ) {
                 clearHoverMedia(true);
                 hoverMediaLayer.classList.add("ghost");
-                showHoverMedia({ imgs: d.imgs || [], vids: d.vids || [] }, mediaKey);
+                showHoverMedia(
+                  {
+                    imgs: d.imgs || [],
+                    vids: d.vids || [],
+                  },
+                  mediaKey,
+                );
               }
             });
             row.addEventListener("mouseleave", () => {
@@ -2166,7 +2445,6 @@
                 !row.classList.contains("open") &&
                 !document.querySelector(".lrow.open")
               ) {
-                hoverMediaLayer.classList.remove("ghost");
                 scheduleHideHoverMedia();
               }
             });
@@ -2188,22 +2466,25 @@
       syncLeadHeight();
       window.addEventListener("resize", () => {
         syncLeadHeight();
-        if (finalLinksBuilt) renderFinalLinks();
+        if (finalLinksBuilt) {
+          finalLinkPosCache.clear();
+          renderFinalLinks();
+          if (ctRow2Resolved) snapMediaToHome();
+        }
+        if (shouldAutoAlignHoverMedia()) autoArrangeHoverMedia(true);
       });
 
       let state = "intro",
         curTab = 0,
         busy = false,
-        introReady = false,
-        introProgress = 0,
-        introJustReady = false;
+        introReady = false;
       let keepShellHintVisible = false;
-      const INTRO_WORD_STEPS = 4,
-        INTRO_STEPS = 5,
-        INTRO_SCROLL_UNIT = 1200;
       const words = [0, 1, 2, 3].map((i) => document.getElementById("w" + i));
-      const hint = document.getElementById("hint");
       const shellHint = document.getElementById("shell-hint");
+      const anagramGray = document.getElementById("anagram-gray");
+      const anagramStructure = document.getElementById("anagram-structure");
+      const introAnagram = document.getElementById("intro-anagram");
+      const introWords = document.getElementById("intro-words");
       const finalPage = document.getElementById("final-page");
       const finalLines = [...finalPage.querySelectorAll(".final-line")];
       const finalScrollHint = finalPage.querySelector(".final-scroll-hint");
@@ -2214,23 +2495,272 @@
       const FINAL_STEPS = finalLines.length,
         FINAL_SCROLL_UNIT = 1200;
 
-      function applyIntroProgress() {
-        const shown = Math.floor(
-          Math.max(0, Math.min(INTRO_STEPS, introProgress)),
-        );
-        words.forEach((w, i) =>
-          w.classList.toggle("vis", i < Math.min(shown, INTRO_WORD_STEPS)),
-        );
-        const wasReady = introReady;
-        introReady = shown === INTRO_STEPS;
-        if (introReady && !wasReady) {
-          introJustReady = true;
+      // ── CONTACT TAB ─────────────────────────────────────────────────────────
+      const ctWrapper = document.getElementById("ct-wrapper");
+      const ctAnagram1 = document.getElementById("ct-anagram-1");
+      const ctAnagram2 = document.getElementById("ct-anagram-2");
+      const ctTrigger1 = document.getElementById("ct-trigger-1");
+      const ctTrigger2 = document.getElementById("ct-trigger-2");
+      let ctRow1Resolved = false,
+        ctRow2Resolved = false;
+
+      function initCtAnagram(container, text) {
+        container.innerHTML = "";
+        const arr = text.split("");
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
         }
-        if (!introReady) {
-          introJustReady = false;
-        }
-        hint.classList.toggle("vis", shown >= INTRO_STEPS);
+        arr.forEach((ch) => {
+          const s = document.createElement("span");
+          s.className = "anagram-char";
+          s.textContent = ch;
+          container.appendChild(s);
+        });
       }
+      initCtAnagram(ctAnagram1, "interaction as");
+      initCtAnagram(ctAnagram2, "system as");
+
+      async function resolveCtAnagram(anagramEl, text) {
+        const srcSpans = [...anagramEl.querySelectorAll(".anagram-char")];
+        if (!srcSpans.length) return;
+        const layer = finalLinkLayer;
+        const layerRect = layer.getBoundingClientRect();
+        const anagramRect = anagramEl.getBoundingClientRect();
+        const fontSize = getComputedStyle(anagramEl).fontSize;
+        // Freeze layout size to prevent collapse when innerHTML is cleared later
+        anagramEl.style.display = "inline-block";
+        anagramEl.style.minWidth = anagramRect.width + "px";
+
+        // 1. Measure source positions — no DOM changes
+        const sources = srcSpans.map((s) => {
+          const r = s.getBoundingClientRect();
+          return {
+            char: s.textContent,
+            x: r.left - layerRect.left,
+            y: r.top - layerRect.top,
+            w: r.width,
+            h: r.height,
+          };
+        });
+
+        // 2. Measure target positions via temp element inside layer (zero layout impact)
+        const tempEl = document.createElement("span");
+        tempEl.style.cssText = `position:absolute;left:${anagramRect.left - layerRect.left}px;top:${anagramRect.top - layerRect.top}px;width:${anagramRect.width}px;font-family:var(--serif);font-size:${fontSize};font-weight:300;line-height:1.15;visibility:hidden;pointer-events:none;z-index:-1;`;
+        text.split("").forEach((ch) => {
+          const s = document.createElement("span");
+          s.className = "anagram-char";
+          s.textContent = ch;
+          tempEl.appendChild(s);
+        });
+        layer.appendChild(tempEl);
+        layer.getBoundingClientRect(); // force reflow
+
+        const targets = [...tempEl.querySelectorAll(".anagram-char")].map(
+          (s) => {
+            const r = s.getBoundingClientRect();
+            return {
+              char: s.textContent,
+              x: r.left - layerRect.left,
+              y: r.top - layerRect.top,
+              w: r.width,
+            };
+          },
+        );
+        tempEl.remove();
+
+        // 3. Nearest-neighbor match by char
+        const usedIdx = new Set();
+        const matched = sources.map((src) => {
+          const candidates = targets.reduce((acc, t, i) => {
+            if (!usedIdx.has(i) && t.char === src.char) acc.push({ t, i });
+            return acc;
+          }, []);
+          if (!candidates.length) {
+            const fb = targets.findIndex((_, i) => !usedIdx.has(i));
+            if (fb >= 0) {
+              usedIdx.add(fb);
+              return { src, tgt: targets[fb] };
+            }
+            return { src, tgt: { x: src.x, y: src.y } };
+          }
+          let best = candidates[0],
+            bestD = Infinity;
+          candidates.forEach(({ t, i }) => {
+            const d = Math.hypot(t.x - src.x, t.y - src.y);
+            if (d < bestD) {
+              bestD = d;
+              best = { t, i };
+            }
+          });
+          usedIdx.add(best.i);
+          return { src, tgt: best.t };
+        });
+
+        // 4. Spawn flying spans inside the link layer
+        const flySpans = matched.map(({ src }) => {
+          const span = document.createElement("span");
+          span.className = "anagram-char";
+          span.textContent = src.char;
+          span.style.cssText = `position:absolute;left:${src.x}px;top:${src.y}px;width:${src.w}px;font-family:var(--serif);font-size:${fontSize};font-weight:300;line-height:1.15;color:var(--g3);pointer-events:none;z-index:10;`;
+          layer.appendChild(span);
+          return span;
+        });
+
+        // 5. Hide scrambled, transition fly spans to target
+        anagramEl.style.opacity = "0";
+        await sleep(30);
+        const dur = 900,
+          ease = "cubic-bezier(0.76,0,0.24,1)";
+        flySpans.forEach((span, i) => {
+          const { tgt } = matched[i];
+          span.style.transition = `left ${dur}ms ${ease}`;
+          span.style.left = `${tgt.x}px`;
+          // Y stays fixed — chars rearrange on same line, no vertical movement needed
+        });
+
+        await sleep(dur + 30);
+
+        // 6. Replace with proper text, restore visibility, remove fly spans
+        anagramEl.innerHTML = "";
+        text.split("").forEach((ch) => {
+          const s = document.createElement("span");
+          s.className = "anagram-char";
+          s.textContent = ch;
+          anagramEl.appendChild(s);
+        });
+        anagramEl.style.opacity = "";
+        flySpans.forEach((s) => s.remove());
+        anagramEl.style.display = "";
+        anagramEl.style.minWidth = "";
+      }
+
+      function snapMediaToHome() {
+        const boxes = [...finalLinkLayer.querySelectorAll(".final-link-box")];
+        if (!boxes.length) return;
+        const lr = finalLinkLayer.getBoundingClientRect();
+        const pad = parseFloat(getComputedStyle(ctWrapper).paddingLeft) || 24;
+        const EDGE_X = MEDIA_ALIGN_EDGE_X,
+          EDGE_Y = MEDIA_ALIGN_START_Y;
+        const mobileMode = isMobileViewport();
+        const rightEdgeX = Math.round(lr.width - pad - EDGE_X);
+        const leftEdgeX = Math.max(0, Math.round(pad));
+        const linkH = 60;
+        const gap = mobileMode ? 8 : MEDIA_ALIGN_GAP;
+        const ctTextEl = document.getElementById("ct-text");
+        const ctTextRect = ctTextEl ? ctTextEl.getBoundingClientRect() : null;
+        const mobileStartY = ctTextRect
+          ? Math.max(EDGE_Y, Math.round(ctTextRect.bottom - lr.top + 12))
+          : EDGE_Y;
+        // Clear inline widths so CSS fit-content can take effect, then measure
+        boxes.forEach((box) => {
+          box.style.width = "";
+        });
+        finalLinkLayer.getBoundingClientRect(); // force reflow
+        let yCursor = mobileMode ? mobileStartY : EDGE_Y;
+        boxes.forEach((box, i) => {
+          const bw = box.offsetWidth || 160;
+          const bh = box.offsetHeight || linkH;
+          const maxX = Math.max(0, lr.width - bw - EDGE_X);
+          const lx = mobileMode ? clamp(leftEdgeX, 0, maxX) : rightEdgeX - bw;
+          const ly = mobileMode ? yCursor : EDGE_Y + i * (linkH + gap);
+          box.classList.add("nudging");
+          box.style.left = `${lx}px`;
+          box.style.top = `${ly}px`;
+          finalLinkPosCache.set(box.dataset.cacheKey, {
+            x: lx,
+            y: ly,
+            w: bw,
+            h: bh,
+          });
+          if (mobileMode) yCursor += bh + gap;
+          setTimeout(
+            () => box.classList.remove("nudging"),
+            FINAL_LINK_NUDGE_MS,
+          );
+        });
+      }
+
+      // Scramble "research.  design. build. " — 3 dots, 4 spaces
+      // Render as individual char spans for fly animation
+      (function () {
+        const src = "research.design.build.";
+        const arr = src.split("");
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        arr.forEach((ch) => {
+          const s = document.createElement("span");
+          s.className = "anagram-char";
+          s.textContent = ch;
+          anagramGray.appendChild(s);
+        });
+        "structure.".split("").forEach((ch) => {
+          const s = document.createElement("span");
+          s.className = "anagram-char";
+          s.textContent = ch;
+          anagramStructure.appendChild(s);
+        });
+      })();
+
+      let blinkCooldown = false;
+      function triggerBlink() {
+        if (state !== "intro" || busy || introReady || blinkCooldown) return;
+        blinkCooldown = true;
+        anagramStructure.classList.add("blink");
+        anagramStructure.addEventListener(
+          "animationend",
+          () => {
+            anagramStructure.classList.remove("blink");
+            blinkCooldown = false;
+          },
+          { once: true },
+        );
+      }
+      let ctBlinkCooldown = false;
+      function triggerCtBlink(triggerEl) {
+        if (ctBlinkCooldown || triggerEl.classList.contains("done")) return;
+        ctBlinkCooldown = true;
+        triggerEl.classList.add("blink");
+        triggerEl.addEventListener(
+          "animationend",
+          () => {
+            triggerEl.classList.remove("blink");
+            ctBlinkCooldown = false;
+          },
+          { once: true },
+        );
+      }
+      finalPage.addEventListener("click", (e) => {
+        if (state !== "shell" || curTab !== 3) return;
+        if (e.target.closest(".tab")) return;
+        if (!ctRow1Resolved) {
+          if (e.target.closest("#ct-trigger-1")) return;
+          triggerCtBlink(ctTrigger1);
+        } else if (!ctRow2Resolved) {
+          if (
+            e.target.closest(
+              "#ct-trigger-1, #ct-trigger-2, .final-link-box, .hover-link-card, .hover-media-resize",
+            )
+          )
+            return;
+          triggerCtBlink(ctTrigger2);
+        }
+      });
+      finalPage.addEventListener(
+        "wheel",
+        (e) => {
+          if (state !== "shell" || curTab !== 3) return;
+          if (!ctRow1Resolved) {
+            triggerCtBlink(ctTrigger1);
+          } else if (!ctRow2Resolved) {
+            triggerCtBlink(ctTrigger2);
+          }
+        },
+        { passive: true },
+      );
+
       function updateShellHint(tabIdx = curTab) {
         if (!shellHint) return;
         const show =
@@ -2239,7 +2769,6 @@
           !finalActive;
         shellHint.classList.toggle("vis", show);
       }
-      applyIntroProgress();
       updateShellHint();
       function nudgeFinalLinks(lineEl) {
         if (!finalLinkLayer.children.length) return;
@@ -2247,14 +2776,15 @@
         const lineR = lineEl.getBoundingClientRect();
         const ly1 = lineR.top - lr.top,
           ly2 = lineR.bottom - lr.top;
-        const seqR = finalPage
-          .querySelector(".final-seq")
-          .getBoundingClientRect();
+        const seqR = (
+          finalPage.querySelector("#ct-text") || finalPage
+        ).getBoundingClientRect();
         const lcx = seqR.left + seqR.width / 2 - lr.left;
         const lcy = seqR.top + seqR.height / 2 - lr.top;
         const MARGIN = 40,
           PUSH = 160,
-          EDGE = 8;
+          EDGE_X = 18,
+          EDGE_Y = 0;
         [
           ...finalLinkLayer.querySelectorAll(".final-link-box:not(.dragging)"),
         ].forEach((box) => {
@@ -2268,11 +2798,15 @@
           const dx = bcx - lcx,
             dy = bcy - lcy;
           const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-          const nx = clamp(bx + (dx / dist) * PUSH, EDGE, lr.width - bw - EDGE);
+          const nx = clamp(
+            bx + (dx / dist) * PUSH,
+            EDGE_X,
+            lr.width - bw - EDGE_X,
+          );
           const ny = clamp(
             by + (dy / dist) * PUSH,
-            EDGE,
-            lr.height - bh - EDGE,
+            EDGE_Y,
+            lr.height - bh - EDGE_Y,
           );
           box.classList.add("nudging");
           box.style.left = `${nx}px`;
@@ -2283,7 +2817,10 @@
             w: bw,
             h: bh,
           });
-          setTimeout(() => box.classList.remove("nudging"), 600);
+          setTimeout(
+            () => box.classList.remove("nudging"),
+            FINAL_LINK_NUDGE_MS,
+          );
         });
       }
       function applyFinalProgress() {
@@ -2333,7 +2870,8 @@
       }
 
       function getLineYs(pageEl) {
-        const topY = getTopY(), botY = getBotY();
+        const topY = getTopY(),
+          botY = getBotY();
         const frameTopRect = document
           .getElementById("frame-top")
           .getBoundingClientRect();
@@ -2438,7 +2976,7 @@
         clines.forEach((el) => el.remove());
       }
 
-      /* ── INTRO SHELL ────────────────────────────────── */
+      /* ── INTRO → SHELL ────────────────────────────────── */
       async function goToShell() {
         if (!introReady || busy || state !== "intro") return;
         busy = true;
@@ -2447,21 +2985,27 @@
         resetShellToOverview(true);
         const shell = document.getElementById("shell"),
           introEl = document.getElementById("intro");
-        shell.style.opacity = "0";
+
+        // Shell starts just below viewport, no opacity tricks
+        shell.style.transform = "translateY(100vh)";
+        shell.style.transition = "";
         shell.classList.add("vis");
-        shell.classList.add("hide-borders");
         await sleep(30);
-        const targetLines = getLineYs(document.getElementById("page-ov"));
-        const clines = spawnClines(targetLines, getTopY());
-        introEl.style.transition = "opacity .3s ease";
-        introEl.style.opacity = "0";
-        await sleep(80);
+
+        // Intro slides up off screen, shell slides up from below
+        const dur = 680;
+        const ease = "cubic-bezier(0.76, 0, 0.24, 1)";
+        introEl.style.transition = `transform ${dur}ms ${ease}`;
+        introEl.style.transform = "translateY(-100vh)";
+        shell.style.transition = `transform ${dur}ms ${ease}`;
+        shell.style.transform = "translateY(0)";
+
+        await sleep(dur + 30);
+
         introEl.style.display = "none";
-        shell.style.transition = "opacity .75s ease";
-        shell.style.opacity = "1";
-        await flyDown(clines, targetLines, 20);
-        removeClines(clines);
-        shell.classList.remove("hide-borders");
+        introEl.style.transform = "";
+        introEl.style.transition = "";
+        shell.style.transform = "";
         shell.style.transition = "";
         keepShellHintVisible = false;
         busy = false;
@@ -2483,30 +3027,36 @@
         busy = true;
         const shell = document.getElementById("shell"),
           introEl = document.getElementById("intro");
-        const sourceLines = getLineYs(page);
-        const clines = spawnClines(sourceLines, getTopY());
-        clines.forEach((el, i) => {
-          el.style.top = sourceLines[i].y + "px";
-        });
-        shell.classList.add("hide-borders");
-        await sleep(20);
-        const flyUpPromise = flyUp(clines, getTopY(), 38);
-        await sleep(100);
-        shell.style.transition = "opacity .28s ease";
-        shell.style.opacity = "0";
+
+        // Shell slides down off screen, intro slides down from above
+        introEl
+          .querySelectorAll(":scope > div[style*='position:absolute']")
+          .forEach((el) => el.remove());
+        introAnagram.style.opacity = "";
+        introAnagram.style.display = "none";
+        introWords.style.display = "block";
+        words.forEach((w) => w.classList.add("vis"));
+
+        introEl.style.transform = "translateY(-100vh)";
+        introEl.style.transition = "";
         introEl.style.display = "";
-        introEl.style.opacity = "0";
-        introEl.style.transition = "opacity .3s ease";
-        await sleep(20);
-        introEl.style.opacity = "1";
-        await flyUpPromise;
+        await sleep(30);
+
+        const dur = 680;
+        const ease = "cubic-bezier(0.76, 0, 0.24, 1)";
+        shell.style.transition = `transform ${dur}ms ${ease}`;
+        shell.style.transform = "translateY(100vh)";
+        introEl.style.transition = `transform ${dur}ms ${ease}`;
+        introEl.style.transform = "translateY(0)";
+
+        await sleep(dur + 30);
+
         shell.classList.remove("vis");
-        shell.classList.remove("hide-borders");
-        shell.style.opacity = "";
+        shell.style.transform = "";
         shell.style.transition = "";
-        removeClines(clines);
-        introProgress = INTRO_STEPS;
-        applyIntroProgress();
+        introEl.style.transform = "";
+        introEl.style.transition = "";
+        introReady = true;
         busy = false;
         state = "intro";
         updateShellHint();
@@ -2549,9 +3099,7 @@
         finalEnterAccum = 0;
         finalProgress = 0;
         applyFinalProgress();
-        finalPage.classList.add("active");
         renderFinalLinks();
-        document.getElementById("shell").classList.add("final-active");
         updateShellHint();
         pages[curTab].style.overflowY = "hidden";
         finalPage.style.opacity = "0";
@@ -2568,16 +3116,9 @@
       }
 
       function exitFinalPageNow() {
-        // Instant exit — no animation (used when another transition takes over)
-        if (!finalActive) return;
         finalActive = false;
         finalTransitioning = false;
         finalEnterAccum = 0;
-        finalPage.classList.remove("active");
-        finalPage.style.opacity = "";
-        finalPage.style.transition = "";
-        document.getElementById("shell").classList.remove("final-active");
-        document.querySelectorAll(".tab-page")[curTab].style.overflowY = "auto";
         updateShellHint();
       }
 
@@ -2694,7 +3235,7 @@
         toPage.classList.add("hide-borders");
         await sleep(16);
         const liftPromise = flyUp(fromClines, getTopY(), 32);
-        slider.style.transform = `translateX(-${idx * 33.333333}%)`;
+        slider.style.transform = `translateX(-${idx * 25}%)`;
         document
           .querySelectorAll(".tab")
           .forEach((t, i) => t.classList.toggle("on", i === idx));
@@ -2716,6 +3257,10 @@
           .forEach((row) => row.classList.remove("open"));
         curTab = idx;
         if (idx === 0) replayOverviewLead();
+        if (idx === 3) {
+          finalLines.forEach((l) => l.classList.add("vis"));
+          if (ctRow1Resolved && !finalLinksBuilt) renderFinalLinks();
+        }
         tabBusy = false;
         updateShellHint();
       }
@@ -2726,25 +3271,152 @@
         "wheel",
         (e) => {
           if (state !== "intro" || busy) return;
-          introProgress = Math.max(
-            0,
-            Math.min(INTRO_STEPS, introProgress + e.deltaY / INTRO_SCROLL_UNIT),
-          );
-          applyIntroProgress();
-          if (e.deltaY > 0 && introReady) {
-            if (introJustReady) {
-              introJustReady = false;
-              return;
-            }
-            goToShell();
-            return;
-          }
-          if (e.deltaY < 0) {
-            introJustReady = false;
+          if (!introReady) {
+            if (e.deltaY > 0) triggerBlink();
+          } else {
+            if (e.deltaY > 0) goToShell();
           }
         },
         { passive: true },
       );
+      introEl.addEventListener("mousemove", triggerBlink);
+      anagramStructure.addEventListener("click", async () => {
+        if (state !== "intro" || busy) return;
+
+        // 1. Measure source char positions
+        const graySpans = [...anagramGray.querySelectorAll(".anagram-char")];
+        const structSpans = [
+          ...anagramStructure.querySelectorAll(".anagram-char"),
+        ];
+        const allSrcSpans = [...graySpans, ...structSpans];
+        const grayCount = graySpans.length;
+        const fontSize = parseFloat(getComputedStyle(allSrcSpans[0]).fontSize);
+        const sources = allSrcSpans.map((s, i) => {
+          const r = s.getBoundingClientRect();
+          return {
+            char: s.textContent,
+            x: r.left,
+            y: r.top,
+            w: r.width,
+            h: r.height,
+            isBlack: i >= grayCount,
+          };
+        });
+
+        // 2. Measure target positions (chars in final right-aligned layout)
+        // Use display:none on anagram so layout matches the final state exactly
+        introAnagram.style.display = "none";
+        introWords.style.cssText = "display:block;visibility:hidden;";
+        const wordTexts = ["research.", "design.", "build.", "structure."];
+        words.forEach((w, wi) => {
+          w.style.cssText = "transition:none;opacity:1;transform:none;";
+          w.innerHTML = "";
+          wordTexts[wi].split("").forEach((ch) => {
+            const s = document.createElement("span");
+            s.className = "anagram-char";
+            s.textContent = ch;
+            w.appendChild(s);
+          });
+        });
+        introWords.getBoundingClientRect(); // force reflow
+
+        const targets = [];
+        words.forEach((w, wi) => {
+          w.querySelectorAll(".anagram-char").forEach((s) => {
+            const r = s.getBoundingClientRect();
+            targets.push({
+              char: s.textContent,
+              x: r.left,
+              y: r.top,
+              isBlack: wi === 3,
+              used: false,
+            });
+          });
+          w.innerHTML = wordTexts[wi];
+          w.style.cssText = "";
+        });
+        introAnagram.style.display = "";
+        introWords.style.cssText = "";
+
+        // 3. Nearest-neighbour match source → target (by char type)
+        const tgtByChar = {};
+        targets.forEach((t) => {
+          (tgtByChar[t.char] = tgtByChar[t.char] || []).push(t);
+        });
+        const matches = sources.map((src) => {
+          const pool = (tgtByChar[src.char] || []).filter(
+            (t) => !t.used && t.isBlack === src.isBlack,
+          );
+          if (!pool.length) return null;
+          let best = pool[0];
+          let bestD = (src.x - best.x) ** 2 + (src.y - best.y) ** 2;
+          for (let i = 1; i < pool.length; i++) {
+            const d = (src.x - pool[i].x) ** 2 + (src.y - pool[i].y) ** 2;
+            if (d < bestD) {
+              bestD = d;
+              best = pool[i];
+            }
+          }
+          best.used = true;
+          return best;
+        });
+
+        // 4. Spawn flying spans inside introEl (position:absolute = same coords
+        //    since introEl is position:fixed inset:0). Layer fades with intro in
+        //    goToShell() — no swap needed, no flicker.
+        const layer = document.createElement("div");
+        layer.style.cssText =
+          "position:absolute;inset:0;pointer-events:none;z-index:1;";
+        introEl.appendChild(layer);
+        const flySpans = sources.map((src) => {
+          const span = document.createElement("span");
+          span.textContent = src.char;
+          span.style.cssText = [
+            "position:absolute",
+            `left:${src.x}px`,
+            `top:${src.y}px`,
+            `width:${src.w}px`,
+            "font-family:var(--serif)",
+            `font-size:${fontSize}px`,
+            "font-weight:300",
+            `color:${src.isBlack ? "var(--black)" : "var(--g3)"}`,
+            "white-space:pre",
+            "line-height:1.15",
+            "pointer-events:none",
+          ].join(";");
+          layer.appendChild(span);
+          return span;
+        });
+
+        // Hide originals (flying spans now cover them)
+        introAnagram.style.opacity = "0";
+        await sleep(30);
+
+        // 5. Animate to target positions
+        const dur = 900;
+        flySpans.forEach((span, si) => {
+          const tgt = matches[si];
+          if (tgt) {
+            span.style.transition = [
+              `left ${dur}ms cubic-bezier(0.4,0,0.2,1)`,
+              `top ${dur}ms cubic-bezier(0.4,0,0.2,1)`,
+            ].join(",");
+            span.style.left = tgt.x + "px";
+            span.style.top = tgt.y + "px";
+          } else {
+            span.style.transition = `opacity ${dur * 0.5}ms ease`;
+            span.style.opacity = "0";
+          }
+        });
+
+        await sleep(dur + 60);
+
+        // 6. Flying spans are now at their final positions inside introEl.
+        //    goToShell() will fade introEl out — no swap, no flicker.
+        introReady = true;
+        await sleep(600);
+        goToShell();
+      });
       let introTouchY = 0;
       introEl.addEventListener(
         "touchstart",
@@ -2761,113 +3433,46 @@
           const y = e.touches[0].clientY;
           const delta = introTouchY - y;
           introTouchY = y;
-          introProgress = Math.max(
-            0,
-            Math.min(INTRO_STEPS, introProgress + delta / (isCoarsePointer ? 350 : 420)),
-          );
-          applyIntroProgress();
-          if (delta > 14 && introReady) goToShell();
+          if (!introReady) {
+            if (delta > 5) triggerBlink();
+          } else {
+            if (delta > 14) goToShell();
+          }
         },
         { passive: true },
       );
-
-      document.querySelectorAll(".tab-page").forEach((page) => {
-        let pageTouchY = 0;
-        page.addEventListener(
-          "wheel",
-          (e) => {
-            if (finalActive || finalTransitioning) return;
-            const pages = document.querySelectorAll(".tab-page"),
-              isCurrent = page === pages[curTab];
-            const atBottom =
-              page.scrollTop + page.clientHeight >= page.scrollHeight - 4;
-            if (isCurrent && e.deltaY > 0 && atBottom) {
-              finalEnterAccum += e.deltaY;
-              if (finalEnterAccum >= 220) {
-                enterFinalPage();
-                return;
-              }
-            } else if (isCurrent) finalEnterAccum = 0;
-            if (e.deltaY < -30 && page.scrollTop === 0) goToIntro();
-          },
-          { passive: true },
-        );
-        page.addEventListener(
-          "touchstart",
-          (e) => {
-            pageTouchY = e.touches[0].clientY;
-          },
-          { passive: true },
-        );
-        page.addEventListener(
-          "touchend",
-          (e) => {
-            if (finalActive || finalTransitioning) return;
-            const pages = document.querySelectorAll(".tab-page");
-            if (page !== pages[curTab]) return;
-            const endY = e.changedTouches[0].clientY;
-            const dy = endY - pageTouchY;
-            const atBottom =
-              page.scrollTop + page.clientHeight >= page.scrollHeight - 4;
-            if (dy < -50 && atBottom) {
-              finalEnterAccum += Math.abs(dy);
-              if (finalEnterAccum >= 140) enterFinalPage();
-            } else if (dy > 50 && page.scrollTop === 0) {
-              goToIntro();
-            } else {
-              finalEnterAccum = 0;
-            }
-          },
-          { passive: true },
-        );
-      });
 
       document
         .querySelectorAll(".tab")
         .forEach((tab, i) => tab.addEventListener("click", () => switchTab(i)));
-      finalPage.addEventListener(
-        "wheel",
-        (e) => {
-          if (!finalActive || finalTransitioning) return;
-          e.preventDefault();
-          const prev = finalProgress;
-          finalProgress = Math.max(
-            0,
-            Math.min(FINAL_STEPS, finalProgress + e.deltaY / FINAL_SCROLL_UNIT),
-          );
-          applyFinalProgress();
-          if (e.deltaY < -12 && prev <= 0.05 && finalProgress <= 0.05)
-            exitFinalPage();
-        },
-        { passive: false },
-      );
-      let finalTouchY = 0;
-      finalPage.addEventListener(
-        "touchstart",
-        (e) => {
-          if (!finalActive || finalTransitioning) return;
-          finalTouchY = e.touches[0].clientY;
-        },
-        { passive: true },
-      );
-      finalPage.addEventListener(
-        "touchmove",
-        (e) => {
-          if (!finalActive || finalTransitioning) return;
-          const y = e.touches[0].clientY;
-          const dy = finalTouchY - y;
-          finalTouchY = y;
-          const prev = finalProgress;
-          finalProgress = Math.max(
-            0,
-            Math.min(FINAL_STEPS, finalProgress + dy / (isCoarsePointer ? 350 : 420)),
-          );
-          applyFinalProgress();
-          if (dy < -12 && prev <= 0.05 && finalProgress <= 0.05)
-            exitFinalPage();
-        },
-        { passive: true },
-      );
+
+      // Contact tab triggers
+      ctTrigger1.addEventListener("click", async () => {
+        if (ctRow1Resolved) return;
+        ctRow1Resolved = true;
+        ctTrigger1.classList.add("done");
+        await resolveCtAnagram(ctAnagram1, "interaction as");
+        renderFinalLinks();
+      });
+
+      ctTrigger2.addEventListener("click", async () => {
+        if (!ctRow1Resolved) {
+          triggerCtBlink(ctTrigger1);
+          return;
+        }
+        if (!ctRow2Resolved) {
+          ctRow2Resolved = true;
+          ctTrigger2.classList.add("done");
+          await resolveCtAnagram(ctAnagram2, "system as");
+        }
+        if (!finalLinksBuilt) {
+          renderFinalLinks();
+          await sleep(800);
+        }
+        snapMediaToHome();
+        autoArrangeHoverMedia(true);
+      });
+
       document.addEventListener("keydown", (e) => {
         if (state !== "shell") return;
         if (e.key === "ArrowRight" && curTab < 2) switchTab(curTab + 1);
