@@ -972,6 +972,23 @@
           font-size: 12px;
           opacity: 1;
         }
+        .lrt:hover {
+          background: none;
+        }
+        .lrt:hover .rname {
+          color: var(--g3);
+          font-weight: 300;
+        }
+        .lrow:not(.open) .lrt:hover .rname-story {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+        .lrow:not(.open) .lrt:hover .rname-project {
+          opacity: 0;
+          transform: rotateX(-90deg);
+          transition: none;
+        }
         .lrow.open .lrow-panel {
           max-height: 1800px;
         }
@@ -993,6 +1010,7 @@
           gap: 16px;
         }
         .panel-media-grid {
+          display: none;
           gap: 18px;
         }
         .panel-close {
