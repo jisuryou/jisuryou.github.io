@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JISU RYOU</title>
     <style>
-      @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500&display=swap");
       @import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,500,700,900&display=swap");
-      @import url("https://fonts.googleapis.com/css?family=Nanum+Myeongjo:400,700&display=swap");
       *,
       *::before,
       *::after {
@@ -21,9 +19,7 @@
         --g1: #2a2a2a;
         --g2: #666;
         --g3: #999;
-        --g4: #0a0a0a;
-        --g5: #0a0a0a;
-        --bg: #fff;
+        --g4: var(--black);
         --white: #fff;
         --tab-h: 50px;
         --bot-h: 50px;
@@ -31,11 +27,9 @@
         --pad: clamp(22px, 4.5vw, 56px);
         --ov-head-target: 132px;
         --serif:
-          "Noto Sans KR", "Montserrat", "Apple SD Gothic Neo", "Malgun Gothic",
-          sans-serif;
+          "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
         --mono:
-          "Noto Sans KR", "Montserrat", "Apple SD Gothic Neo", "Malgun Gothic",
-          sans-serif;
+          "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
       }
       html,
       body {
@@ -129,6 +123,39 @@
         color: var(--black);
         cursor: pointer;
         line-height: 1.15;
+      }
+      .sweep-hover {
+        display: inline;
+        background-image: linear-gradient(var(--black), var(--black));
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: 0% 100%;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+        transition:
+          background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1),
+          color 2.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .sweep-hover:hover,
+      .sweep-hover:focus-visible {
+        color: var(--white);
+        background-size: 100% 100%;
+      }
+      #anagram-structure.sweep-hover:hover,
+      #anagram-structure.sweep-hover:focus-visible,
+      .ct-trigger.sweep-hover:hover,
+      .ct-trigger.sweep-hover:focus-visible {
+        color: var(--white);
+      }
+      .sweep-hover.blink:hover,
+      .sweep-hover.blink:focus-visible {
+        animation: none;
+      }
+      #anagram-structure.blink.sweep-hover:hover,
+      #anagram-structure.blink.sweep-hover:focus-visible,
+      .ct-trigger.blink.sweep-hover:hover,
+      .ct-trigger.blink.sweep-hover:focus-visible {
+        animation: none !important;
       }
       @keyframes anagram-blink {
         0%,
@@ -234,7 +261,7 @@
       }
       .tab.on {
         color: var(--black);
-        background: var(--bg);
+        background: var(--white);
       }
       .tab + .tab::before {
         display: none;
@@ -306,20 +333,22 @@
         align-items: flex-start;
         padding: clamp(4px, 0.8vw, 10px) 0;
         margin-bottom: 24px;
-        perspective: 800px;
       }
       .ov-mark {
-        display: inline-block;
-        padding: 0;
-        margin: 0;
-        font-weight: 600;
-        color: var(--black);
-        opacity: 0;
-        transform: rotateX(-90deg);
-        transform-origin: top center;
+        display: inline;
+        font-weight: 400;
+        color: var(--white);
+        line-height: inherit;
+        vertical-align: baseline;
+        background-image: linear-gradient(var(--black), var(--black));
+        background-repeat: no-repeat;
+        background-position: 0 60%;
+        background-size: 0% 1em;
       }
       .ov-lead.ov-anim .ov-mark {
-        animation: ovMarkFlip 2.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        animation:
+          ovMarkFill 2.3s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+          ovMarkTextSweep 2.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
       }
       .ov-lead.ov-anim .ov-mark.ov-mark-delay {
         animation-delay: 0.28s;
@@ -327,14 +356,18 @@
       .ov-line {
         display: block;
       }
-      @keyframes ovMarkFlip {
+      @keyframes ovMarkFill {
         0% {
-          opacity: 0;
-          transform: rotateX(-90deg);
+          background-size: 0% 1em;
         }
         100% {
-          opacity: 1;
-          transform: rotateX(0deg);
+          background-size: 100% 1em;
+        }
+      }
+      @keyframes ovMarkTextSweep {
+        0%,
+        100% {
+          color: var(--white);
         }
       }
       .ov-cols {
@@ -386,7 +419,7 @@
         white-space: nowrap;
       }
       .ov-ih:hover .ov-t {
-        font-weight: 600;
+        font-weight: 400;
         color: var(--black);
       }
       .ov-sub {
@@ -433,6 +466,7 @@
       }
       .lrow {
         position: relative;
+        z-index: 1;
       }
       .lrow::after {
         display: none;
@@ -442,21 +476,44 @@
         grid-template-columns:
           clamp(16px, 2vw, 28px)
           1fr max-content max-content;
-        align-items: baseline;
+        align-items: start;
         gap: 0 clamp(10px, 1.5vw, 20px);
         padding: clamp(4px, 0.8vw, 10px) var(--pad);
         cursor: pointer;
+        background-image: linear-gradient(var(--black), var(--black));
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: 0% 100%;
+        transition: background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1);
       }
-      .lrt:hover {
-        background: none;
+      .lrow:not(.open) .lrt:hover {
+        background-size: 100% 100%;
       }
-      .lrt:hover .rname {
-        color: var(--black);
-        font-weight: 600;
+      .tab-page.sweep-paused .lrow:not(.open) .lrt:hover {
+        background-size: 0% 100%;
       }
-      .lrt:hover .rcl,
-      .lrt:hover .ryr {
+      .lrow:not(.open) .lrt:hover .rname,
+      .lrow:not(.open) .lrt:hover .rn,
+      .lrow:not(.open) .lrt:hover .rcl,
+      .lrow:not(.open) .lrt:hover .ryr {
+        color: var(--white);
         opacity: 1;
+      }
+      .tab-page.sweep-paused .lrow:not(.open) .lrt:hover .rname,
+      .tab-page.sweep-paused .lrow:not(.open) .lrt:hover .rn,
+      .tab-page.sweep-paused .lrow:not(.open) .lrt:hover .rcl,
+      .tab-page.sweep-paused .lrow:not(.open) .lrt:hover .ryr {
+        color: var(--g3);
+      }
+      .tab-page.sweep-paused .lrow:not(.open) .lrt:hover .rname {
+        color: var(--g3);
+      }
+      .tab-page.sweep-paused .lrow:not(.open) .lrt:hover .rn {
+        opacity: 0.5;
+      }
+      .tab-page.sweep-paused .lrow:not(.open) .lrt:hover .rcl,
+      .tab-page.sweep-paused .lrow:not(.open) .lrt:hover .ryr {
+        opacity: 0;
       }
       .lrow.open .lrt {
         background: var(--black);
@@ -470,13 +527,13 @@
         opacity: 1;
       }
       .lrow.open .rname {
-        font-weight: 600;
+        font-weight: 400;
       }
       .rn {
         font-size: 12px;
         color: var(--g3);
         opacity: 0.5;
-        align-self: center;
+        align-self: start;
       }
       .rname {
         font-family: var(--serif);
@@ -484,46 +541,77 @@
         font-weight: 300;
         color: var(--g3);
         line-height: 1.15;
+        position: relative;
         transition:
           color 0.15s,
           font-weight 0.15s;
         display: inline-grid;
-        perspective: 800px;
       }
       .rname-story,
       .rname-project {
         grid-area: 1 / 1;
-        transform-origin: center top;
-        backface-visibility: hidden;
+        transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        will-change: opacity;
+      }
+      .rname-story {
+        visibility: visible;
+        display: inline;
+        color: var(--g3);
         transition:
-          transform 2.3s cubic-bezier(0.22, 1, 0.36, 1),
-          opacity 2.3s cubic-bezier(0.22, 1, 0.36, 1);
+          opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+          color 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .rname-project {
         opacity: 0;
-        transform: rotateX(-90deg);
+        visibility: hidden;
+        display: inline-block;
+        position: absolute;
+        inset: 0;
+        color: transparent;
+        background-image: linear-gradient(var(--white), var(--white));
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: 0% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+        transition:
+          opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+          background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1),
+          visibility 0s linear 0.35s;
       }
       .lrow:not(.open) .lrt:hover .rname-story {
-        opacity: 0;
-        transform: rotateX(90deg);
-        transition: none;
+        opacity: 1;
+        visibility: visible;
+        color: var(--white);
       }
       .lrow:not(.open) .lrt:hover .rname-project {
-        opacity: 1;
-        transform: rotateX(0deg);
+        opacity: 0;
+        visibility: hidden;
+        background-size: 0% 100%;
       }
       .lrow:not(.open) .lrt:not(:hover) .rname-project {
-        transition: none;
+        background-size: 0% 100%;
+      }
+      .lrow:not(.open) .lrt:not(:hover) .rname-story {
+        visibility: visible;
+        color: var(--g3);
       }
       .lrow.open .rname-story {
         opacity: 0;
-        transform: rotateX(90deg);
-        transition: none;
+        visibility: hidden;
       }
       .lrow.open .rname-project {
         opacity: 1;
-        transform: rotateX(0deg);
-        transition: none;
+        visibility: visible;
+        position: static;
+        background-size: 100% 100%;
+        transition:
+          opacity 0.2s ease,
+          background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1),
+          visibility 0s;
       }
       .rcl {
         font-size: 12px;
@@ -531,14 +619,14 @@
         letter-spacing: 0.5px;
         opacity: 0;
         transition: opacity 0.15s;
-        align-self: center;
+        align-self: start;
       }
       .ryr {
         font-size: 12px;
         color: var(--g3);
         opacity: 0;
         transition: opacity 0.15s;
-        align-self: center;
+        align-self: start;
       }
       .lrow-panel {
         overflow: hidden;
@@ -576,14 +664,61 @@
         padding: clamp(18px, 3vw, 28px) var(--pad) 22px var(--pad);
         background: var(--black);
       }
+      .row-media-preview-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+      }
+      .row-media-preview {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        padding: 0 var(--pad);
+        opacity: 0;
+        transform: translateY(8px);
+        filter: blur(2px) contrast(0.9);
+        transition:
+          opacity 0.35s ease,
+          transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .row-media-preview::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.15),
+          rgba(255, 255, 255, 0.45)
+        );
+        pointer-events: none;
+      }
+      .row-media-preview.show {
+        opacity: 0.5;
+        transform: translateY(0);
+      }
+      .row-media-preview .panel-media-caption,
+      .row-media-preview .panel-media-actions {
+        display: none !important;
+      }
+      .row-media-preview .panel-media-frame {
+        background: transparent !important;
+        padding: 0 !important;
+        pointer-events: none;
+      }
+      .row-media-preview .panel-media-frame img,
+      .row-media-preview .panel-media-frame video {
+        pointer-events: none;
+      }
       .panel-media-grid {
         display: flex;
         flex-direction: column;
-        gap: clamp(22px, 4vw, 40px);
+        gap: clamp(6px, 1.1vw, 11px);
       }
       .panel-media-item {
         width: 100%;
         margin-top: calc(0px - var(--media-overlap, 0px));
+        position: relative;
       }
       .panel-media-frame {
         width: calc((var(--media-span, 3) / 4) * 100%);
@@ -592,6 +727,51 @@
         border: none;
         padding: var(--media-pad, 0px);
         box-sizing: border-box;
+      }
+      .panel-media-caption {
+        font-family: var(--mono);
+        font-size: 16px;
+        font-style: italic;
+        line-height: 1.5;
+        letter-spacing: 0.01em;
+        color: var(--g3);
+      }
+      .panel-media-caption.is-below {
+        width: calc((var(--caption-span, var(--media-span, 3)) / 4) * 100%);
+        margin-left: calc(
+          ((var(--caption-start, var(--media-start, 1)) - 1) / 4) * 100%
+        );
+        margin-top: clamp(6px, 1vw, 10px);
+      }
+      .panel-media-caption.is-top {
+        width: calc((var(--caption-span, var(--media-span, 3)) / 4) * 100%);
+        margin-left: calc(
+          ((var(--caption-start, var(--media-start, 1)) - 1) / 4) * 100%
+        );
+        margin-bottom: clamp(6px, 1vw, 10px);
+      }
+      .panel-media-caption.is-left {
+        position: absolute;
+        top: 0;
+        left: calc(
+          ((var(--caption-start, var(--media-start, 1)) - 1) / 4) * 100% - 10px
+        );
+        height: var(--media-h, 220px);
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: keep-all;
+        writing-mode: vertical-rl;
+        text-orientation: sideways;
+        display: flex;
+        align-items: flex-end;
+        transform: translateX(-100%);
+        pointer-events: none;
+      }
+      .panel-media-caption.is-group {
+        opacity: 0.5;
+      }
+      .panel-media-caption.is-group.is-below {
+        margin-top: 0;
       }
       .panel-media-frame img,
       .panel-media-frame video {
@@ -679,6 +859,64 @@
       .sd-title {
         color: rgba(255, 255, 255, 0.9);
       }
+      .sd-mark {
+        background-image: linear-gradient(var(--white), var(--white));
+        background-repeat: no-repeat;
+        background-position: 0 40%;
+        background-size: 0% 1.3em;
+        transition: background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1),
+                    color 2.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .sd-mark.active {
+        background-size: 100% 1.3em;
+        color: var(--black);
+      }
+      .ds-mark {
+        background-image: linear-gradient(var(--white), var(--white));
+        background-repeat: no-repeat;
+        background-position: 0 40%;
+        background-size: 0% 1.3em;
+        transition: background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1),
+                    color 2.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .ds-mark.active {
+        background-size: 100% 1.3em;
+        color: var(--black);
+      }
+      .panel-media-item[data-group] {
+        opacity: 0;
+        transform: translateY(8px);
+        filter: blur(2px) contrast(0.9);
+        pointer-events: none;
+        transition:
+          opacity 0.35s ease,
+          transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .panel-media-item[data-group] .panel-media-frame {
+        cursor: pointer;
+        pointer-events: auto;
+      }
+      .panel-media-item[data-group] .panel-media-caption {
+        display: none;
+      }
+      .panel-media-caption[data-group] {
+        display: none;
+      }
+      .panel-media-item[data-group].group-hovered {
+        opacity: 0.5;
+        transform: translateY(0);
+      }
+      .panel-media-item[data-group].group-locked {
+        opacity: 1;
+        transform: translateY(0);
+        filter: none;
+      }
+      .panel-media-item[data-group].group-locked .panel-media-caption {
+        display: block;
+      }
+      .panel-media-caption[data-group].group-locked {
+        display: block;
+      }
       .pl2 {
         display: block;
         font-size: 20px;
@@ -749,6 +987,7 @@
       .ct-trigger {
         color: var(--black);
         cursor: pointer;
+        margin-left: 0.25em;
       }
       .ct-trigger.done {
         cursor: default;
@@ -838,6 +1077,9 @@
       .hover-link-card.is-disabled {
         text-decoration: line-through;
         cursor: not-allowed;
+      }
+      .hover-link-card.is-note {
+        text-decoration: none;
       }
       .link-label {
         flex: 1;
@@ -981,13 +1223,10 @@
         }
         .lrow:not(.open) .lrt:hover .rname-story {
           opacity: 1;
-          transform: none;
-          transition: none;
         }
         .lrow:not(.open) .lrt:hover .rname-project {
           opacity: 0;
-          transform: rotateX(-90deg);
-          transition: none;
+          background-size: 0% 1em;
         }
         .lrow.open .lrow-panel {
           max-height: 1800px;
@@ -1011,7 +1250,7 @@
         }
         .panel-media-grid {
           display: none;
-          gap: 18px;
+          gap: 6px;
         }
         .panel-close {
           --close-size: calc(clamp(18px, 5.5vw, 28px) + 30px);
@@ -1040,7 +1279,8 @@
     </div>
     <div id="intro">
       <div id="intro-anagram">
-        <span id="anagram-gray"></span><span id="anagram-structure"></span>
+        <span id="anagram-gray"></span
+        ><span id="anagram-structure" class="sweep-hover"></span>
       </div>
       <div id="intro-words">
         <div class="word-row">
@@ -1064,7 +1304,7 @@
         <div id="tab-slider">
           <div class="tab-page" id="page-ov">
             <div id="ov">
-              <p class="ov-lead ov-anim">
+              <p class="ov-lead">
                 <span class="ov-line"
                   ><span class="ov-mark">데이터와 UX</span>를 기반으로,</span
                 >
@@ -1193,12 +1433,14 @@
                     </p>
                     <p class="final-line head" id="ct-row-1">
                       <span id="ct-anagram-1"></span
-                      ><span id="ct-trigger-1" class="ct-trigger"> data</span>
+                      ><span id="ct-trigger-1" class="ct-trigger sweep-hover"
+                        >data</span
+                      >
                     </p>
                     <p class="final-line head" id="ct-row-2">
                       <span id="ct-anagram-2"></span
-                      ><span id="ct-trigger-2" class="ct-trigger">
-                        structure</span
+                      ><span id="ct-trigger-2" class="ct-trigger sweep-hover"
+                        >structure</span
                       >
                     </p>
                   </div>
@@ -1222,7 +1464,7 @@
           sd: [
             "Service Architecture (사용자 여정·데이터 흐름 통합한 앱 구조 설계)",
             "Signal Definition (온보딩 대화 기반 개인 지표 및 실제 대화 기반 관계 지표 정의)",
-            "Matching Logic (지표 기반 케미 점수 산출 모델 설계 및 구현)",
+            { text: "Matching Logic (지표 기반 케미 점수 산출 모델 설계 및 구현)", imgGroup: 0 },
             "Learning Loop (매칭 결과 반영한 지표 업데이트·모델 학습 구조 설계 및 구현)",
           ],
           oc: [
@@ -1231,7 +1473,16 @@
             "Y Combinator 출품 준비 진행 중",
           ],
           imgs: [
-            { src: "/images/about_nine_img1.png", start: 1.5, span: 1.4 },],
+            {
+              src: "/images/about_nine_img1.png",
+              start: 4.07,
+              span: 0.93,
+              caption: {
+                text: "Chemistry score: 90 — not a guess, but a signal drawn from what was actually said.",
+                position: "left",
+              },
+            },
+          ],
           links: [
             { label: "about-nine.com", url: "https://about-nine.onrender.com" },
           ],
@@ -1239,7 +1490,6 @@
         {
           name: "then defined what makes a conversation good,",
           project: "Standardizing Conversational Quality",
-          cl: "About Nine",
           cl: "LG Electronics",
           yr: "2024.05–08 (4개월)",
           co: "PM / 프로젝트 전 과정 리드 (100%)",
@@ -1247,9 +1497,9 @@
           pb: "생성형 AI의 대화 품질은 편차가 존재하지만 이를 일관되게 판단하고 개선할 공통 기준과 운영 체계가 없음",
           sd: [
             "Scope Framing (LLM 기능과 IoT 기능을 구분, 실제로 유의미한 평가 영역 정의)",
-            "Reference Set Build (사용 상황·발화 유형 기반 레퍼런스 세트 생성/증강)",
-            "Quality Framework (평가 차원·우선순위·판정 규칙 정의)",
-            "Auto-Eval Engine (응답 생성–수집–평가–스코어링이 연결된 자동 평가 흐름 설계)",
+            { text: "Reference Set Build (사용 상황·발화 유형 기반 레퍼런스 세트 생성/증강)", imgGroup: 1 },
+            { text: "Quality Framework (평가 차원·우선순위·판정 규칙 정의)", imgGroup: 1 },
+            { text: "Auto-Eval Engine (응답 생성–수집–평가–스코어링이 연결된 자동 평가 흐름 설계)", imgGroup: 0 },
             "Governance Loop (휴먼 판단과 비교·오차 분석을 통해 프롬프트 지속 개선)",
             "Delivery (개발·기획팀이 활용할 수 있는 리포트 및 공유 체계 설계)",
           ],
@@ -1259,9 +1509,29 @@
             "2차 산학 연구 과제로 확장",
           ],
           imgs: [
-            { src: "/images/cxq_img3.png", start: 1, span: 2.3 },
-            { src: "/images/cxq_img1.png", start: 1.28, span: 1.67 },
-            { src: "/images/cxq_img2.png", start: 3, span: 1.5, overlap: 1 },
+            {
+              src: "/images/cxq_img3.png",
+              start: 3.11,
+              span: 1.89,
+              caption: {
+                text: "The system generates real-use utterances, captures responses, and evaluates them — automatically.",
+                position: "left",
+              },
+            },
+            { src: "/images/cxq_img1.png", start: 3.11, span: 0.97 },
+            {
+              src: "/images/cxq_img2.png",
+              start: 4.13,
+              span: 0.87,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "Built to be judged: AI-generated exchanges measured against a standard that kept getting sharper.",
+              position: "below",
+              media: [2, 3],
+            },
           ],
         },
         {
@@ -1274,8 +1544,8 @@
           pb: "금융 앱은 사용자 상태 변화를 실시간으로 해석하지 못하여, 개인화 기능은 계좌 정보 중심의 정적 데이터에 머무르고 있음",
           sd: [
             "State Modeling (데이터 분석 및 인터뷰 기반 개인화에 필요한 핵심 상태 정의)",
-            "Trigger Design (이상 거래, 잔액 변동 등 상태 변화 시점 탐지 규칙 정의)",
-            "Message Strategy (상황×목표×톤으로 알림 메시지 구조 설계)",
+            { text: "Trigger Design (이상 거래, 잔액 변동 등 상태 변화 시점 탐지 규칙 정의)", imgGroup: 0 },
+            { text: "Message Strategy (상황×목표×톤으로 알림 메시지 구조 설계)", imgGroup: 0 },
             "Validation Loop (사용자 인터뷰 및 실무자 검토를 통한 리스크 조정 및 구조 보완)",
           ],
           oc: [
@@ -1284,10 +1554,28 @@
             "한국 HCI 학회 2025 논문 발표 (2저자)",
           ],
           imgs: [
-            { src: "/images/mydata_img1.png", start: 1.3, span: 1.4, bg: "#FFFFFF", pad: 20 },
+            {
+              src: "/images/mydata_img1.png",
+              start: 2.05,
+              span: 1.08,
+              bg: "#FFFFFF",
+              pad: 20,
+            },
           ],
           vids: [
-            { src: "/images/mydata_vid1_web.mp4", start: 2.9, span: 2, overlap: 0.7 }
+            {
+              src: "/images/mydata_vid1_web.mp4",
+              start: 3.18,
+              span: 1.82,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "The data was always there. The question was when to speak — and in what voice.\nWhen it finally did, the data stopped being a record and started becoming a financial trigger.",
+              position: "below",
+              media: [1, 2],
+            },
           ],
         },
         {
@@ -1301,15 +1589,31 @@
           sd: [
             "Usage Insight (공용 가전 사용 시나리오 및 페인포인트 정리)",
             "Data Structure (핵심 데이터 항목 및 데이터간 관계 설계)",
-            "Real-time Connection (사용자·관리자 앱-가전 상태 실시간 연동 구현)",
+            { text: "Real-time Connection (사용자·관리자 앱-가전 상태 실시간 연동 구현)", imgGroup: 0 },
           ],
           oc: [
             "실시간 가전 상태가 연동되는 공유주거 파일럿 앱 개발",
             "공용 가전 운영 관리 구조 작동 검증",
           ],
           imgs: [
-            { src: "/images/shared_appliance_img1.png", start: 1.2, span: 1.4 },
-            { src: "/images/shared_appliance_img2.png", start: 2.9, span: 1.4, overlap: 1 },
+            {
+              src: "/images/shared_appliance_img1.png",
+              start: 3.11,
+              span: 0.93,
+            },
+            {
+              src: "/images/shared_appliance_img2.png",
+              start: 4.07,
+              span: 0.93,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "Six floors, a dozen machines: someone's laundry was always someone else's wait.\nOn the other side of that wait: a fault alert, a floor number, a manager who finally knew.",
+              position: "below",
+              media: [1, 2],
+            },
           ],
         },
         {
@@ -1322,7 +1626,7 @@
           pb: "장애인은 문화행사 참여 이전 단계에서 접근성 정보를 찾기 어려우며, 행사 기획자 역시 어떤 정보를 어떻게 제공해야 하는지 기준이 없음",
           sd: [
             "Accessibility Framework (표준 문화행사 접근성 체크리스트 설계)",
-            "Interface Design (행사 관리자 입력 시스템 및 사용자 접근성 정보 탐색 구조 설계)",
+            { text: "Interface Design (행사 관리자 입력 시스템 및 사용자 접근성 정보 탐색 구조 설계)", imgGroup: 0 },
             "Accessibility Compliance (WCAG 기준에 맞춰 실제 사용 가능한 접근성 환경 구현)",
           ],
           oc: [
@@ -1330,8 +1634,20 @@
             "서울대학교 문화행사 접근성 포털 운영",
           ],
           imgs: [
-            { src: "/images/access_img1.png", start: 1.1, span: 1.3 },
-            { src: "/images/access_img2.jpg", start: 2.5, span: 1.3, overlap: 1 },
+            { src: "/images/access_img1.png", start: 3.11, span: 0.92 },
+            {
+              src: "/images/access_img2.jpg",
+              start: 4.08,
+              span: 0.92,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "A checklist turned into a portal: accessibility information finally had somewhere to live — and everyone could find it.",
+              position: "below",
+              media: [1, 2],
+            },
           ],
           links: [
             {
@@ -1350,20 +1666,41 @@
           ds: "전시 컨셉에 맞는 캐릭터 기반 대화 구조를 기획·설계하고 인터랙티브 보이스 에이전트를 구현했습니다.",
           pb: "대화형 AI 기술은 빠르게 발전하고 있지만, 관람객-기계 상호작용이 단순 기술 시연에 머무르며 서사적 경험으로 연결되지 않는 등 예술 전시 환경에서의 활용 방식은 제한적임",
           sd: [
-            "Exhibition Concept (‘기억’, ‘상식’, ‘인간 의식’을 주제로 세 개의 전시 대화 경험 기획)",
-            "Conversation Design (각 에이전트의 컨셉에 맞는 대화 흐름 설계)",
-            "Agent Implementation (Dialogflow 기반 대화 시스템 구축)",
+            { text: "Exhibition Concept (‘기억’, ‘상식’, ‘인간 의식’을 주제로 세 개의 전시 대화 경험 기획)", imgGroup: 0 },
+            { text: "Conversation Design (각 에이전트의 컨셉에 맞는 대화 흐름 설계)", imgGroup: 0 },
+            { text: "Agent Implementation (Dialogflow 기반 대화 시스템 구축)", imgGroup: 1 },
           ],
           oc: [
             "아트센터 나비 전시 작품 시연",
             "디자인융복합연구 2023 논문 게재 (2저자)",
           ],
           imgs: [
-            { src: "/images/robot_art_img1.png", start: 1.3, span: 1.6 },
-            { src: "/images/robot_art_img2.png", start: 3, span: 1.6, overlap: 1 },
+            { src: "/images/robot_art_img1.png", start: 3.11, span: 0.94 },
+            {
+              src: "/images/robot_art_img2.png",
+              start: 4.06,
+              span: 0.94,
+              overlap: 1,
+            },
           ],
           vids: [
-            { src: "/images/robot_art_vid1.mp4", start: 2.7, span: 1.9 }
+            {
+              src: "/images/robot_art_vid1.mp4",
+              start: 3.11,
+              span: 1.89,
+              caption: {
+                text: "Then the gallery opened: what had been designed as characters became conversations with strangers.",
+                position: "below",
+              },
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "One asked what you remembered. The other spoke with certainty — even when its answers didn’t match yours.",
+              position: "left",
+              media: [1, 2],
+              anchor: 1,
+            },
           ],
         },
         {
@@ -1376,16 +1713,37 @@
           pb: "사용자 환경과 시장 구조는 점차 서비스 중심 모델로 변화하고 있으나, 가전 산업은 단일 제품 판매 중심 모델에 머물러 있음",
           sd: [
             "Market & Trend Mapping (사용자·시장·기술 환경 변화 분석 및 전환 요인 구조화)",
-            "Opportunity Framing (타겟 사용자와 사용 맥락 기반의 가전 서비스 기회 정의)",
-            "Strategy Design (HAaS 기반 서비스 모델과 B2B2C 구독 운영 전략 제안)",
+            { text: "Opportunity Framing (타겟 사용자와 사용 맥락 기반의 가전 서비스 기회 정의)", imgGroup: 0 },
+            { text: "Strategy Design (HAaS 기반 서비스 모델과 B2B2C 구독 운영 전략 제안)", imgGroup: 1 },
           ],
           oc: [
             "공유주거 환경 기반 가전 구독 서비스 제안",
             "2차 산학 연구 과제로 확장",
           ],
           imgs: [
-            { src: "/images/haas_img2.png", start: 1.4, span: 2.1, bg: "#FFFFFF", pad: 30 },
-            { src: "/images/haas_img1.png", start: 3, span: 1.8, bg: "#FFFFFF", pad: 30, overlap: 0 },
+            {
+              src: "/images/haas_img1.png",
+              start: 2.05,
+              span: 1.02,
+              bg: "#FFFFFF",
+              pad: 20,
+              caption: {
+                text: "Ownership mapped against a life stage: not who buys the appliance, but who needs it — and for how long.",
+                position: "left",
+              },
+            },
+            {
+              src: "/images/haas_img2.png",
+              start: 3.11,
+              span: 1.89,
+              bg: "#FFFFFF",
+              pad: 30,
+              overlap: 1,
+              caption: {
+                text: "The deeper question wasn't whether people would subscribe. It was what they were actually paying for.",
+                position: "below",
+              },
+            },
           ],
         },
         {
@@ -1397,8 +1755,8 @@
           ds: "쇼핑 로그 데이터를 행동 시퀀스로 구조화하고 클러스터링과 사용자 인터뷰를 통해 쇼핑 행동 유형을 도출했습니다.",
           pb: "사용자들은 가격 비교·탐색·즉시 구매 등 다양한 쇼핑 행동 패턴을 보이지만, 동일한 인터페이스 구조를 경험하고 있음",
           sd: [
-            "Interaction Structuring (페이지 구조·UI 패턴 기준 페이지를 26개 그룹으로 구조화)",
-            "Behavior Clustering (페이지 로그 데이터 기반 쇼핑 행동 유형 클러스터 도출)",
+            { text: "Interaction Structuring (페이지 구조·UI 패턴 기준 페이지를 26개 그룹으로 구조화)", imgGroup: 0 },
+            { text: "Behavior Clustering (페이지 로그 데이터 기반 쇼핑 행동 유형 클러스터 도출)", imgGroup: 1 },
             "Context Validation (사용자 인터뷰로 행동 패턴 맥락 검증)",
             "UX Strategy (행동 유형 기반 UX 개선 방향 도출)",
           ],
@@ -1408,8 +1766,29 @@
             "한국 HCI 학회 2023 논문 발표 (2저자)",
           ],
           imgs: [
-            { src: "/images/naver_shopping_img1.png", start: 1, span: 1.7, bg: "#F2F2F0", pad: 20 },
-            { src: "/images/naver_shopping_img2.png", start: 2.8, span: 1.9, bg: "#F2F2F0", pad: 30, overlap: 0.9 },
+            {
+              src: "/images/naver_shopping_img1.png",
+              start: 1,
+              span: 1.89,
+              bg: "#F2F2F0",
+              pad: 20,
+              caption: {
+                text: "Before any pattern could emerge, the site needed a skeleton: 26 page groups mapped by structure and UI type.",
+                position: "below",
+              },
+            },
+            {
+              src: "/images/naver_shopping_img2.png",
+              start: 3.11,
+              span: 1.89,
+              bg: "#F2F2F0",
+              pad: 20,
+              overlap: 1,
+              caption: {
+                text: "Five types of shoppers, defined not by who they said they were, but by where they went and how long they stayed.",
+                position: "below",
+              },
+            },
           ],
         },
         {
@@ -1422,8 +1801,8 @@
           pb: "금융 서비스는 대부분 화면 중심 인터페이스로 설계되어 있으며, 보이스 인터랙션 환경에서 사용자의 실제 요구는 충분히 연구되지 않음",
           sd: [
             "Use Case Framing (음성 기반 금융 서비스에서 발생할 수 있는 주요 사용 상황 정의)",
-            "Prototype Interaction (보이스 금융 서비스 프로토타입 제작)",
-            "Utterance Analysis (사용자 발화 데이터 수집 및 금융 보이스 인터랙션 니즈 분석)",
+            { text: "Prototype Interaction (보이스 금융 서비스 프로토타입 제작)", imgGroup: 0 },
+            { text: "Utterance Analysis (사용자 발화 데이터 수집 및 금융 보이스 인터랙션 니즈 분석)", imgGroup: 1 },
           ],
           oc: [
             "477개 사용자 발화 데이터 확보",
@@ -1431,8 +1810,25 @@
             "한국 HCI 학회 2022 논문 발표 (3저자)",
           ],
           imgs: [
-            { src: "/images/banky_img1.png", start: 1.2, span: 1.4 },
-            { src: "/images/banky_img2.png", start: 2.7, span: 2.2, overlap: 0.6 },
+            {
+              src: "/images/banky_img1.png",
+              start: 2.05,
+              span: 1.04,
+              caption: {
+                text: "Banky began with one promise: if banking is everyday language, finance can feel less like work.",
+                position: "left",
+              },
+            },
+            {
+              src: "/images/banky_img2.png",
+              start: 3.11,
+              span: 1.89,
+              overlap: 0.98,
+              caption: {
+                text: "Then we tested it: everyday scenes met real financial requests and revealed the contexts of voice banking.",
+                position: "below",
+              },
+            },
           ],
         },
       ];
@@ -1442,7 +1838,7 @@
           cl: "ACM CHI 2023",
           yr: "2023.04.19",
           co: ["Poster", "First Author"],
-          ds: "기존 음성 에이전트는 단문 중심 상호작용에 최적화되어 있어 긴 발화를 안정적으로 수집하기 어렵다. \n에이전트 응답 유형(공감형·반복형·혼합형)을 설계해 실험한 결과, 반복형 응답이 사용자 발화 길이와 데이터 품질을 가장 효과적으로 향상시켰다.",
+          ds: "기존 음성 에이전트는 단문 중심 상호작용에 최적화되어 있어 {{긴 발화를 안정적으로 수집하기 어렵다|0}}. \n에이전트 응답 유형(공감형·반복형·혼합형)을 설계해 실험한 결과, {{반복형 응답이 사용자 발화 길이와 데이터 품질을 가장 효과적으로 향상시켰다|1}}.",
           links: [
             {
               label: "dl.acm.org",
@@ -1450,8 +1846,28 @@
             },
           ],
           imgs: [
-            { src: "/images/dada_thesis_img1.png", start: 1.8, span: 2.3, bg: "#FFFFFF", pad: 20 },
-            { src: "/images/dada_thesis_img2.png", start: 2.4, span: 2.5, bg: "#FFFFFF", pad: 20 },
+            {
+              src: "/images/dada_thesis_img1.png",
+              start: 2.1,
+              span: 2.9,
+              bg: "#FFFFFF",
+              pad: 20,
+              caption: {
+                text: "The pause was the problem: a 1.5-second silence where the story could slip away.",
+                position: "below",
+              },
+            },
+            {
+              src: "/images/dada_thesis_img2.png",
+              start: 2.1,
+              span: 2.9,
+              bg: "#FFFFFF",
+              pad: 20,
+              caption: {
+                text: "Reading back just two words kept the voice going longer than empathy did.",
+                position: "below",
+              },
+            },
           ],
         },
         {
@@ -1459,7 +1875,7 @@
           cl: "HCI Korea 2025",
           yr: "2025.02.10",
           co: ["Conference Paper", "Second Author"],
-          ds: "마이데이터와 디지털 결제 확산으로 금융 활동이 복잡해지면서 개인이 자신의 재정 상태를 직관적으로 파악하기 어려워졌다. \n인터뷰와 마이데이터 거래 데이터 분석을 통해 사람들의 돈 관리 전략이 구분감 형성, 재분배 관리, 파이낸셜 터치라는 세 가지 멘탈 모델로 나타남을 확인했다.",
+          ds: "마이데이터와 디지털 결제 확산으로 금융 활동이 복잡해지면서 개인이 자신의 재정 상태를 직관적으로 파악하기 어려워졌다. \n인터뷰와 마이데이터 거래 데이터 분석을 통해 사람들의 돈 관리 전략이 {{구분감 형성, 재분배 관리, 파이낸셜 터치라는 세 가지 멘탈 모델|0}}로 나타남을 확인했다.",
           links: [
             {
               label: "dbpia.co.kr",
@@ -1467,8 +1883,22 @@
             },
           ],
           imgs: [
-            { src: "/images/mydata_thesis_img1.png", start: 1.1, span: 1.7 },
-            { src: "/images/mydata_thesis_img2.png", start: 3, span: 1.76, bg: "#FFFFFF", pad: 30, overlap: 1 },
+            { src: "/images/mydata_thesis_img1.png", start: 2.1, span: 1.4 },
+            {
+              src: "/images/mydata_thesis_img2.png",
+              start: 3.55,
+              span: 1.45,
+              bg: "#FFFFFF",
+              pad: 20,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "People don't just track money — they sort it, name it, separate it.\nA month mapped in full: where income pooled, where spending spread thin.",
+              position: "left",
+              media: [1, 2],
+            },
           ],
         },
         {
@@ -1476,7 +1906,7 @@
           cl: "서울대학교",
           yr: "2024.02.01",
           co: ["Master's Thesis", "First Author"],
-          ds: "음성 에이전트는 일기 기록의 인지적 부담을 줄일 수 있지만, 타임아웃 문제로 긴 발화를 안정적으로 수집하기 어렵다. \n반복 에코잉 기반 응답 스타일을 설계하고 두 차례의 사용자 실험을 통해 긴 발화를 유도하는 효과적인 VA 저널링 인터랙션을 검증했다.",
+          ds: "음성 에이전트는 일기 기록의 인지적 부담을 줄일 수 있지만, 타임아웃 문제로 긴 발화를 안정적으로 수집하기 어렵다. \n{{반복 에코잉 기반 응답 스타일|0}}을 설계하고 두 차례의 사용자 실험을 통해 {{긴 발화를 유도하는 효과적인 VA 저널링 인터랙션을 검증|1}}했다.",
           links: [
             {
               label: "s-space.snu.ac.kr",
@@ -1484,8 +1914,39 @@
             },
           ],
           imgs: [
-            { src: "/images/va_journaling_thesis_img1.png", start: 1.3, span: 2.3, bg: "#FFFFFF", pad: 30 },
-            { src: "/images/va_journaling_thesis_img2.png", start: 3.6, span: 1.2, bg: "#FFFFFF", pad: 30, overlap: 0.5 },
+            {
+              src: "/images/va_journaling_thesis_img1.png",
+              start: 2.1,
+              span: 2.9,
+              bg: "#FFFFFF",
+              pad: 30,
+              caption: {
+                text: "The voice agent didn't interrupt — it echoed: just enough to show it was listening, just enough to invite more.",
+                position: "below",
+              },
+            },
+            {
+              src: "/images/va_journaling_thesis_img3.png",
+              start: 2.1,
+              span: 1.45,
+              bg: "#FFFFFF",
+              pad: 20,
+            },
+            {
+              src: "/images/va_journaling_thesis_img2.png",
+              start: 3.6,
+              span: 1.4,
+              bg: "#FFFFFF",
+              pad: 20,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "Ten days in, two paths diverged. The numbers that followed confirmed what the echoes had started.",
+              position: "below",
+              media: [2, 3],
+            },
           ],
         },
         {
@@ -1493,7 +1954,7 @@
           cl: "디자인융복합연구",
           yr: "2023.08.01",
           co: ["Journal Paper", "Second Author"],
-          ds: "인간의 사고 방식을 모방하는 ‘컨스트럭션빌딩’ 접근을 기반으로 대화형 마인드업로드 에이전트를 설계하고 전시 환경에서 상호작용 실험을 진행했다. \n실험 결과 강한 사고 구조를 가진 캐릭터 기반 에이전트가 관객과의 대화 참여와 흥미를 효과적으로 유도함을 확인했다.",
+          ds: "인간의 사고 방식을 모방하는 ‘컨스트럭션빌딩’ 접근을 기반으로 대화형 마인드업로드 에이전트를 설계하고 전시 환경에서 상호작용 실험을 진행했다. \n실험 결과 {{강한 사고 구조를 가진 캐릭터 기반 에이전트가 관객과의 대화 참여와 흥미를 효과적으로 유도|0}}함을 확인했다.",
           links: [
             {
               label: "kiss.kstudy.com",
@@ -1501,8 +1962,21 @@
             },
           ],
           imgs: [
-            { src: "/images/robot_art_img3.png", start: 1.3, span: 1.6 },
-            { src: "/images/mind_upload_img1.png", start: 3, span: 1.8, overlap: 0.6 },
+            { src: "/images/robot_art_img3.png", start: 2.1, span: 1.34 },
+            {
+              src: "/images/mind_upload_img1.png",
+              start: 3.45,
+              span: 1.55,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "A lawyer who loved whales: the stronger the character, the longer the conversation lasted.\nThe system behind her was just architecture — until she gave it something to say.",
+              position: "left",
+              media: [1, 2],
+              anchor: 1,
+            },
           ],
         },
         {
@@ -1510,7 +1984,7 @@
           cl: "HCI Korea 2023",
           yr: "2023.02.01",
           co: ["Conference Paper", "Second Author"],
-          ds: "E-commerce 로그 데이터만으로는 사용자 행동의 맥락을 해석하기 어려워 UX 개선에 활용하기 어렵다. \n페이지 구조 기반 로그 데이터 정제와 인터뷰 기반 행동 해석을 결합해 사용자 행동 유형을 도출하고 UX 개선을 위한 분석 방법을 제안했다.",
+          ds: "E-commerce 로그 데이터만으로는 사용자 행동의 맥락을 해석하기 어려워 UX 개선에 활용하기 어렵다. \n{{페이지 구조 기반 로그 데이터 정제와 인터뷰 기반 행동 해석을 결합|0}}해 사용자 행동 유형을 도출하고 UX 개선을 위한 분석 방법을 제안했다.",
           links: [
             {
               label: "dbpia.co.kr",
@@ -1518,8 +1992,28 @@
             },
           ],
           imgs: [
-            { src: "/images/naver_shopping_thesis_img1.png", start: 3, span: 1.8, bg: "#FFFFFF", pad: 20 },
-            { src: "/images/naver_shopping_thesis_img2.png", start: 1.8, span: 1, bg: "#FFFFFF", pad: 40, overlap: 0.6 },
+            {
+              src: "/images/naver_shopping_thesis_img2.png",
+              start: 2.1,
+              span: 1.19,
+              bg: "#FFFFFF",
+              pad: 30,
+            },
+            {
+              src: "/images/naver_shopping_thesis_img1.png",
+              start: 3.33,
+              span: 1.67,
+              bg: "#FFFFFF",
+              pad: 20,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "The pages needed a language first. Then the process had something to build on — and the behavior types followed.",
+              position: "left",
+              media: [1, 2],
+            },
           ],
         },
         {
@@ -1527,9 +2021,17 @@
           cl: "쓰리체어스",
           yr: "2023.01.30",
           co: ["Book", "Co-Author"],
-          ds: "1인 가구가 급증하고 있지만 사회는 여전히 개인의 삶을 ‘고립’의 관점에서만 해석하며 새로운 관계 구조를 충분히 고려하지 못하고 있다. \n본 글은 코리빙 환경에서 기술이 사람 간 연결을 어떻게 만들어낼 수 있는지를 탐구하며, 1인 가구 시대의 새로운 사회적 관계 모델을 제안한다.",
+          ds: "1인 가구가 급증하고 있지만 사회는 여전히 개인의 삶을 ‘고립’의 관점에서만 해석하며 새로운 관계 구조를 충분히 고려하지 못하고 있다. \n본 글은 {{코리빙 환경에서 기술이 사람 간 연결을 어떻게 만들어낼 수 있는지|0}}를 탐구하며, 1인 가구 시대의 새로운 사회적 관계 모델을 제안한다.",
           imgs: [
-            { src: "/images/threechairs_book_img1.png", start: 3.8, span: 1.2 }
+            {
+              src: "/images/threechairs_book_img1.png",
+              start: 4.05,
+              span: 0.95,
+              caption: {
+                text: "The question wasn't whether technology could replace neighbors. It was whether it could make new ones.",
+                position: "left",
+              },
+            },
           ],
           links: [
             {
@@ -1543,7 +2045,7 @@
           cl: "HCI Korea 2022",
           yr: "2022.02.11",
           co: ["Conference Paper", "Third Author"],
-          ds: "기존 은행 VUI는 모바일 기능을 음성으로 단순 대체하는 방식에 머물러 사용자 니즈를 충분히 반영하지 못한다. \nWoZ 실험과 프로토타입 평가를 통해 금융 VUI에서 사용자는 가벼운 업무 수행, 계산 기반 정보 요청, 캐주얼한 금융 상담과 같은 새로운 사용 패턴을 보임을 확인했다.",
+          ds: "기존 은행 VUI는 모바일 기능을 음성으로 단순 대체하는 방식에 머물러 사용자 니즈를 충분히 반영하지 못한다. \nWoZ 실험과 프로토타입 평가를 통해 금융 VUI에서 사용자는 {{가벼운 업무 수행, 계산 기반 정보 요청, 캐주얼한 금융 상담|0}}과 같은 새로운 사용 패턴을 보임을 확인했다.",
           links: [
             {
               label: "dbpia.co.kr",
@@ -1551,8 +2053,20 @@
             },
           ],
           imgs: [
-            { src: "/images/banky_thesis_img1.png", start: 1.3, span: 1.6 },
-            { src: "/images/banky_thesis_img2.png", start: 3, span: 1.2, overlap: 1 },
+            { src: "/images/banky_thesis_img1.png", start: 2.1, span: 1.85 },
+            {
+              src: "/images/banky_thesis_img2.png",
+              start: 3.99,
+              span: 1.01,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "The taxonomy revealed it first — then the numbers confirmed it: voice banking wasn’t just tasks, but advice, questions, and everyday financial talk.",
+              position: "left",
+              media: [1, 2],
+            },
           ],
         },
         {
@@ -1560,11 +2074,32 @@
           cl: "HCI Korea 2022",
           yr: "2022.02.11",
           co: ["Tutorial", "Co-Speaker"],
-          ds: "사용자 데이터가 축적되며 지식베이스가 성장하는 대화형 서비스 설계 방법론을 소개했다.\n지속적으로 데이터가 생성되는 도메인 선택, 지식베이스 구조 설계, 데이터 수집·제공을 위한 대화 디자인의 세 단계 프레임워크를 사례와 함께 설명했다.",
+          ds: "사용자 데이터가 축적되며 지식베이스가 성장하는 대화형 서비스 설계 방법론을 소개했다.\n{{지속적으로 데이터가 생성되는 도메인 선택, 지식베이스 구조 설계, 데이터 수집·제공을 위한 대화 디자인의 세 단계 프레임워크|0}}를 사례와 함께 설명했다.",
           imgs: [
-            { src: "/images/hcik22_tutorial_img1.png", start: 1.2, span: 1.3 },
-            { src: "/images/hcik22_tutorial_img2.png", start: 2.6, span: 1.3, overlap: 1 },
-            { src: "/images/hcik22_tutorial_img3.png", start: 3.8, span: 1.2, overlap: 0.2 },
+            {
+              src: "/images/hcik22_tutorial_img1.png",
+              start: 2.05,
+              span: 0.95,
+            },
+            {
+              src: "/images/hcik22_tutorial_img2.png",
+              start: 3.05,
+              span: 0.95,
+              overlap: 1,
+            },
+            {
+              src: "/images/hcik22_tutorial_img3.png",
+              start: 4.05,
+              span: 0.95,
+              overlap: 1,
+            },
+          ],
+          mediaCaptions: [
+            {
+              text: "A service that grows from being used — three steps, two chatbots built: one that shared what people were watching, one that collected what they dreamed.",
+              position: "below",
+              media: [1, 2, 3],
+            },
           ],
         },
       ];
@@ -1579,16 +2114,74 @@
           .replace(/</g, "&lt;")
           .replace(/>/g, "&gt;");
       }
+      function buildGroupIndex(d) {
+        const items = normalizePanelMediaItems(d);
+        const n = items.length;
+        const itemToRaw = new Array(n).fill(-1);
+        const rawGroups = [];
+        normalizePanelMediaCaptions(d).forEach((entry) => {
+          const indices = entry.media
+            .map((v) => v - 1)
+            .filter((i) => i >= 0 && i < n);
+          if (!indices.length) return;
+          const rawIdx = rawGroups.length;
+          rawGroups.push({ minIdx: Math.min(...indices), indices });
+          indices.forEach((i) => {
+            if (itemToRaw[i] === -1) itemToRaw[i] = rawIdx;
+          });
+        });
+        items.forEach((item, i) => {
+          if (itemToRaw[i] !== -1) return;
+          if (normalizeCaptionSpec(item.caption)) {
+            const rawIdx = rawGroups.length;
+            rawGroups.push({ minIdx: i, indices: [i] });
+            itemToRaw[i] = rawIdx;
+          }
+        });
+        if (!rawGroups.length) return new Array(n).fill(-1);
+        const sorted = rawGroups
+          .map((g, i) => ({ ...g, rawIdx: i }))
+          .sort((a, b) => a.minIdx - b.minIdx);
+        const rawToFinal = new Array(rawGroups.length);
+        sorted.forEach((g, finalIdx) => {
+          rawToFinal[g.rawIdx] = finalIdx;
+        });
+        return itemToRaw.map((r) => (r === -1 ? -1 : rawToFinal[r]));
+      }
+      function parseDsMarkup(raw) {
+        const str = String(raw ?? "");
+        let result = "";
+        const re = /\{\{(.+?)\|(\d+)\}\}/g;
+        let last = 0, m;
+        while ((m = re.exec(str)) !== null) {
+          result += escHtml(str.slice(last, m.index)).replace(/\n/g, "<br/>");
+          result += `<span class="ds-mark" data-group="${m[2]}">${escHtml(m[1])}</span>`;
+          last = m.index + m[0].length;
+        }
+        result += escHtml(str.slice(last)).replace(/\n/g, "<br/>");
+        return result;
+      }
       function toSystemDesignHtml(v) {
         const arr = Array.isArray(v) ? v : [v];
         return arr
           .map((raw) => {
-            const line = String(raw ?? "").trim();
+            const isObj = raw !== null && typeof raw === "object";
+            const line = isObj ? String(raw.text ?? "").trim() : String(raw ?? "").trim();
+            const imgGroup = isObj && raw.imgGroup != null ? raw.imgGroup : null;
             const m = line.match(/^(.+?)\s*\((.+)\)\s*$/);
-            if (!m) return escHtml(line);
+            if (!m) {
+              const esc = escHtml(line);
+              return imgGroup != null
+                ? `<span class="sd-mark sd-title" data-group="${imgGroup}">${esc}</span>`
+                : `<span class="sd-title">${esc}</span>`;
+            }
             const title = escHtml(m[1].trim());
             const desc = escHtml(m[2].trim());
-            return `<span class="sd-title">${title}</span><br/>${desc}`;
+            const titleHtml =
+              imgGroup != null
+                ? `<span class="sd-mark sd-title" data-group="${imgGroup}">${title}</span>`
+                : `<span class="sd-title">${title}</span>`;
+            return `${titleHtml}<br/>${desc}`;
           })
           .join("<br/>");
       }
@@ -1596,7 +2189,13 @@
         const imgs = (d.imgs || [])
           .map((img) =>
             typeof img === "string"
-              ? { type: "img", src: img, fr: 1 }
+              ? {
+                  type: "img",
+                  src: img,
+                  fr: 1,
+                  caption: null,
+                  captionPos: null,
+                }
               : {
                   type: "img",
                   src: img?.src || "",
@@ -1606,6 +2205,8 @@
                   bg: img?.bg,
                   pad: img?.pad,
                   overlap: img?.overlap ?? null,
+                  caption: img?.caption ?? null,
+                  captionPos: img?.captionPos ?? img?.captionPosition ?? null,
                 },
           )
           .filter((img) => !!img.src);
@@ -1613,7 +2214,7 @@
           .filter(Boolean)
           .map((vid) =>
             typeof vid === "string"
-              ? { type: "video", src: vid }
+              ? { type: "video", src: vid, caption: null, captionPos: null }
               : {
                   type: "video",
                   src: vid?.src || "",
@@ -1623,10 +2224,80 @@
                   bg: vid?.bg,
                   pad: vid?.pad,
                   overlap: vid?.overlap ?? null,
+                  caption: vid?.caption ?? null,
+                  captionPos: vid?.captionPos ?? vid?.captionPosition ?? null,
                 },
           )
           .filter((vid) => !!vid.src);
         return [...imgs, ...vids];
+      }
+      function normalizeCaptionSpec(rawCaption, fallbackPos = "below") {
+        if (rawCaption == null) return null;
+        const asObj =
+          typeof rawCaption === "object"
+            ? rawCaption
+            : { text: String(rawCaption) };
+        const text = String(
+          asObj?.text ?? asObj?.caption ?? asObj?.label ?? "",
+        ).trim();
+        if (!text) return null;
+        const posRaw = String(
+          asObj?.position ?? asObj?.pos ?? fallbackPos ?? "below",
+        ).toLowerCase();
+        const position =
+          posRaw === "left" ? "left" : posRaw === "top" ? "top" : "below";
+        return { text, position };
+      }
+      function normalizePanelMediaCaptions(d = {}) {
+        const arr = Array.isArray(d.mediaCaptions) ? d.mediaCaptions : [];
+        return arr
+          .map((entry) => {
+            const caption = normalizeCaptionSpec(entry);
+            if (!caption) return null;
+            const media = Array.isArray(entry?.media)
+              ? entry.media
+                  .map((v) => Math.trunc(Number(v)))
+                  .filter((v) => Number.isFinite(v) && v > 0)
+              : [];
+            const range = Array.isArray(entry?.range) ? entry.range : [];
+            const rangeStart = Math.trunc(Number(range[0]));
+            const rangeEnd = Math.trunc(Number(range[1]));
+            const anchor = Math.trunc(Number(entry?.anchor));
+            const start = Number(entry?.start);
+            const span = Number(entry?.span);
+            return {
+              caption,
+              media,
+              range:
+                Number.isFinite(rangeStart) && Number.isFinite(rangeEnd)
+                  ? [
+                      Math.min(rangeStart, rangeEnd),
+                      Math.max(rangeStart, rangeEnd),
+                    ]
+                  : null,
+              anchor: Number.isFinite(anchor) && anchor > 0 ? anchor : null,
+              start,
+              span,
+            };
+          })
+          .filter(Boolean);
+      }
+      function captionTextToHtml(text) {
+        return escHtml(text).replace(/\n/g, "<br/>");
+      }
+      function renderPanelCaptionHtml(caption, opts = {}) {
+        if (!caption) return "";
+        const cls = `panel-media-caption is-${caption.position}${
+          opts.group ? " is-group" : ""
+        }`;
+        const styleParts = [];
+        if (Number.isFinite(opts.start))
+          styleParts.push(`--caption-start:${opts.start}`);
+        if (Number.isFinite(opts.span))
+          styleParts.push(`--caption-span:${opts.span}`);
+        return `<div class="${cls}"${
+          styleParts.length ? ` style="${styleParts.join(";")};"` : ""
+        }>${captionTextToHtml(caption.text)}</div>`;
       }
       function normalizePanelLinks(d = {}) {
         return (d.links || [])
@@ -1641,50 +2312,144 @@
       }
       function buildPanelMediaHtml(d = {}) {
         const items = normalizePanelMediaItems(d);
+        const mediaCaptions = normalizePanelMediaCaptions(d);
         const links = normalizePanelLinks(d);
         if (!items.length && !links.length) return "";
-        const mediaHtml = items
-          .map((item, idx) => {
-            const baseFr = Number(item.fr) || 1;
-            const isLeft = idx % 2 === 0;
-            const spanRaw = Number(item.span);
-            let span = Number.isFinite(spanRaw)
-              ? Math.max(1, Math.min(4, spanRaw))
-              : Math.max(
-              2,
-              Math.min(4, Math.round(baseFr * 2 + 0.5)),
+        const renderedItems = items.map((item, idx) => {
+          const baseFr = Number(item.fr) || 1;
+          const isLeft = idx % 2 === 0;
+          const spanRaw = Number(item.span);
+          const MIN_SPAN = 0.25;
+          let span = Number.isFinite(spanRaw)
+            ? clamp(spanRaw, MIN_SPAN, 4)
+            : Math.max(2, Math.min(4, Math.round(baseFr * 2 + 0.5)));
+          if (!Number.isFinite(spanRaw) && !isLeft && span === 4) span = 3;
+          const startRaw = Number(item.start);
+          const maxStart = Math.max(1, 5 - span);
+          let start = Number.isFinite(startRaw)
+            ? clamp(startRaw, 1, maxStart)
+            : isLeft
+              ? 1
+              : maxStart;
+          const bgRaw = typeof item.bg === "string" ? item.bg.trim() : "";
+          const bg = bgRaw && /^[#\w\s(),.%+-]+$/.test(bgRaw) ? bgRaw : "";
+          const padRaw = Number(item.pad);
+          const pad = Number.isFinite(padRaw) ? Math.max(0, padRaw) : null;
+          const overlapRaw = Number(item.overlap);
+          const overlap =
+            Number.isFinite(overlapRaw) && overlapRaw > 0 ? overlapRaw : null;
+          const styleParts = [`--media-start:${start}`, `--media-span:${span}`];
+          if (bg) styleParts.push(`--media-bg:${bg}`);
+          if (pad !== null) styleParts.push(`--media-pad:${pad}px`);
+          const itemCaption = normalizeCaptionSpec(
+            item.caption,
+            item.captionPos || "below",
+          );
+          const leftCaptionHtml =
+            itemCaption?.position === "left"
+              ? renderPanelCaptionHtml(itemCaption)
+              : "";
+          const topCaptionHtml =
+            itemCaption?.position === "top"
+              ? renderPanelCaptionHtml(itemCaption)
+              : "";
+          const bottomCaptionHtml =
+            itemCaption?.position === "below"
+              ? renderPanelCaptionHtml(itemCaption)
+              : "";
+          const media =
+            item.type === "video"
+              ? `<video src="${escHtml(
+                  item.src,
+                )}" muted loop autoplay playsinline preload="metadata"></video>`
+              : `<img src="${escHtml(item.src)}" alt="" loading="lazy" />`;
+          return {
+            start,
+            span,
+            overlap,
+            style: styleParts.join(";"),
+            media,
+            topCaptionHtml,
+            leftCaptionHtml,
+            bottomCaptionHtml,
+          };
+        });
+        const groupInlineCaptionsByItem = new Map();
+        const groupCaptionsByAfterIndex = new Map();
+        mediaCaptions.forEach((entry) => {
+          let targetIdx = [];
+          if (entry.media.length) {
+            targetIdx = entry.media
+              .map((v) => v - 1)
+              .filter((v) => v >= 0 && v < renderedItems.length);
+          } else if (entry.range) {
+            for (let i = entry.range[0] - 1; i <= entry.range[1] - 1; i += 1) {
+              if (i >= 0 && i < renderedItems.length) targetIdx.push(i);
+            }
+          }
+          let start = Number(entry.start);
+          let span = Number(entry.span);
+          if (
+            (!Number.isFinite(start) || !Number.isFinite(span)) &&
+            targetIdx.length
+          ) {
+            start = Math.min(...targetIdx.map((i) => renderedItems[i].start));
+            const maxEnd = Math.max(
+              ...targetIdx.map(
+                (i) => renderedItems[i].start + renderedItems[i].span - 1,
+              ),
             );
-            if (!Number.isFinite(spanRaw) && !isLeft && span === 4) span = 3;
-            const startRaw = Number(item.start);
-            let start = Number.isFinite(startRaw)
-              ? Math.max(1, Math.min(4, startRaw))
-              : isLeft
-                ? 1
-                : Math.max(1, 5 - span);
-            if (start + span - 1 > 4) start = Math.max(1, 5 - span);
-            const bgRaw = typeof item.bg === "string" ? item.bg.trim() : "";
-            const bg =
-              bgRaw && /^[#\w\s(),.%+-]+$/.test(bgRaw) ? bgRaw : "";
-            const padRaw = Number(item.pad);
-            const pad = Number.isFinite(padRaw) ? Math.max(0, padRaw) : null;
-            const overlapRaw = Number(item.overlap);
-            const overlap =
-              Number.isFinite(overlapRaw) && overlapRaw > 0 ? overlapRaw : null;
-            const styleParts = [
-              `--media-start:${start}`,
-              `--media-span:${span}`,
-            ];
-            if (bg) styleParts.push(`--media-bg:${bg}`);
-            if (pad !== null) styleParts.push(`--media-pad:${pad}px`);
-            const media =
-              item.type === "video"
-                ? `<video src="${escHtml(
-                    item.src,
-                  )}" muted loop autoplay playsinline preload="metadata"></video>`
-                : `<img src="${escHtml(item.src)}" alt="" loading="lazy" />`;
-            return `<div class="panel-media-item"${
-              overlap !== null ? ` data-overlap="${overlap}"` : ""
-            } style="${styleParts.join(";")};"><div class="panel-media-frame">${media}</div></div>`;
+            span = maxEnd - start + 1;
+          }
+          if (Number.isFinite(start) && Number.isFinite(span)) {
+            const clampedSpan = clamp(span, 0.25, 4);
+            const maxStart = Math.max(1, 5 - clampedSpan);
+            start = clamp(start, 1, maxStart);
+            span = clampedSpan;
+          } else {
+            start = 1;
+            span = 4;
+          }
+          const anchorIdx = entry.anchor ? entry.anchor - 1 : null;
+          let afterIdx;
+          if (
+            Number.isFinite(anchorIdx) &&
+            anchorIdx >= 0 &&
+            anchorIdx < renderedItems.length
+          ) {
+            afterIdx = anchorIdx;
+          } else if (targetIdx.length) {
+            afterIdx =
+              entry.caption?.position === "below"
+                ? Math.max(...targetIdx)
+                : Math.min(...targetIdx);
+          } else {
+            afterIdx = renderedItems.length - 1;
+          }
+          const html = renderPanelCaptionHtml(entry.caption, {
+            group: true,
+            start,
+            span,
+          });
+          if (entry.caption?.position === "left") {
+            const currentInline = groupInlineCaptionsByItem.get(afterIdx) || "";
+            groupInlineCaptionsByItem.set(afterIdx, `${currentInline}${html}`);
+            return;
+          }
+          const currentAfter = groupCaptionsByAfterIndex.get(afterIdx) || "";
+          groupCaptionsByAfterIndex.set(afterIdx, `${currentAfter}${html}`);
+        });
+        const mediaHtml = renderedItems
+          .map((item, idx) => {
+            const ownAndInline = `${item.leftCaptionHtml}${
+              groupInlineCaptionsByItem.get(idx) || ""
+            }`;
+            const itemHtml = `<div class="panel-media-item"${
+              item.overlap !== null ? ` data-overlap="${item.overlap}"` : ""
+            } style="${item.style};">${item.topCaptionHtml}<div class="panel-media-frame">${
+              item.media
+            }</div>${ownAndInline}${item.bottomCaptionHtml}</div>`;
+            return `${itemHtml}${groupCaptionsByAfterIndex.get(idx) || ""}`;
           })
           .join("");
         const linkHtml = links
@@ -1704,7 +2469,13 @@
         return `<div class="panel-media"><div class="panel-media-grid">${mediaHtml}</div><div class="panel-media-actions"><button class="panel-close" type="button" aria-label="Close panel"><svg class="panel-close-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4L20 20M20 4L4 20"/></svg></button><div class="panel-media-links">${linkHtml}</div></div></div>`;
       }
       const activeRows = {};
+      const rowGroupStateResetters = new WeakMap();
       let lastOpenedRow = null;
+      function resetRowGroupState(row) {
+        if (!row) return;
+        const reset = rowGroupStateResetters.get(row);
+        if (typeof reset === "function") reset();
+      }
       function scrollPanelIntoView(row, scrollContainer, smooth = false) {
         const panel = row.querySelector(".lrow-panel");
         const header = row.querySelector(".lrt") || row;
@@ -1723,6 +2494,45 @@
           });
         }
       }
+      function scrollGroupIntoView(row, grid, group, smooth = true) {
+        const scrollContainer = row?.closest(".tab-page");
+        if (!scrollContainer || !grid || !row?.classList.contains("open")) return;
+        const key = String(group);
+        const targets = [
+          ...grid.querySelectorAll(`.panel-media-item[data-group="${key}"]`),
+          ...grid.querySelectorAll(
+            `.panel-media-caption[data-group="${key}"].group-locked`,
+          ),
+        ].filter((el) => el.getClientRects().length > 0);
+        if (!targets.length) return;
+        const containerRect = scrollContainer.getBoundingClientRect();
+        let top = Infinity;
+        let bottom = -Infinity;
+        targets.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          top = Math.min(top, rect.top);
+          bottom = Math.max(bottom, rect.bottom);
+        });
+        const padTop = 12;
+        const padBottom = 18;
+        let delta = 0;
+        if (bottom > containerRect.bottom - padBottom) {
+          delta = bottom - (containerRect.bottom - padBottom);
+        } else if (top < containerRect.top + padTop) {
+          delta = top - (containerRect.top + padTop);
+        }
+        if (Math.abs(delta) <= 1) return;
+        const maxScroll =
+          scrollContainer.scrollHeight - scrollContainer.clientHeight;
+        const target = Math.max(
+          0,
+          Math.min(maxScroll, scrollContainer.scrollTop + delta),
+        );
+        scrollContainer.scrollTo({
+          top: target,
+          behavior: smooth ? "smooth" : "auto",
+        });
+      }
       function syncMediaOverlaps() {
         document.querySelectorAll(".panel-media-grid").forEach((grid) => {
           const gapRaw =
@@ -1730,16 +2540,34 @@
           const gap = parseFloat(gapRaw) || 0;
           const items = [...grid.querySelectorAll(".panel-media-item")];
           items.forEach((item, idx) => {
+            const frame = item.querySelector(".panel-media-frame");
+            const frameH = frame?.getBoundingClientRect().height || 0;
+            if (frameH > 0) {
+              item.style.setProperty("--media-h", `${frameH}px`);
+            }
             const ratio = parseFloat(item.dataset.overlap || "");
             if (!Number.isFinite(ratio) || ratio <= 0 || idx === 0) {
               item.style.removeProperty("--media-overlap");
               return;
             }
-            const prevFrame = items[idx - 1]?.querySelector(
-              ".panel-media-frame",
-            );
+            const prevFrame =
+              items[idx - 1]?.querySelector(".panel-media-frame");
             const prevH = prevFrame?.getBoundingClientRect().height || 0;
-            const px = prevH * ratio + gap;
+            const prevItem = items[idx - 1];
+            const prevCaptionsH = prevItem
+              ? [
+                  ...prevItem.querySelectorAll(
+                    ".panel-media-caption.is-top, .panel-media-caption.is-below",
+                  ),
+                ].reduce((sum, el) => {
+                  const rectH = el.getBoundingClientRect().height || 0;
+                  const st = getComputedStyle(el);
+                  const mt = parseFloat(st.marginTop) || 0;
+                  const mb = parseFloat(st.marginBottom) || 0;
+                  return sum + rectH + mt + mb;
+                }, 0)
+              : 0;
+            const px = prevH * ratio + gap + prevCaptionsH;
             item.style.setProperty("--media-overlap", `${px}px`);
           });
         });
@@ -1796,9 +2624,18 @@
           url: "mailto:jisuryou7@gmail.com",
           icon: "mail",
         },
+        {
+          label: "Get in touch.",
+          url: "#",
+          disabled: true,
+          note: true,
+          icon: "link",
+        },
       ];
       let finalLinksBuilt = false,
         finalLinksAnimatedOnce = false;
+      const rowMediaPreviewState = new Map();
+      const rowSweepPauseTimers = new WeakMap();
       const MEDIA_ALIGN_EDGE_X = 18,
         MEDIA_ALIGN_START_Y = 0,
         MEDIA_ALIGN_GAP = 10,
@@ -1806,7 +2643,110 @@
       function clamp(v, min, max) {
         return Math.max(min, Math.min(max, v));
       }
-      function clearHoverMedia() {}
+      function pauseRowHoverSweep(pageEl, ms = 1250) {
+        if (!pageEl) return;
+        const prev = rowSweepPauseTimers.get(pageEl);
+        if (prev) clearTimeout(prev);
+        pageEl.classList.add("sweep-paused");
+        const timer = setTimeout(() => {
+          pageEl.classList.remove("sweep-paused");
+          rowSweepPauseTimers.delete(pageEl);
+        }, ms);
+        rowSweepPauseTimers.set(pageEl, timer);
+      }
+      function getRowMediaPreviewLayer(pageEl) {
+        if (!pageEl) return null;
+        let layer = pageEl.querySelector(".row-media-preview-layer");
+        if (layer) return layer;
+        layer = document.createElement("div");
+        layer.className = "row-media-preview-layer";
+        pageEl.appendChild(layer);
+        return layer;
+      }
+      function positionRowMediaPreview(pageEl, previewEl) {
+        if (!pageEl || !previewEl) return;
+        const top = pageEl.scrollTop + (pageEl.clientHeight - previewEl.offsetHeight) / 2;
+        const maxTop = Math.max(0, pageEl.scrollHeight - previewEl.offsetHeight);
+        previewEl.style.top = `${clamp(top, 0, maxTop)}px`;
+      }
+      function buildRowMediaPreview(row) {
+        const sourceGrid = row?.querySelector(".panel-media-grid");
+        if (!sourceGrid) return null;
+        const sourceItems = [...sourceGrid.querySelectorAll(":scope > .panel-media-item")];
+        if (!sourceItems.length) return null;
+        const preview = document.createElement("div");
+        preview.className = "row-media-preview";
+        const grid = document.createElement("div");
+        grid.className = "panel-media-grid";
+        sourceItems.forEach((sourceItem) => {
+          const sourceFrame = sourceItem.querySelector(".panel-media-frame");
+          const sourceMedia = sourceFrame?.querySelector("img,video");
+          if (!sourceMedia) return;
+          const item = document.createElement("div");
+          item.className = "panel-media-item";
+          const style = sourceItem.getAttribute("style");
+          if (style) item.setAttribute("style", style);
+          const frame = document.createElement("div");
+          frame.className = "panel-media-frame";
+          const media = sourceMedia.cloneNode(true);
+          if (media.tagName === "VIDEO") {
+            media.muted = true;
+            media.autoplay = true;
+            media.loop = true;
+            media.playsInline = true;
+            media.removeAttribute("controls");
+            media.preload = "metadata";
+          } else {
+            media.loading = "eager";
+          }
+          frame.appendChild(media);
+          item.appendChild(frame);
+          grid.appendChild(item);
+        });
+        if (!grid.children.length) return null;
+        preview.appendChild(grid);
+        return preview;
+      }
+      function hideRowMediaPreview(pageEl, row = null, immediate = false) {
+        if (!pageEl) return;
+        const state = rowMediaPreviewState.get(pageEl);
+        if (!state) return;
+        if (row && state.row !== row) return;
+        const previewEl = state.preview;
+        rowMediaPreviewState.delete(pageEl);
+        if (immediate) {
+          previewEl.classList.remove("show");
+          if (previewEl.parentNode) previewEl.remove();
+          return;
+        }
+        state.preview.classList.remove("show");
+        setTimeout(() => {
+          if (previewEl.parentNode) previewEl.remove();
+        }, 220);
+      }
+      function showRowMediaPreview(row) {
+        if (!row || row.classList.contains("open") || isCoarsePointer) return;
+        const pageEl = row.closest(".tab-page");
+        if (!pageEl) return;
+        const preview = buildRowMediaPreview(row);
+        if (!preview) return;
+        hideRowMediaPreview(pageEl);
+        const layer = getRowMediaPreviewLayer(pageEl);
+        if (!layer) return;
+        layer.appendChild(preview);
+        positionRowMediaPreview(pageEl, preview);
+        rowMediaPreviewState.set(pageEl, { row, preview });
+        requestAnimationFrame(() => preview.classList.add("show"));
+        preview.querySelectorAll("video").forEach((el) => {
+          const play = el.play?.();
+          if (play && typeof play.catch === "function") play.catch(() => {});
+        });
+      }
+      function clearHoverMedia(immediate = false) {
+        [...rowMediaPreviewState.keys()].forEach((pageEl) =>
+          hideRowMediaPreview(pageEl, null, immediate),
+        );
+      }
       function bindFinalLinkHandleDrag(box, handle) {
         const EDGE_X = 18,
           EDGE_Y = 0;
@@ -1945,6 +2885,7 @@
           box.style.top = `${pos.y}px`;
           const a = document.createElement("a");
           a.className = "hover-link-card";
+          if (item.note) a.classList.add("is-note");
           a.href = item.url;
           if (item.disabled) {
             a.classList.add("is-disabled");
@@ -2031,7 +2972,7 @@
             !d.empty && isProj
               ? `<div class="lrow-panel"><div class="panel-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div><div class="pds">${d.ds}</div></div><div class="pb prob-out-col">${d.pb ? `<div><span class="pl">Problem</span><div class="pbody">${d.pb}</div></div>` : ``}${d.oc ? `<div><span class="pl">Outcome</span><div class="pbody">${toMultiline(d.oc)}</div></div>` : ``}</div><div class="pb">${d.sd ? `<span class="pl2">System Design</span><div class="pbody">${toSystemDesignHtml(d.sd)}</div>` : ``}</div></div>${mediaPanel}</div>`
               : !d.empty && !isProj
-                ? `<div class="lrow-panel"><div class="panel-inner talk-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div></div><div class="pb abs"><span class="pl">Abstract</span><div class="pbody">${toMultiline(d.ds)}</div></div></div>${mediaPanel}</div>`
+                ? `<div class="lrow-panel"><div class="panel-inner talk-inner"><div class="pb"><span class="pl">Contribution</span><div class="pco">${toMultiline(d.co)}</div></div><div class="pb abs"><span class="pl">Abstract</span><div class="pbody">${parseDsMarkup(d.ds)}</div></div></div>${mediaPanel}</div>`
                 : "";
           const storyTitle = escHtml(d.story || d.name || "");
           const projectTitle = escHtml(
@@ -2042,29 +2983,49 @@
               ? `<span class="rname"><span class="rname-story">${
                   storyTitle || projectTitle
                 }</span><span class="rname-project">${
-                  isProj ? projectTitle || storyTitle : storyTitle || projectTitle
+                  isProj
+                    ? projectTitle || storyTitle
+                    : storyTitle || projectTitle
                 }</span></span>`
               : `<span class="rname">${storyTitle}</span>`;
           row.innerHTML = `<div class="lrt"><span class="rn">${autoNo}</span>${rnameHtml}<span class="rcl">${d.cl}</span><span class="ryr">${d.yr || ""}</span></div>${panel}`;
           c.appendChild(row);
           if (!d.empty) {
+            const headerEl = row.querySelector(".lrt");
+            if (headerEl) {
+              headerEl.addEventListener("mouseenter", () => {
+                if (!row.classList.contains("open")) showRowMediaPreview(row);
+              });
+              headerEl.addEventListener("mouseleave", () => {
+                const pageEl = row.closest(".tab-page");
+                if (pageEl) hideRowMediaPreview(pageEl, row);
+              });
+            }
             const closeBtn = row.querySelector(".panel-close");
             if (closeBtn) {
               closeBtn.addEventListener("click", (e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                const pageEl = row.closest(".tab-page");
+                if (pageEl) pauseRowHoverSweep(pageEl);
+                if (pageEl) hideRowMediaPreview(pageEl, row, true);
+                resetRowGroupState(row);
                 row.classList.remove("open");
                 if (activeRows[pageId] === row) activeRows[pageId] = null;
               });
             }
             row
-              .querySelectorAll(".panel-media-links .hover-link-card.is-disabled")
+              .querySelectorAll(
+                ".panel-media-links .hover-link-card.is-disabled",
+              )
               .forEach((el) =>
                 el.addEventListener("click", (e) => e.preventDefault()),
               );
             row.tabIndex = 0;
             const toggleOpen = () => {
               if (row.classList.contains("open")) return;
+              const pageEl = row.closest(".tab-page");
+              if (pageEl) hideRowMediaPreview(pageEl, row, true);
               const prevRow =
                 activeRows[pageId] && activeRows[pageId] !== row
                   ? activeRows[pageId]
@@ -2130,11 +3091,117 @@
                 toggleOpen();
               }
             });
+            // Group hover/click interaction
+            const grid = row.querySelector(".panel-media-grid");
+            if (grid) {
+              const groupIndexes = buildGroupIndex(d);
+              const mediaItems = [
+                ...grid.querySelectorAll(".panel-media-item"),
+              ];
+              groupIndexes.forEach((g, i) => {
+                if (g >= 0 && mediaItems[i])
+                  mediaItems[i].dataset.group = String(g);
+              });
+              // Mark standalone captions (grid siblings, not inside panel-media-item)
+              [...grid.children].forEach((child) => {
+                if (child.classList.contains("panel-media-item")) return;
+                let prev = child.previousElementSibling;
+                while (prev && !prev.classList.contains("panel-media-item"))
+                  prev = prev.previousElementSibling;
+                if (prev && prev.dataset.group !== undefined)
+                  child.dataset.group = prev.dataset.group;
+              });
+              const lockedGroups = new Set();
+              const hoveredGroups = new Set();
+              const allGroups = new Set(
+                mediaItems
+                  .map((el) => el.dataset.group)
+                  .filter((g) => g !== undefined)
+                  .map((g) => Number(g)),
+              );
+              const renderGroups = () => {
+                allGroups.forEach((g) => {
+                  const key = String(g);
+                  const isHovered = hoveredGroups.has(g);
+                  const isLocked = lockedGroups.has(g);
+                  mediaItems
+                    .filter((el) => el.dataset.group === key)
+                    .forEach((el) => {
+                      el.classList.toggle("group-hovered", isHovered && !isLocked);
+                      el.classList.toggle("group-locked", isLocked);
+                    });
+                  grid
+                    .querySelectorAll(`.panel-media-caption[data-group="${key}"]`)
+                    .forEach((el) =>
+                      el.classList.toggle("group-locked", isLocked),
+                    );
+                  row
+                    .querySelectorAll(
+                      `.sd-mark[data-group="${key}"], .ds-mark[data-group="${key}"]`,
+                    )
+                    .forEach((el) =>
+                      el.classList.toggle("active", isLocked || isHovered),
+                    );
+                });
+              };
+              const resetGroups = () => {
+                lockedGroups.clear();
+                hoveredGroups.clear();
+                renderGroups();
+              };
+              rowGroupStateResetters.set(row, resetGroups);
+              mediaItems.forEach((item) => {
+                if (item.dataset.group === undefined) return;
+                const g = parseInt(item.dataset.group);
+                const frame = item.querySelector(".panel-media-frame");
+                if (!frame) return;
+                frame.addEventListener("mouseenter", () => {
+                  hoveredGroups.add(g);
+                  renderGroups();
+                });
+                frame.addEventListener("mouseleave", () => {
+                  hoveredGroups.delete(g);
+                  renderGroups();
+                });
+                frame.addEventListener("click", (e) => {
+                  e.stopPropagation();
+                  const wasLocked = lockedGroups.has(g);
+                  if (lockedGroups.has(g)) {
+                    lockedGroups.delete(g);
+                  } else {
+                    lockedGroups.add(g);
+                  }
+                  renderGroups();
+                  requestAnimationFrame(syncMediaOverlaps);
+                  if (!wasLocked) {
+                    requestAnimationFrame(() => {
+                      requestAnimationFrame(() => {
+                        scrollGroupIntoView(row, grid, g, true);
+                      });
+                    });
+                  }
+                });
+              });
+              renderGroups();
+            }
           }
         });
       }
       buildList(PROJ, "page-pr");
       buildList(TALKS, "page-tb");
+      ["page-pr", "page-tb"].forEach((id) => {
+        const pageEl = document.getElementById(id);
+        if (!pageEl) return;
+        pageEl.addEventListener(
+          "scroll",
+          () => {
+            const state = rowMediaPreviewState.get(pageEl);
+            if (state) positionRowMediaPreview(pageEl, state.preview);
+          },
+          { passive: true },
+        );
+        pageEl.addEventListener("mouseleave", () => hideRowMediaPreview(pageEl));
+      });
       syncMediaOverlaps();
       bindMediaOverlapObservers();
       function syncLeadHeight() {
@@ -2149,6 +3216,7 @@
       }
       syncLeadHeight();
       window.addEventListener("resize", () => {
+        clearHoverMedia();
         syncLeadHeight();
         if (finalLinksBuilt) {
           finalLinkPosCache.clear();
@@ -2384,6 +3452,7 @@
       let blinkCooldown = false;
       function triggerBlink() {
         if (state !== "intro" || busy || introReady || blinkCooldown) return;
+        if (anagramStructure.matches(":hover, :focus-visible")) return;
         blinkCooldown = true;
         anagramStructure.classList.add("blink");
         anagramStructure.addEventListener(
@@ -2398,6 +3467,7 @@
       let ctBlinkCooldown = false;
       function triggerCtBlink(triggerEl) {
         if (ctBlinkCooldown || triggerEl.classList.contains("done")) return;
+        if (triggerEl.matches(":hover, :focus-visible")) return;
         ctBlinkCooldown = true;
         triggerEl.classList.add("blink");
         triggerEl.addEventListener(
@@ -2409,6 +3479,13 @@
           { once: true },
         );
       }
+      [anagramStructure, ctTrigger1, ctTrigger2].forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          el.classList.remove("blink");
+          blinkCooldown = false;
+          ctBlinkCooldown = false;
+        });
+      });
       finalPage.addEventListener("click", (e) => {
         if (state !== "shell" || curTab !== 3) return;
         if (e.target.closest(".tab")) return;
@@ -2633,6 +3710,7 @@
           p.style.overflowY = "auto";
           p.classList.remove("hide-borders");
           p.querySelectorAll(".lrow.open").forEach((row) => {
+            resetRowGroupState(row);
             row.classList.remove("open");
           });
         });
@@ -2650,6 +3728,10 @@
       }
       async function switchTab(idx) {
         if (idx === curTab || tabBusy) return;
+        if (curTab === 0) {
+          const lead = document.querySelector("#page-ov .ov-lead");
+          if (lead) lead.classList.remove("ov-anim");
+        }
         tabBusy = true;
         if (finalActive) exitFinalPageNow();
         updateShellHint(idx);
@@ -2685,7 +3767,10 @@
         toPage.scrollTop = 0;
         fromPage
           .querySelectorAll(".lrow.open")
-          .forEach((row) => row.classList.remove("open"));
+          .forEach((row) => {
+            resetRowGroupState(row);
+            row.classList.remove("open");
+          });
         curTab = idx;
         if (idx === 0) replayOverviewLead();
         if (idx === 3) {
