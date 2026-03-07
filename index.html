@@ -864,8 +864,9 @@
         background-repeat: no-repeat;
         background-position: 0 40%;
         background-size: 0% 1.3em;
-        transition: background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1),
-                    color 2.3s cubic-bezier(0.22, 1, 0.36, 1);
+        transition:
+          background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1),
+          color 2.3s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .sd-mark.active {
         background-size: 100% 1.3em;
@@ -876,8 +877,9 @@
         background-repeat: no-repeat;
         background-position: 0 40%;
         background-size: 0% 1.3em;
-        transition: background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1),
-                    color 2.3s cubic-bezier(0.22, 1, 0.36, 1);
+        transition:
+          background-size 2.3s cubic-bezier(0.22, 1, 0.36, 1),
+          color 2.3s cubic-bezier(0.22, 1, 0.36, 1);
       }
       .ds-mark.active {
         background-size: 100% 1.3em;
@@ -1313,6 +1315,7 @@
                   <span class="ov-mark ov-mark-delay">MECE하게 구조화</span>할
                   수 있는 기획자</span
                 >
+                <span class="ov-line"># Digital Planner # AI Experience # System Design</span>
               </p>
               <div class="ov-cols">
                 <div class="ov-col">
@@ -1464,7 +1467,10 @@
           sd: [
             "Service Architecture (사용자 여정·데이터 흐름 통합한 앱 구조 설계)",
             "Signal Definition (온보딩 대화 기반 개인 지표 및 실제 대화 기반 관계 지표 정의)",
-            { text: "Matching Logic (지표 기반 케미 점수 산출 모델 설계 및 구현)", imgGroup: 0 },
+            {
+              text: "Matching Logic (지표 기반 케미 점수 산출 모델 설계 및 구현)",
+              imgGroup: 0,
+            },
             "Learning Loop (매칭 결과 반영한 지표 업데이트·모델 학습 구조 설계 및 구현)",
           ],
           oc: [
@@ -1497,9 +1503,18 @@
           pb: "생성형 AI의 대화 품질은 편차가 존재하지만 이를 일관되게 판단하고 개선할 공통 기준과 운영 체계가 없음",
           sd: [
             "Scope Framing (LLM 기능과 IoT 기능을 구분, 실제로 유의미한 평가 영역 정의)",
-            { text: "Reference Set Build (사용 상황·발화 유형 기반 레퍼런스 세트 생성/증강)", imgGroup: 1 },
-            { text: "Quality Framework (평가 차원·우선순위·판정 규칙 정의)", imgGroup: 1 },
-            { text: "Auto-Eval Engine (응답 생성–수집–평가–스코어링이 연결된 자동 평가 흐름 설계)", imgGroup: 0 },
+            {
+              text: "Reference Set Build (사용 상황·발화 유형 기반 레퍼런스 세트 생성/증강)",
+              imgGroup: 1,
+            },
+            {
+              text: "Quality Framework (평가 차원·우선순위·판정 규칙 정의)",
+              imgGroup: 1,
+            },
+            {
+              text: "Auto-Eval Engine (응답 생성–수집–평가–스코어링이 연결된 자동 평가 흐름 설계)",
+              imgGroup: 0,
+            },
             "Governance Loop (휴먼 판단과 비교·오차 분석을 통해 프롬프트 지속 개선)",
             "Delivery (개발·기획팀이 활용할 수 있는 리포트 및 공유 체계 설계)",
           ],
@@ -1544,8 +1559,14 @@
           pb: "금융 앱은 사용자 상태 변화를 실시간으로 해석하지 못하여, 개인화 기능은 계좌 정보 중심의 정적 데이터에 머무르고 있음",
           sd: [
             "State Modeling (데이터 분석 및 인터뷰 기반 개인화에 필요한 핵심 상태 정의)",
-            { text: "Trigger Design (이상 거래, 잔액 변동 등 상태 변화 시점 탐지 규칙 정의)", imgGroup: 0 },
-            { text: "Message Strategy (상황×목표×톤으로 알림 메시지 구조 설계)", imgGroup: 0 },
+            {
+              text: "Trigger Design (이상 거래, 잔액 변동 등 상태 변화 시점 탐지 규칙 정의)",
+              imgGroup: 0,
+            },
+            {
+              text: "Message Strategy (상황×목표×톤으로 알림 메시지 구조 설계)",
+              imgGroup: 0,
+            },
             "Validation Loop (사용자 인터뷰 및 실무자 검토를 통한 리스크 조정 및 구조 보완)",
           ],
           oc: [
@@ -1589,7 +1610,10 @@
           sd: [
             "Usage Insight (공용 가전 사용 시나리오 및 페인포인트 정리)",
             "Data Structure (핵심 데이터 항목 및 데이터간 관계 설계)",
-            { text: "Real-time Connection (사용자·관리자 앱-가전 상태 실시간 연동 구현)", imgGroup: 0 },
+            {
+              text: "Real-time Connection (사용자·관리자 앱-가전 상태 실시간 연동 구현)",
+              imgGroup: 0,
+            },
           ],
           oc: [
             "실시간 가전 상태가 연동되는 공유주거 파일럿 앱 개발",
@@ -1626,7 +1650,10 @@
           pb: "장애인은 문화행사 참여 이전 단계에서 접근성 정보를 찾기 어려우며, 행사 기획자 역시 어떤 정보를 어떻게 제공해야 하는지 기준이 없음",
           sd: [
             "Accessibility Framework (표준 문화행사 접근성 체크리스트 설계)",
-            { text: "Interface Design (행사 관리자 입력 시스템 및 사용자 접근성 정보 탐색 구조 설계)", imgGroup: 0 },
+            {
+              text: "Interface Design (행사 관리자 입력 시스템 및 사용자 접근성 정보 탐색 구조 설계)",
+              imgGroup: 0,
+            },
             "Accessibility Compliance (WCAG 기준에 맞춰 실제 사용 가능한 접근성 환경 구현)",
           ],
           oc: [
@@ -1666,9 +1693,18 @@
           ds: "전시 컨셉에 맞는 캐릭터 기반 대화 구조를 기획·설계하고 인터랙티브 보이스 에이전트를 구현했습니다.",
           pb: "대화형 AI 기술은 빠르게 발전하고 있지만, 관람객-기계 상호작용이 단순 기술 시연에 머무르며 서사적 경험으로 연결되지 않는 등 예술 전시 환경에서의 활용 방식은 제한적임",
           sd: [
-            { text: "Exhibition Concept (‘기억’, ‘상식’, ‘인간 의식’을 주제로 세 개의 전시 대화 경험 기획)", imgGroup: 0 },
-            { text: "Conversation Design (각 에이전트의 컨셉에 맞는 대화 흐름 설계)", imgGroup: 0 },
-            { text: "Agent Implementation (Dialogflow 기반 대화 시스템 구축)", imgGroup: 1 },
+            {
+              text: "Exhibition Concept (‘기억’, ‘상식’, ‘인간 의식’을 주제로 세 개의 전시 대화 경험 기획)",
+              imgGroup: 0,
+            },
+            {
+              text: "Conversation Design (각 에이전트의 컨셉에 맞는 대화 흐름 설계)",
+              imgGroup: 0,
+            },
+            {
+              text: "Agent Implementation (Dialogflow 기반 대화 시스템 구축)",
+              imgGroup: 1,
+            },
           ],
           oc: [
             "아트센터 나비 전시 작품 시연",
@@ -1713,8 +1749,14 @@
           pb: "사용자 환경과 시장 구조는 점차 서비스 중심 모델로 변화하고 있으나, 가전 산업은 단일 제품 판매 중심 모델에 머물러 있음",
           sd: [
             "Market & Trend Mapping (사용자·시장·기술 환경 변화 분석 및 전환 요인 구조화)",
-            { text: "Opportunity Framing (타겟 사용자와 사용 맥락 기반의 가전 서비스 기회 정의)", imgGroup: 0 },
-            { text: "Strategy Design (HAaS 기반 서비스 모델과 B2B2C 구독 운영 전략 제안)", imgGroup: 1 },
+            {
+              text: "Opportunity Framing (타겟 사용자와 사용 맥락 기반의 가전 서비스 기회 정의)",
+              imgGroup: 0,
+            },
+            {
+              text: "Strategy Design (HAaS 기반 서비스 모델과 B2B2C 구독 운영 전략 제안)",
+              imgGroup: 1,
+            },
           ],
           oc: [
             "공유주거 환경 기반 가전 구독 서비스 제안",
@@ -1755,8 +1797,14 @@
           ds: "쇼핑 로그 데이터를 행동 시퀀스로 구조화하고 클러스터링과 사용자 인터뷰를 통해 쇼핑 행동 유형을 도출했습니다.",
           pb: "사용자들은 가격 비교·탐색·즉시 구매 등 다양한 쇼핑 행동 패턴을 보이지만, 동일한 인터페이스 구조를 경험하고 있음",
           sd: [
-            { text: "Interaction Structuring (페이지 구조·UI 패턴 기준 페이지를 26개 그룹으로 구조화)", imgGroup: 0 },
-            { text: "Behavior Clustering (페이지 로그 데이터 기반 쇼핑 행동 유형 클러스터 도출)", imgGroup: 1 },
+            {
+              text: "Interaction Structuring (페이지 구조·UI 패턴 기준 페이지를 26개 그룹으로 구조화)",
+              imgGroup: 0,
+            },
+            {
+              text: "Behavior Clustering (페이지 로그 데이터 기반 쇼핑 행동 유형 클러스터 도출)",
+              imgGroup: 1,
+            },
             "Context Validation (사용자 인터뷰로 행동 패턴 맥락 검증)",
             "UX Strategy (행동 유형 기반 UX 개선 방향 도출)",
           ],
@@ -1801,8 +1849,14 @@
           pb: "금융 서비스는 대부분 화면 중심 인터페이스로 설계되어 있으며, 보이스 인터랙션 환경에서 사용자의 실제 요구는 충분히 연구되지 않음",
           sd: [
             "Use Case Framing (음성 기반 금융 서비스에서 발생할 수 있는 주요 사용 상황 정의)",
-            { text: "Prototype Interaction (보이스 금융 서비스 프로토타입 제작)", imgGroup: 0 },
-            { text: "Utterance Analysis (사용자 발화 데이터 수집 및 금융 보이스 인터랙션 니즈 분석)", imgGroup: 1 },
+            {
+              text: "Prototype Interaction (보이스 금융 서비스 프로토타입 제작)",
+              imgGroup: 0,
+            },
+            {
+              text: "Utterance Analysis (사용자 발화 데이터 수집 및 금융 보이스 인터랙션 니즈 분석)",
+              imgGroup: 1,
+            },
           ],
           oc: [
             "477개 사용자 발화 데이터 확보",
@@ -2152,7 +2206,8 @@
         const str = String(raw ?? "");
         let result = "";
         const re = /\{\{(.+?)\|(\d+)\}\}/g;
-        let last = 0, m;
+        let last = 0,
+          m;
         while ((m = re.exec(str)) !== null) {
           result += escHtml(str.slice(last, m.index)).replace(/\n/g, "<br/>");
           result += `<span class="ds-mark" data-group="${m[2]}">${escHtml(m[1])}</span>`;
@@ -2166,8 +2221,11 @@
         return arr
           .map((raw) => {
             const isObj = raw !== null && typeof raw === "object";
-            const line = isObj ? String(raw.text ?? "").trim() : String(raw ?? "").trim();
-            const imgGroup = isObj && raw.imgGroup != null ? raw.imgGroup : null;
+            const line = isObj
+              ? String(raw.text ?? "").trim()
+              : String(raw ?? "").trim();
+            const imgGroup =
+              isObj && raw.imgGroup != null ? raw.imgGroup : null;
             const m = line.match(/^(.+?)\s*\((.+)\)\s*$/);
             if (!m) {
               const esc = escHtml(line);
@@ -2496,7 +2554,8 @@
       }
       function scrollGroupIntoView(row, grid, group, smooth = true) {
         const scrollContainer = row?.closest(".tab-page");
-        if (!scrollContainer || !grid || !row?.classList.contains("open")) return;
+        if (!scrollContainer || !grid || !row?.classList.contains("open"))
+          return;
         const key = String(group);
         const targets = [
           ...grid.querySelectorAll(`.panel-media-item[data-group="${key}"]`),
@@ -2665,14 +2724,20 @@
       }
       function positionRowMediaPreview(pageEl, previewEl) {
         if (!pageEl || !previewEl) return;
-        const top = pageEl.scrollTop + (pageEl.clientHeight - previewEl.offsetHeight) / 2;
-        const maxTop = Math.max(0, pageEl.scrollHeight - previewEl.offsetHeight);
+        const top =
+          pageEl.scrollTop + (pageEl.clientHeight - previewEl.offsetHeight) / 2;
+        const maxTop = Math.max(
+          0,
+          pageEl.scrollHeight - previewEl.offsetHeight,
+        );
         previewEl.style.top = `${clamp(top, 0, maxTop)}px`;
       }
       function buildRowMediaPreview(row) {
         const sourceGrid = row?.querySelector(".panel-media-grid");
         if (!sourceGrid) return null;
-        const sourceItems = [...sourceGrid.querySelectorAll(":scope > .panel-media-item")];
+        const sourceItems = [
+          ...sourceGrid.querySelectorAll(":scope > .panel-media-item"),
+        ];
         if (!sourceItems.length) return null;
         const preview = document.createElement("div");
         preview.className = "row-media-preview";
@@ -3127,11 +3192,16 @@
                   mediaItems
                     .filter((el) => el.dataset.group === key)
                     .forEach((el) => {
-                      el.classList.toggle("group-hovered", isHovered && !isLocked);
+                      el.classList.toggle(
+                        "group-hovered",
+                        isHovered && !isLocked,
+                      );
                       el.classList.toggle("group-locked", isLocked);
                     });
                   grid
-                    .querySelectorAll(`.panel-media-caption[data-group="${key}"]`)
+                    .querySelectorAll(
+                      `.panel-media-caption[data-group="${key}"]`,
+                    )
                     .forEach((el) =>
                       el.classList.toggle("group-locked", isLocked),
                     );
@@ -3200,7 +3270,9 @@
           },
           { passive: true },
         );
-        pageEl.addEventListener("mouseleave", () => hideRowMediaPreview(pageEl));
+        pageEl.addEventListener("mouseleave", () =>
+          hideRowMediaPreview(pageEl),
+        );
       });
       syncMediaOverlaps();
       bindMediaOverlapObservers();
@@ -3765,12 +3837,10 @@
           toPage.classList.remove("hide-borders");
         }
         toPage.scrollTop = 0;
-        fromPage
-          .querySelectorAll(".lrow.open")
-          .forEach((row) => {
-            resetRowGroupState(row);
-            row.classList.remove("open");
-          });
+        fromPage.querySelectorAll(".lrow.open").forEach((row) => {
+          resetRowGroupState(row);
+          row.classList.remove("open");
+        });
         curTab = idx;
         if (idx === 0) replayOverviewLead();
         if (idx === 3) {
