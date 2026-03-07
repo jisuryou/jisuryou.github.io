@@ -1,0 +1,461 @@
+[
+  {
+    "name": "now connecting people through voice...",
+    "project": "Voice Interaction as Compatibility Signal",
+    "cl": "About Nine",
+    "yr": "2025.01– (진행중)",
+    "co": "서비스 기획 및 시스템 설계 (80%)",
+    "ds": "음성 대화를 정량화 가능한 관계 신호로 정의하고 케미 예측 모델과 추천 파이프라인을 설계·구현했습니다.",
+    "pb": "기존 매칭 서비스는 프로필·사진 등 상호작용 이전의 정보에 기반해 추천하여, 실제 대화에서 드러나는 관계 신호는 시스템에 반영되지 않음",
+    "sd": [
+      "Service Architecture (사용자 여정·데이터 흐름 통합한 앱 구조 설계)",
+      "Signal Definition (온보딩 대화 기반 개인 지표 및 실제 대화 기반 관계 지표 정의)",
+      {
+        "text": "Matching Logic (지표 기반 케미 점수 산출 모델 설계 및 구현)",
+        "imgGroup": 0
+      },
+      "Learning Loop (매칭 결과 반영한 지표 업데이트·모델 학습 구조 설계 및 구현)"
+    ],
+    "oc": [
+      "통화–분석–추천이 연결된 작동 가능한 MVP 구축",
+      "상호작용 데이터 기반 추천 모델의 작동 가능성 검증",
+      "Y Combinator 출품 준비 진행 중"
+    ],
+    "imgs": [
+      {
+        "src": "/images/about_nine_img1.png",
+        "start": 4.07,
+        "span": 0.93,
+        "caption": {
+          "text": "Chemistry score: 90 — not a guess, but a signal drawn from what was actually said.",
+          "position": "left"
+        }
+      }
+    ],
+    "links": [
+      {
+        "label": "about-nine.com",
+        "url": "https://about-nine.onrender.com"
+      }
+    ]
+  },
+  {
+    "name": "then defined what makes a conversation good,",
+    "project": "Standardizing Conversational Quality",
+    "cl": "LG Electronics",
+    "yr": "2024.05–08 (4개월)",
+    "co": "PM / 프로젝트 전 과정 리드 (100%)",
+    "ds": "AI 서비스 품질을 작동 가능한 평가 체계로 정의하고 루브릭 설계부터 자동 평가 파이프라인 구축까지 리드했습니다.",
+    "pb": "생성형 AI의 대화 품질은 편차가 존재하지만 이를 일관되게 판단하고 개선할 공통 기준과 운영 체계가 없음",
+    "sd": [
+      "Scope Framing (LLM 기능과 IoT 기능을 구분, 실제로 유의미한 평가 영역 정의)",
+      {
+        "text": "Reference Set Build (사용 상황·발화 유형 기반 레퍼런스 세트 생성/증강)",
+        "imgGroup": 1
+      },
+      {
+        "text": "Quality Framework (평가 차원·우선순위·판정 규칙 정의)",
+        "imgGroup": 1
+      },
+      {
+        "text": "Auto-Eval Engine (응답 생성–수집–평가–스코어링이 연결된 자동 평가 흐름 설계)",
+        "imgGroup": 0
+      },
+      "Governance Loop (휴먼 판단과 비교·오차 분석을 통해 프롬프트 지속 개선)",
+      "Delivery (개발·기획팀이 활용할 수 있는 리포트 및 공유 체계 설계)"
+    ],
+    "oc": [
+      "1,600+ 챗봇 응답 생성 및 자동 평가 수행",
+      "평가 결과 기반 실서비스 개선",
+      "2차 산학 연구 과제로 확장"
+    ],
+    "imgs": [
+      {
+        "src": "/images/cxq_img3.png",
+        "start": 3.11,
+        "span": 1.89,
+        "caption": {
+          "text": "The system generates real-use utterances, captures responses, and evaluates them — automatically.",
+          "position": "left"
+        }
+      },
+      {
+        "src": "/images/cxq_img1.png",
+        "start": 3.11,
+        "span": 0.97
+      },
+      {
+        "src": "/images/cxq_img2.png",
+        "start": 4.13,
+        "span": 0.87,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "Built to be judged: AI-generated exchanges measured against a standard that kept getting sharper.",
+        "position": "below",
+        "media": [
+          2,
+          3
+        ]
+      }
+    ]
+  },
+  {
+    "name": "until data began reacting before behavior did,",
+    "project": "MyData-Driven Financial Notifications",
+    "cl": "HiUX Consulting",
+    "yr": "2024.03–08 (6개월)",
+    "co": "PM  /  프로젝트 전 과정 리드 (100%)",
+    "ds": "금융 데이터를 ‘결과’가 아닌 행동을 유발하는 트리거로 정의하고 마이데이터 기반 개인화 알림 로직을 설계했습니다.",
+    "pb": "금융 앱은 사용자 상태 변화를 실시간으로 해석하지 못하여, 개인화 기능은 계좌 정보 중심의 정적 데이터에 머무르고 있음",
+    "sd": [
+      "State Modeling (데이터 분석 및 인터뷰 기반 개인화에 필요한 핵심 상태 정의)",
+      {
+        "text": "Trigger Design (이상 거래, 잔액 변동 등 상태 변화 시점 탐지 규칙 정의)",
+        "imgGroup": 0
+      },
+      {
+        "text": "Message Strategy (상황×목표×톤으로 알림 메시지 구조 설계)",
+        "imgGroup": 0
+      },
+      "Validation Loop (사용자 인터뷰 및 실무자 검토를 통한 리스크 조정 및 구조 보완)"
+    ],
+    "oc": [
+      "초개인화 금융 알림 프레임워크 설계",
+      "서비스 시나리오 및 프로토타입 제작",
+      "한국 HCI 학회 2025 논문 발표 (2저자)"
+    ],
+    "imgs": [
+      {
+        "src": "/images/mydata_img1.png",
+        "start": 2.05,
+        "span": 1.08,
+        "bg": "#FFFFFF",
+        "pad": 20
+      }
+    ],
+    "vids": [
+      {
+        "src": "/images/mydata_vid1_web.mp4",
+        "start": 3.18,
+        "span": 1.82,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "The data was always there. The question was when to speak — and in what voice.\nWhen it finally did, the data stopped being a record and started becoming a financial trigger.",
+        "position": "below",
+        "media": [
+          1,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "name": "and wired shared spaces into live data,",
+    "project": "Shared Appliances, Real-time Data System",
+    "cl": "Samsung Electronics",
+    "yr": "2023.01–03 (3개월)",
+    "co": "백엔드 개발 / DB 설계 및 API 연동 (50%)",
+    "ds": "공용 가전 사용 경험을 데이터 흐름 설계 문제로 접근해 실시간 가전 상태가 앱 경험과 연결되는 구조를 구현했습니다.",
+    "pb": "공용 공간에서는 가전 상태와 사용 기록이 사용자 경험과 연결되지 않아, 예약·대기 등의 공유 운영이 비효율적임",
+    "sd": [
+      "Usage Insight (공용 가전 사용 시나리오 및 페인포인트 정리)",
+      "Data Structure (핵심 데이터 항목 및 데이터간 관계 설계)",
+      {
+        "text": "Real-time Connection (사용자·관리자 앱-가전 상태 실시간 연동 구현)",
+        "imgGroup": 0
+      }
+    ],
+    "oc": [
+      "실시간 가전 상태가 연동되는 공유주거 파일럿 앱 개발",
+      "공용 가전 운영 관리 구조 작동 검증"
+    ],
+    "imgs": [
+      {
+        "src": "/images/shared_appliance_img1.png",
+        "start": 3.11,
+        "span": 0.93
+      },
+      {
+        "src": "/images/shared_appliance_img2.png",
+        "start": 4.07,
+        "span": 0.93,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "Six floors, a dozen machines: someone's laundry was always someone else's wait.\nOn the other side of that wait: a fault alert, a floor number, a manager who finally knew.",
+        "position": "below",
+        "media": [
+          1,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "name": "and reached the places where information didn't arrive,",
+    "project": "From Accessibility Checklist to Information Infrastructure",
+    "cl": "SNU Institute for Arts & Culture",
+    "yr": "2024.11–12 (2개월)",
+    "co": "시스템 설계 및 개발 (70%)",
+    "ds": "문화행사 접근성 정보를 구조화 가능한 체크리스트로 정의하고 행사 관리자 입력 시스템과 사용자 검색 포털을 설계·구현했습니다.",
+    "pb": "장애인은 문화행사 참여 이전 단계에서 접근성 정보를 찾기 어려우며, 행사 기획자 역시 어떤 정보를 어떻게 제공해야 하는지 기준이 없음",
+    "sd": [
+      "Accessibility Framework (표준 문화행사 접근성 체크리스트 설계)",
+      {
+        "text": "Interface Design (행사 관리자 입력 시스템 및 사용자 접근성 정보 탐색 구조 설계)",
+        "imgGroup": 0
+      },
+      "Accessibility Compliance (WCAG 기준에 맞춰 실제 사용 가능한 접근성 환경 구현)"
+    ],
+    "oc": [
+      "문화행사 접근성 정보를 수집·공유하는 정보 허브 구축",
+      "서울대학교 문화행사 접근성 포털 운영"
+    ],
+    "imgs": [
+      {
+        "src": "/images/access_img1.png",
+        "start": 3.11,
+        "span": 0.92
+      },
+      {
+        "src": "/images/access_img2.jpg",
+        "start": 4.08,
+        "span": 0.92,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "A checklist turned into a portal: accessibility information finally had somewhere to live — and everyone could find it.",
+        "position": "below",
+        "media": [
+          1,
+          2
+        ]
+      }
+    ],
+    "links": [
+      {
+        "label": "access.snu.ac.kr",
+        "url": "https://access.snu.ac.kr",
+        "disabled": true
+      }
+    ]
+  },
+  {
+    "name": "so I built machines that could speak like people,",
+    "project": "Human-Like Machines, Conversational Art Experience",
+    "cl": "KOCCA",
+    "yr": "2022.09–12 (4개월)",
+    "co": "서비스 기획 / 대화 경험 설계 / 에이전트 개발 (80%)",
+    "ds": "전시 컨셉에 맞는 캐릭터 기반 대화 구조를 기획·설계하고 인터랙티브 보이스 에이전트를 구현했습니다.",
+    "pb": "대화형 AI 기술은 빠르게 발전하고 있지만, 관람객-기계 상호작용이 단순 기술 시연에 머무르며 서사적 경험으로 연결되지 않는 등 예술 전시 환경에서의 활용 방식은 제한적임",
+    "sd": [
+      {
+        "text": "Exhibition Concept (‘기억’, ‘상식’, ‘인간 의식’을 주제로 세 개의 전시 대화 경험 기획)",
+        "imgGroup": 0
+      },
+      {
+        "text": "Conversation Design (각 에이전트의 컨셉에 맞는 대화 흐름 설계)",
+        "imgGroup": 0
+      },
+      {
+        "text": "Agent Implementation (Dialogflow 기반 대화 시스템 구축)",
+        "imgGroup": 1
+      }
+    ],
+    "oc": [
+      "아트센터 나비 전시 작품 시연",
+      "디자인융복합연구 2023 논문 게재 (2저자)"
+    ],
+    "imgs": [
+      {
+        "src": "/images/robot_art_img1.png",
+        "start": 3.11,
+        "span": 0.94
+      },
+      {
+        "src": "/images/robot_art_img2.png",
+        "start": 4.06,
+        "span": 0.94,
+        "overlap": 1
+      }
+    ],
+    "vids": [
+      {
+        "src": "/images/robot_art_vid1.mp4",
+        "start": 3.11,
+        "span": 1.89,
+        "caption": {
+          "text": "Then the gallery opened: what had been designed as characters became conversations with strangers.",
+          "position": "below"
+        }
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "One asked what you remembered. The other spoke with certainty — even when its answers didn’t match yours.",
+        "position": "left",
+        "media": [
+          1,
+          2
+        ],
+        "anchor": 1
+      }
+    ]
+  },
+  {
+    "name": "which led me to ask what value means beyond owning,",
+    "project": "Rethinking Appliance Ownership as a Subscription Service",
+    "cl": "Samsung Electronics",
+    "yr": "2022.07–10 (4개월)",
+    "co": "PM / 프로젝트 전 과정 리드 (100%)",
+    "ds": "사용자·시장 리서치를 통해 가전 서비스 기회 영역을 구조화하고 가전 구독 서비스 전략을 설계했습니다.",
+    "pb": "사용자 환경과 시장 구조는 점차 서비스 중심 모델로 변화하고 있으나, 가전 산업은 단일 제품 판매 중심 모델에 머물러 있음",
+    "sd": [
+      "Market & Trend Mapping (사용자·시장·기술 환경 변화 분석 및 전환 요인 구조화)",
+      {
+        "text": "Opportunity Framing (타겟 사용자와 사용 맥락 기반의 가전 서비스 기회 정의)",
+        "imgGroup": 0
+      },
+      {
+        "text": "Strategy Design (HAaS 기반 서비스 모델과 B2B2C 구독 운영 전략 제안)",
+        "imgGroup": 1
+      }
+    ],
+    "oc": [
+      "공유주거 환경 기반 가전 구독 서비스 제안",
+      "2차 산학 연구 과제로 확장"
+    ],
+    "imgs": [
+      {
+        "src": "/images/haas_img1.png",
+        "start": 2.05,
+        "span": 1.02,
+        "bg": "#FFFFFF",
+        "pad": 20,
+        "caption": {
+          "text": "Ownership mapped against a life stage: not who buys the appliance, but who needs it — and for how long.",
+          "position": "left"
+        }
+      },
+      {
+        "src": "/images/haas_img2.png",
+        "start": 3.11,
+        "span": 1.89,
+        "bg": "#FFFFFF",
+        "pad": 30,
+        "overlap": 1,
+        "caption": {
+          "text": "The deeper question wasn't whether people would subscribe. It was what they were actually paying for.",
+          "position": "below"
+        }
+      }
+    ]
+  },
+  {
+    "name": "then read the patterns in the data they left behind,",
+    "project": "Modeling Shopping Behavior from Log Data",
+    "cl": "Naver Shopping",
+    "yr": "2022.03–06 (4개월)",
+    "co": "UX 리서치 / 데이터 분석 (50%)",
+    "ds": "쇼핑 로그 데이터를 행동 시퀀스로 구조화하고 클러스터링과 사용자 인터뷰를 통해 쇼핑 행동 유형을 도출했습니다.",
+    "pb": "사용자들은 가격 비교·탐색·즉시 구매 등 다양한 쇼핑 행동 패턴을 보이지만, 동일한 인터페이스 구조를 경험하고 있음",
+    "sd": [
+      {
+        "text": "Interaction Structuring (페이지 구조·UI 패턴 기준 페이지를 26개 그룹으로 구조화)",
+        "imgGroup": 0
+      },
+      {
+        "text": "Behavior Clustering (페이지 로그 데이터 기반 쇼핑 행동 유형 클러스터 도출)",
+        "imgGroup": 1
+      },
+      "Context Validation (사용자 인터뷰로 행동 패턴 맥락 검증)",
+      "UX Strategy (행동 유형 기반 UX 개선 방향 도출)"
+    ],
+    "oc": [
+      "5가지 쇼핑 행동 유형 모델 도출",
+      "행동 유형 기반 UX 개선 전략 제안",
+      "한국 HCI 학회 2023 논문 발표 (2저자)"
+    ],
+    "imgs": [
+      {
+        "src": "/images/naver_shopping_img1.png",
+        "start": 1,
+        "span": 1.89,
+        "bg": "#F2F2F0",
+        "pad": 20,
+        "caption": {
+          "text": "Before any pattern could emerge, the site needed a skeleton: 26 page groups mapped by structure and UI type.",
+          "position": "below"
+        }
+      },
+      {
+        "src": "/images/naver_shopping_img2.png",
+        "start": 3.11,
+        "span": 1.89,
+        "bg": "#F2F2F0",
+        "pad": 20,
+        "overlap": 1,
+        "caption": {
+          "text": "Five types of shoppers, defined not by who they said they were, but by where they went and how long they stayed.",
+          "position": "below"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Started by listening to what people said to machines,",
+    "project": "Understanding Voice Banking through User Utterances",
+    "cl": "Taran UXD",
+    "yr": "2021.09–10 (2개월)",
+    "co": "UX 리서치 (30%)",
+    "ds": "프로토타입 실험과 사용자 인터뷰를 통해 발화 데이터를 수집·분석하고 금융 보이스 인터랙션 사용 맥락을 도출했습니다.",
+    "pb": "금융 서비스는 대부분 화면 중심 인터페이스로 설계되어 있으며, 보이스 인터랙션 환경에서 사용자의 실제 요구는 충분히 연구되지 않음",
+    "sd": [
+      "Use Case Framing (음성 기반 금융 서비스에서 발생할 수 있는 주요 사용 상황 정의)",
+      {
+        "text": "Prototype Interaction (보이스 금융 서비스 프로토타입 제작)",
+        "imgGroup": 0
+      },
+      {
+        "text": "Utterance Analysis (사용자 발화 데이터 수집 및 금융 보이스 인터랙션 니즈 분석)",
+        "imgGroup": 1
+      }
+    ],
+    "oc": [
+      "477개 사용자 발화 데이터 확보",
+      "금융 보이스 서비스 UX 설계 방향 도출",
+      "한국 HCI 학회 2022 논문 발표 (3저자)"
+    ],
+    "imgs": [
+      {
+        "src": "/images/banky_img1.png",
+        "start": 2.05,
+        "span": 1.04,
+        "caption": {
+          "text": "Banky began with one promise: if banking is everyday language, finance can feel less like work.",
+          "position": "left"
+        }
+      },
+      {
+        "src": "/images/banky_img2.png",
+        "start": 3.11,
+        "span": 1.89,
+        "overlap": 0.98,
+        "caption": {
+          "text": "Then we tested it: everyday scenes met real financial requests and revealed the contexts of voice banking.",
+          "position": "below"
+        }
+      }
+    ]
+  }
+]

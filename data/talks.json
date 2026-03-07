@@ -1,0 +1,326 @@
+[
+  {
+    "name": "“You said da da…”: A Short Echoing Tweak for Journaling with VA",
+    "cl": "ACM CHI 2023",
+    "yr": "2023.04.19",
+    "co": [
+      "Poster",
+      "First Author"
+    ],
+    "ds": "기존 음성 에이전트는 단문 중심 상호작용에 최적화되어 있어 {{긴 발화를 안정적으로 수집하기 어렵다|0}}. \n에이전트 응답 유형(공감형·반복형·혼합형)을 설계해 실험한 결과, {{반복형 응답이 사용자 발화 길이와 데이터 품질을 가장 효과적으로 향상시켰다|1}}.",
+    "links": [
+      {
+        "label": "dl.acm.org",
+        "url": "https://dl.acm.org/doi/10.1145/3544549.3585901"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "/images/dada_thesis_img1.png",
+        "start": 2.1,
+        "span": 2.9,
+        "bg": "#FFFFFF",
+        "pad": 20,
+        "caption": {
+          "text": "The pause was the problem: a 1.5-second silence where the story could slip away.",
+          "position": "below"
+        }
+      },
+      {
+        "src": "/images/dada_thesis_img2.png",
+        "start": 2.1,
+        "span": 2.9,
+        "bg": "#FFFFFF",
+        "pad": 20,
+        "caption": {
+          "text": "Reading back just two words kept the voice going longer than empathy did.",
+          "position": "below"
+        }
+      }
+    ]
+  },
+  {
+    "name": "직접 만드는 구분감: 마이데이터를 통해 확인한 돈 관리 전략",
+    "cl": "HCI Korea 2025",
+    "yr": "2025.02.10",
+    "co": [
+      "Conference Paper",
+      "Second Author"
+    ],
+    "ds": "마이데이터와 디지털 결제 확산으로 금융 활동이 복잡해지면서 개인이 자신의 재정 상태를 직관적으로 파악하기 어려워졌다. \n인터뷰와 마이데이터 거래 데이터 분석을 통해 사람들의 돈 관리 전략이 {{구분감 형성, 재분배 관리, 파이낸셜 터치라는 세 가지 멘탈 모델|0}}로 나타남을 확인했다.",
+    "links": [
+      {
+        "label": "dbpia.co.kr",
+        "url": "https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12131521"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "/images/mydata_thesis_img1.png",
+        "start": 2.1,
+        "span": 1.4
+      },
+      {
+        "src": "/images/mydata_thesis_img2.png",
+        "start": 3.55,
+        "span": 1.45,
+        "bg": "#FFFFFF",
+        "pad": 20,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "People don't just track money — they sort it, name it, separate it.\nA month mapped in full: where income pooled, where spending spread thin.",
+        "position": "left",
+        "media": [
+          1,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "name": "음성 에이전트를 활용한 일기 시스템에 관한 연구",
+    "cl": "서울대학교",
+    "yr": "2024.02.01",
+    "co": [
+      "Master's Thesis",
+      "First Author"
+    ],
+    "ds": "음성 에이전트는 일기 기록의 인지적 부담을 줄일 수 있지만, 타임아웃 문제로 긴 발화를 안정적으로 수집하기 어렵다. \n{{반복 에코잉 기반 응답 스타일|0}}을 설계하고 두 차례의 사용자 실험을 통해 {{긴 발화를 유도하는 효과적인 VA 저널링 인터랙션을 검증|1}}했다.",
+    "links": [
+      {
+        "label": "s-space.snu.ac.kr",
+        "url": "https://s-space.snu.ac.kr/handle/10371/210859"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "/images/va_journaling_thesis_img1.png",
+        "start": 2.1,
+        "span": 2.9,
+        "bg": "#FFFFFF",
+        "pad": 30,
+        "caption": {
+          "text": "The voice agent didn't interrupt — it echoed: just enough to show it was listening, just enough to invite more.",
+          "position": "below"
+        }
+      },
+      {
+        "src": "/images/va_journaling_thesis_img3.png",
+        "start": 2.1,
+        "span": 1.45,
+        "bg": "#FFFFFF",
+        "pad": 20
+      },
+      {
+        "src": "/images/va_journaling_thesis_img2.png",
+        "start": 3.6,
+        "span": 1.4,
+        "bg": "#FFFFFF",
+        "pad": 20,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "Ten days in, two paths diverged. The numbers that followed confirmed what the echoes had started.",
+        "position": "below",
+        "media": [
+          2,
+          3
+        ]
+      }
+    ]
+  },
+  {
+    "name": "컨스트럭션빌딩 방식의 마인드업로드 연구",
+    "cl": "디자인융복합연구",
+    "yr": "2023.08.01",
+    "co": [
+      "Journal Paper",
+      "Second Author"
+    ],
+    "ds": "인간의 사고 방식을 모방하는 ‘컨스트럭션빌딩’ 접근을 기반으로 대화형 마인드업로드 에이전트를 설계하고 전시 환경에서 상호작용 실험을 진행했다. \n실험 결과 {{강한 사고 구조를 가진 캐릭터 기반 에이전트가 관객과의 대화 참여와 흥미를 효과적으로 유도|0}}함을 확인했다.",
+    "links": [
+      {
+        "label": "kiss.kstudy.com",
+        "url": "https://kiss.kstudy.com/Detail/Ar?key=4037302"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "/images/robot_art_img3.png",
+        "start": 2.1,
+        "span": 1.34
+      },
+      {
+        "src": "/images/mind_upload_img1.png",
+        "start": 3.45,
+        "span": 1.55,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "A lawyer who loved whales: the stronger the character, the longer the conversation lasted.\nThe system behind her was just architecture — until she gave it something to say.",
+        "position": "left",
+        "media": [
+          1,
+          2
+        ],
+        "anchor": 1
+      }
+    ]
+  },
+  {
+    "name": "UXer가 페이지 로그 데이터로 행동 유형을 분석하는 방법",
+    "cl": "HCI Korea 2023",
+    "yr": "2023.02.01",
+    "co": [
+      "Conference Paper",
+      "Second Author"
+    ],
+    "ds": "E-commerce 로그 데이터만으로는 사용자 행동의 맥락을 해석하기 어려워 UX 개선에 활용하기 어렵다. \n{{페이지 구조 기반 로그 데이터 정제와 인터뷰 기반 행동 해석을 결합|0}}해 사용자 행동 유형을 도출하고 UX 개선을 위한 분석 방법을 제안했다.",
+    "links": [
+      {
+        "label": "dbpia.co.kr",
+        "url": "https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11229699"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "/images/naver_shopping_thesis_img2.png",
+        "start": 2.1,
+        "span": 1.19,
+        "bg": "#FFFFFF",
+        "pad": 30
+      },
+      {
+        "src": "/images/naver_shopping_thesis_img1.png",
+        "start": 3.33,
+        "span": 1.67,
+        "bg": "#FFFFFF",
+        "pad": 20,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "The pages needed a language first. Then the process had something to build on — and the behavior types followed.",
+        "position": "left",
+        "media": [
+          1,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "name": "1인 가구와 기술: 혼삶의 시대, 기술이 만드는 이웃감",
+    "cl": "쓰리체어스",
+    "yr": "2023.01.30",
+    "co": [
+      "Book",
+      "Co-Author"
+    ],
+    "ds": "1인 가구가 급증하고 있지만 사회는 여전히 개인의 삶을 ‘고립’의 관점에서만 해석하며 새로운 관계 구조를 충분히 고려하지 못하고 있다. \n본 글은 {{코리빙 환경에서 기술이 사람 간 연결을 어떻게 만들어낼 수 있는지|0}}를 탐구하며, 1인 가구 시대의 새로운 사회적 관계 모델을 제안한다.",
+    "imgs": [
+      {
+        "src": "/images/threechairs_book_img1.png",
+        "start": 4.05,
+        "span": 0.95,
+        "caption": {
+          "text": "The question wasn't whether technology could replace neighbors. It was whether it could make new ones.",
+          "position": "left"
+        }
+      }
+    ],
+    "links": [
+      {
+        "label": "bookjournalism.com",
+        "url": "https://www.bookjournalism.com/books/58754/category/131062"
+      }
+    ]
+  },
+  {
+    "name": "\"대체가 아닌, 새로운 뱅킹\": 사용자-기계 대화를 통한 은행 서비스의 VUI 유즈 케이스 탐색",
+    "cl": "HCI Korea 2022",
+    "yr": "2022.02.11",
+    "co": [
+      "Conference Paper",
+      "Third Author"
+    ],
+    "ds": "기존 은행 VUI는 모바일 기능을 음성으로 단순 대체하는 방식에 머물러 사용자 니즈를 충분히 반영하지 못한다. \nWoZ 실험과 프로토타입 평가를 통해 금융 VUI에서 사용자는 {{가벼운 업무 수행, 계산 기반 정보 요청, 캐주얼한 금융 상담|0}}과 같은 새로운 사용 패턴을 보임을 확인했다.",
+    "links": [
+      {
+        "label": "dbpia.co.kr",
+        "url": "https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11043832"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "/images/banky_thesis_img1.png",
+        "start": 2.1,
+        "span": 1.85
+      },
+      {
+        "src": "/images/banky_thesis_img2.png",
+        "start": 3.99,
+        "span": 1.01,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "The taxonomy revealed it first — then the numbers confirmed it: voice banking wasn’t just tasks, but advice, questions, and everyday financial talk.",
+        "position": "left",
+        "media": [
+          1,
+          2
+        ]
+      }
+    ]
+  },
+  {
+    "name": "사용할수록 지식베이스가 성장하는 대화형 서비스 만들기",
+    "cl": "HCI Korea 2022",
+    "yr": "2022.02.11",
+    "co": [
+      "Tutorial",
+      "Co-Speaker"
+    ],
+    "ds": "사용자 데이터가 축적되며 지식베이스가 성장하는 대화형 서비스 설계 방법론을 소개했다.\n{{지속적으로 데이터가 생성되는 도메인 선택, 지식베이스 구조 설계, 데이터 수집·제공을 위한 대화 디자인의 세 단계 프레임워크|0}}를 사례와 함께 설명했다.",
+    "imgs": [
+      {
+        "src": "/images/hcik22_tutorial_img1.png",
+        "start": 2.05,
+        "span": 0.95
+      },
+      {
+        "src": "/images/hcik22_tutorial_img2.png",
+        "start": 3.05,
+        "span": 0.95,
+        "overlap": 1
+      },
+      {
+        "src": "/images/hcik22_tutorial_img3.png",
+        "start": 4.05,
+        "span": 0.95,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "A service that grows from being used — three steps, two chatbots built: one that shared what people were watching, one that collected what they dreamed.",
+        "position": "below",
+        "media": [
+          1,
+          2,
+          3
+        ]
+      }
+    ]
+  }
+]
