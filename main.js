@@ -1079,6 +1079,23 @@
                 hoveredGroups.clear();
                 renderGroups();
               };
+              const toggleGroupLock = (g) => {
+                const wasLocked = lockedGroups.has(g);
+                if (lockedGroups.has(g)) {
+                  lockedGroups.delete(g);
+                } else {
+                  lockedGroups.add(g);
+                }
+                renderGroups();
+                requestAnimationFrame(syncMediaOverlaps);
+                if (!wasLocked) {
+                  requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                      scrollGroupIntoView(row, grid, g, true);
+                    });
+                  });
+                }
+              };
               rowGroupStateResetters.set(row, resetGroups);
               mediaItems.forEach((item) => {
                 if (item.dataset.group === undefined) return;
@@ -1095,23 +1112,27 @@
                 });
                 frame.addEventListener("click", (e) => {
                   e.stopPropagation();
-                  const wasLocked = lockedGroups.has(g);
-                  if (lockedGroups.has(g)) {
-                    lockedGroups.delete(g);
-                  } else {
-                    lockedGroups.add(g);
-                  }
-                  renderGroups();
-                  requestAnimationFrame(syncMediaOverlaps);
-                  if (!wasLocked) {
-                    requestAnimationFrame(() => {
-                      requestAnimationFrame(() => {
-                        scrollGroupIntoView(row, grid, g, true);
-                      });
-                    });
-                  }
+                  toggleGroupLock(g);
                 });
               });
+              row
+                .querySelectorAll(".sd-mark[data-group], .ds-mark[data-group]")
+                .forEach((markEl) => {
+                  const g = parseInt(markEl.dataset.group, 10);
+                  if (Number.isNaN(g)) return;
+                  markEl.addEventListener("mouseenter", () => {
+                    hoveredGroups.add(g);
+                    renderGroups();
+                  });
+                  markEl.addEventListener("mouseleave", () => {
+                    hoveredGroups.delete(g);
+                    renderGroups();
+                  });
+                  markEl.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    toggleGroupLock(g);
+                  });
+                });
               renderGroups();
             }
           }
