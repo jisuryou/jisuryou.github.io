@@ -692,7 +692,7 @@
         pointer-events: none;
       }
       .row-media-preview.show {
-        opacity: 0.5;
+        opacity: 0.3;
         transform: translateY(0);
       }
       .row-media-preview .panel-media-caption,
@@ -766,7 +766,7 @@
         pointer-events: none;
       }
       .panel-media-caption.is-group {
-        opacity: 0.5;
+        opacity: 0.3;
       }
       .panel-media-caption.is-group.is-below {
         margin-top: 0;
@@ -903,7 +903,7 @@
         display: none;
       }
       .panel-media-item[data-group].group-hovered {
-        opacity: 0.5;
+        opacity: 0.3;
         transform: translateY(0);
       }
       .panel-media-item[data-group].group-locked {
