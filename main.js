@@ -1,7 +1,6 @@
       let PROJ = [];
       let TALKS = [];
       let portfolioDataLoaded = false;
-
       async function loadPortfolioData() {
         const [projRes, talksRes] = await Promise.all([
           fetch("/data/projects.json", { cache: "no-store" }),
