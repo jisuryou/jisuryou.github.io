@@ -51,7 +51,20 @@
             itemToRaw[i] = rawIdx;
           }
         });
-        if (!rawGroups.length) return new Array(n).fill(-1);
+        if (!rawGroups.length) {
+          const ds = String(d?.ds ?? "");
+          const dsGroupSet = new Set();
+          const re = /\{\{.+?\|(\d+)\}\}/g;
+          let m;
+          while ((m = re.exec(ds)) !== null) dsGroupSet.add(Number(m[1]));
+          // Fallback: when a talk has only one text marker and no media caption map,
+          // connect that marker to all media items so text-image interaction still works.
+          if (dsGroupSet.size === 1 && n > 0) {
+            const [singleGroup] = [...dsGroupSet];
+            return new Array(n).fill(singleGroup);
+          }
+          return new Array(n).fill(-1);
+        }
         const sorted = rawGroups
           .map((g, i) => ({ ...g, rawIdx: i }))
           .sort((a, b) => a.minIdx - b.minIdx);
@@ -881,10 +894,12 @@
         return Number.isFinite(score) ? score : 0;
       }
       function buildList(data, pageId) {
-        const c = document.getElementById(pageId),
-          sorted = [...data].sort(
-            (a, b) => getChronoScore(a) - getChronoScore(b),
-          );
+        const c = document.getElementById(pageId);
+        const sorted = [...data].sort((a, b) =>
+          pageId === "page-tb"
+            ? getChronoScore(b) - getChronoScore(a)
+            : getChronoScore(a) - getChronoScore(b),
+        );
         sorted.forEach((d, idx) => {
           const row = document.createElement("div");
           row.className = "lrow" + (d.empty ? " empty" : "");

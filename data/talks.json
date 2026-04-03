@@ -1,6 +1,66 @@
 [
   {
-    "name": "“You said da da…”: A Short Echoing Tweak for Journaling with VA",
+    "name": "바이브 코딩 워크숍: AI로 포트폴리오 만들기",
+    "cl": "썬트리하우스",
+    "yr": "2026.03.25",
+    "co": [
+      "Workshop",
+      "Instructor"
+    ],
+    "ds": "코딩 경험이 없는 비개발자도 AI와의 대화만으로 웹사이트를 만들 수 있을까. \n{{4시간 안에 참가자 전원이 자신의 포트폴리오 사이트를 직접 배포하는 것|0}}을 목표로, 바이브 코딩과 집짓기 메타포, 깃허브 배포를 결합한 워크숍을 기획하고 운영했다.",
+    "links": [
+      {
+        "label": "instagram",
+        "url": "https://www.instagram.com/p/DV-RQOFk0Nl/"
+      }
+    ],
+    "imgs": [
+      {
+        "src": "/images/vibecoding1.png",
+        "start": 2.1,
+        "span": 0.58
+      },
+      {
+        "src": "/images/vibecoding2.png",
+        "start": 2.68,
+        "span": 0.58,
+        "overlap": 1
+      },
+      {
+        "src": "/images/vibecoding3.png",
+        "start": 3.26,
+        "span": 0.58,
+        "overlap": 1
+      },
+      {
+        "src": "/images/vibecoding4.png",
+        "start": 3.84,
+        "span": 0.58,
+        "overlap": 1
+      },
+      {
+        "src": "/images/vibecoding5.png",
+        "start": 4.42,
+        "span": 0.58,
+        "overlap": 1
+      }
+    ],
+    "mediaCaptions": [
+      {
+        "text": "\"Absolutely mindblowing — I made a website in four hours.\"\n\"It understood my vague words and just... did it.\"\n\"Zero coding. One homepage.\"",
+        "position": "left",
+        "media": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
+    ]
+  },
+  {
+    "name": "'You said da da…': A Short Echoing Tweak for Journaling with VA",
     "cl": "ACM CHI 2023",
     "yr": "2023.04.19",
     "co": [
