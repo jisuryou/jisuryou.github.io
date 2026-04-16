@@ -25,9 +25,9 @@
     ],
     "imgs": [
       {
-        "src": "/images/about_nine_img2.png",
+        "src": "/images/about_nine_vid1.mp4",
         "start": 2.05,
-        "span": 1.82,
+        "span": 0.93,
         "caption": {
           "text": "From AI matching to three rounds of voice conversation, about nine redesigns dating UX into an immersive journey that increases relationship satisfaction.",
           "position": "left"
@@ -35,8 +35,8 @@
       },
       {
         "src": "/images/about_nine_img1.png",
-        "start": 4.07,
-        "span": 0.93,
+        "start": 3.18,
+        "span": 1.82,
         "caption": {
           "text": "Chemistry score: 90 — not a guess, but a signal drawn from what was actually said.",
           "position": "below"

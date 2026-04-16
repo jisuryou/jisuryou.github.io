@@ -116,18 +116,20 @@
           .join("<br/>");
       }
       function normalizePanelMediaItems(d = {}) {
+        const isVideoSrc = (src = "") =>
+          /\.(mp4|webm|ogg|mov)(?:[?#].*)?$/i.test(String(src).trim());
         const imgs = (d.imgs || [])
           .map((img) =>
             typeof img === "string"
               ? {
-                  type: "img",
+                  type: isVideoSrc(img) ? "video" : "img",
                   src: img,
                   fr: 1,
                   caption: null,
                   captionPos: null,
                 }
               : {
-                  type: "img",
+                  type: isVideoSrc(img?.src) ? "video" : "img",
                   src: img?.src || "",
                   fr: Math.max(1, Number(img?.fr) || 1),
                   start: Number(img?.start),
