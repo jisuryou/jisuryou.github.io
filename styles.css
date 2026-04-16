@@ -913,10 +913,13 @@
         transform: translateY(0);
         filter: none;
       }
+      .panel-media-item[data-group].group-hovered .panel-media-frame {
+        filter: blur(2px) contrast(0.9) brightness(0.45);
+      }
       .panel-media-item[data-group].group-hovered .panel-media-frame img,
       .panel-media-item[data-group].group-hovered .panel-media-frame video {
-        opacity: 0.3;
-        filter: blur(2px) contrast(0.9);
+        opacity: 1;
+        filter: none;
       }
       .panel-media-item[data-group].group-locked {
         opacity: 1;

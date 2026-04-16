@@ -28,7 +28,7 @@
       },
       {
         "src": "/images/vibecoding3.png",
-        
+
         "start": 3.26,
         "span": 0.58,
         "overlap": 1
@@ -49,7 +49,7 @@
     "mediaCaptions": [
       {
         "text": "\"Absolutely mindblowing — I made a website in four hours.\"\n\"It understood my vague words and just... did it.\"\n\"Zero coding. One homepage.\"",
-        "position": "left",
+        "position": "below",
         "media": [
           1,
           2,
